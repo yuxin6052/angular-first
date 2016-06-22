@@ -1,0 +1,55 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#agreementList">客户管理</a><i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">费用列表</span>
+    </li>
+</ul>
+<div class="row " ng-controller="feeCaculateCtr" ng-init="init()">
+    <div class="col-md-12 ">
+            <div class="tabbable-line boxless tabbable-reversed">
+               <div class="portlet light bordered minheight600">
+                 
+                    <div class="portlet-title  tabbable-line">
+                    <div class="caption">
+                        <h5 class="blueFont">费用列表</h5>
+                    </div>
+                   </div>
+                    <div class="table-scrollable">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>单据号</th>
+                                        <th>单据类型</th>
+                                        <th>货主名称</th>
+                                        <th>计费日期</th>
+                                        <th>总费用(单位：元)</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="feeCalate in feeCaculateList">
+                                        <td ng-bind="$index+1"></td>
+                                        <td>{{feeCalate.orderId}}</td>
+                                        <td>{{feeCalate.orderTypeName}}</td>
+                                        <td>{{feeCalate.tradeCompanyName}}</td>
+                                        <td>{{feeCalate.calculateDate}}</td>
+                                        <td>{{feeCalate.totalFee}}</td>
+                                        <td>
+                                            <a ui-sref="feeCaculateDtl({orderFeeId:'{{feeCalate.  id}}',ownerName:'{{feeCalate.
+                                            tradeCompanyName}}',totalFee:'{{feeCalate.totalFee}}',orderId:'{{feeCalate.orderId}}',orderTypeName:'{{feeCalate.orderTypeName}}'})"  class="btn btn-sm green">查看详情</a> 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="centerDiv">
+                            <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                                max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>

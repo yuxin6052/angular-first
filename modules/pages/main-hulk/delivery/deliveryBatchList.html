@@ -1,0 +1,116 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#deliveryBatchList">单据管理</a><i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">发货通知管理</span>
+    </li>
+</ul>
+<div class="row " ng-controller="DeliveryBatchListCtrl" ng-init="init()">
+    <div class="col-md-12 ">
+        <div class="tabbable-line boxless tabbable-reversed">
+            <div class="portlet light bordered minheight600">
+                <div class="portlet-title  tabbable-line">
+                   
+                        <ul class="nav nav-tabs fl col-md-10">
+                            <li ng-class="{'active':!queryStatus}">
+                                <a href="javascript:;" ng-click="changeTab()"> 全部({{totalSum}})</a>
+                            </li>
+                            <li ng-class="{'active':queryStatus==CONTRACT_BATCH_STATUS.NOT_HANDLED}">
+                                <a href="javascript:;" ng-click="changeTab(CONTRACT_BATCH_STATUS.NOT_HANDLED)"> 未处理({{unhandledSum}})</a>
+                            </li>
+                            <li ng-class="{'active':queryStatus==CONTRACT_BATCH_STATUS.HANDLING}">
+                                <a href="javascript:;" ng-click="changeTab(CONTRACT_BATCH_STATUS.HANDLING)"> 处理中({{handlingSum}})</a>
+                            </li>
+                            <li ng-class="{'active':queryStatus==CONTRACT_BATCH_STATUS.HANDLED}">
+                                <a href="javascript:;" ng-click="changeTab(CONTRACT_BATCH_STATUS.HANDLED)"> 已处理({{handledSum}})</a>
+                            </li>
+                        </ul>
+                        <div class="actions" >
+                            <a class="btn btn-orange btn-sm" ui-sref="deliveryBatchAdd">
+                                <i class="fa fa-plus"></i> 添加发货通知
+                            </a>
+                        </div>
+                  
+                    
+                </div>
+                <div class="portlet-body form">
+                <div class="row marginTop20 marginBottom10">
+                     <div class="caption col-md-4">
+                        <h5 class="blueFont">发货单通知列表</h5>
+
+                    </div>
+                    <div class="actions col-md-8">
+                        <div class="controls-row form-horizontal">
+                        <div class="control-group col col-md-5">
+                                
+                                   <label class="col-md-4 control-label">发货批次号</label>
+                                   <div class="col-md-8">
+                                    <input type="text" class="form-control " ng-model="queryParameters.batchNo">
+                                </div>
+                               
+                            </div>
+                            <div class="control-group col col-md-5">
+                               
+                                  <label  class="col-md-4 control-label">承运单位</label>
+                                     <div class="col-md-8">
+                                    <input type="text" class="form-control " ng-model="queryParameters.wlCompanyName">
+                                </div>
+                                   
+                              
+                            </div>
+                            <div class="col-md-2">
+                             <span class="input-group-btn">
+                                        <button class="btn blue" type="button" ng-click="queryDliveryBatchList()">搜索</button>
+                                    </span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                   
+                    <div class="tab-content">
+                        <div class="tab-pane active " id="tab_0">
+                            <div class="table-scrollable">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>发货批次号</th>
+                                            <th>承运单位</th>
+                                            <th>承运单位联系人</th>
+                                            <th>承运单位联系方式</th>
+                                            <th>创建时间</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="deliveryBatch in deliveryBatchList">
+                                            <td ng-bind="$index+1"></td>
+                                            <td>{{deliveryBatch.batchNo}}</td>
+                                            <td>{{deliveryBatch.wlCompanyName}}</td>
+                                            <td>{{deliveryBatch.wlCompanyPerson}}</td>
+                                            <td>{{deliveryBatch.wlCompanyPhone}}</td>
+                                            <td>{{deliveryBatch.createdDateStr}}</td>
+                                            <td><span ng-class="{'yellowFont':deliveryBatch.status=={{CONTRACT_BATCH_STATUS.NOT_HANDLED}}||deliveryBatch.status=={{CONTRACT_BATCH_STATUS.HANDLING}},'greenFont':deliveryBatch.status=={{CONTRACT_BATCH_STATUS.HANDLED}}}">{{deliveryBatch.status | contractBatchStatus}}</span></td>
+                                            <td>
+                                                <a href="#/deliveryBatchDt/{{deliveryBatch.batchNo}}" class="btn btn-sm green">查看详情</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="centerDiv">
+                                <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                                    max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

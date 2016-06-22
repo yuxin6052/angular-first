@@ -1,0 +1,414 @@
+.cover {
+	margin: 0 auto;
+	height: 35px;
+	background: #f5f5f5;
+	-webkit-backface-visibility: hidden;
+}
+
+.site-nav,
+.logo-search-bar,
+.main-menu ul,
+.main-part,
+.footer .inner {
+	width: 1210px;
+	margin: 0 auto;
+}
+
+.site-nav,
+.logo-search-bar,
+.main-menu,
+.home-main-part,
+.basic-info:after,
+.footer:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.site-nav-r {
+	float: right;
+	font-size: 12px;
+	color: #6C6C6C;
+}
+
+.site-nav-r li {
+	float: left;
+}
+
+.site-nav-r li div {
+	padding: 0 10px;
+}
+
+.site-nav-r li div a {
+	font-size: 12px;
+	color: #6C6C6C;
+	line-height: 35px;
+}
+
+.logo-search-bar {
+	padding: 17px 0;
+}
+
+.search-bar,
+.search-bar form {
+	width: 600px;
+	height: 35px;
+}
+
+.search-bar input {
+	border: 1px solid #999;
+	height: 35px;
+	width: 500px;
+	float: left;
+}
+
+.search-bar button {
+	background-color: #bb442a;
+	height: 35px;
+	width: 100px;
+	border: none;
+	color: #fff;
+}
+
+.logo {
+	margin-left: 175px;
+	margin-right: 60px;
+}
+
+.main-menu {
+	width: 100%;
+	border-bottom: 2px solid #BB442A;
+}
+
+.main-menu ul li {
+	float: left;
+	margin-right: 2px;
+}
+
+.main-menu ul li a div {
+	color: #BB442A;
+	padding: 0 8px;
+	width: 90px;
+	height: 35px;
+	line-height: 35px;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+.main-menu ul li a div:hover,
+.main-menu ul li a.active div {
+	background-color: #BB442A;
+	color: #fff;
+}
+
+.select-part {
+	border: 1px solid #ccc;
+	padding: 3px;
+}
+
+.select-option {
+	border-bottom: 1px dashed #ccc;
+}
+
+.select-option ul li {
+	float: left;
+	line-height: 35px;
+}
+
+.select-option ul li label {
+	color: #6C6C6C;
+	margin-left: 15px;
+}
+
+.select-option ul li a {
+	padding: 0px 5px;
+	display: inline-block;
+	float: left;
+	text-align: center;
+	line-height: 35px;
+	min-width: 40px;
+	color: #000
+}
+
+.sort-by {
+	margin: 8px 0px;
+}
+
+.sort-by:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.sort-by ul li {
+	float: left;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-collapse: collapse;
+	border-spacing: 0;
+	line-height: 22px;
+    padding: 0px 6px;
+}.sort-by ul li:last-child{border-right: 1px solid #ccc;}
+.sort-by ul li:hover{
+	background: #BB442A;
+	color:#fff;
+	border-color:#BB442A ;
+}
+.sort-by ul li:hover span{
+	color: #fff;
+}
+.pro-cell {
+	margin: 10px 0px 15px 0px;
+}
+
+.recommend-list-area {}
+
+.recommend-list-area:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.recommend-list-area li {
+	float: left;
+	width: 210px;
+	margin-right: 20px;
+}
+
+.recommend-list-area li:nth-child(5n) {
+	margin-right: 0px;
+}
+
+.recommend-img {
+	height: 135px;
+	background: #CCCCCC;
+}
+
+.recommend-detail {
+	padding: 5px;
+}
+
+.recommend-detail:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.recommend-detail div {
+	height: 22px;
+	font-size: 12px;
+	line-height: 22px;
+	text-indent: 2px;
+}
+
+.recommend-detail label {
+	color: #6C6C6C;
+}
+
+.recommend-detail span.price {
+	color: rgb(200, 99, 61);
+	font-size: 24px;
+}
+
+.pagination {
+	margin-left: 50%;
+}
+
+.pagination ol {
+	margin-left: -50%;
+	min-width: 355px;
+}
+
+.pagination ol li {
+	float: left;
+	border: 1px solid #CCCCCC;
+	padding: 0 5px;
+	height: 26px;
+	line-height: 26px;
+	color: #bcbcbc;
+	margin-right: 4px;
+	min-width: 18px;
+	text-align: center;
+	background: rgb(249, 250, 251);
+	cursor: pointer;
+}
+.pagination ol li:hover{
+	background: #BB442A;
+	border-color:#BB442A
+}
+.pagination ol li:hover a{
+	color:#fff;
+}
+
+.pagination ol li.next,
+.pagination ol li.prev {
+	padding: 0 10px;
+}
+
+.pagination ol li a {
+	color: #bcbcbc;
+	    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.footer {
+	background: rgb(237, 238, 239);
+	padding: 30px 0px 20px 0px;
+}
+.link{
+	text-align: center;
+}
+.link span,.link a,.copyright p{
+	font-size:14px;
+	color:#6C6C6C;
+}
+.link a{
+	margin:0 17px;
+}
+.copyright{
+	margin-top: 20px;
+	font-size: 12px;
+	text-align: center;
+}
+
+.home-main-part{
+  background-color: white;
+  width: 1212px;
+	margin: 0 auto;
+  padding: 0px 40px;
+  padding-bottom: 60px;
+  box-sizing: border-box;
+	margin-bottom: 20px;	
+  margin-top: 15px;
+  border: 1px solid #DDDDDD;
+}
+.my-menu {
+  height:100px;
+  margin: 40px 175px
+}
+
+.my-menu:after{
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.my-menu div{
+  float: left;
+  width:100px;
+  height:100px;
+  margin-right: 50px;
+  border-radius: 50px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  background-color: #DDDDDD;
+}
+
+.my-menu div .menuIcon{
+  width:32px;
+  height:31px;
+  padding:23px 34px 0px 34px;
+}
+
+.my-menu div label{
+  width:56px;
+  height:20px;
+  padding:5px 22px 0px 22px;
+  display: block;
+  text-align: center;
+  color:white;
+}
+
+.my-menu div:nth-child(5n){
+  margin-right: 0px;
+}
+
+.my-menu .selected{
+  background-color: #E87053;
+}
+
+.basic-info {
+  border: 1px solid #EEEEEE;
+  padding: 20px;
+}
+
+.basic-info .company-logo {
+  float: left;
+  width:205px;
+  height:130px;
+  background-color: aquamarine;
+}
+
+.basic-info .infos{
+  width:800px;
+  padding:5px 40px;
+  float:left;
+}
+
+.basic-info .infos div{
+  height:30px;
+  line-height: 30px;
+  font-size: 14px;
+}
+
+.basic-info .infos label{
+  color: #999999;
+  width:70px;
+  display: inline-block;
+  text-align: right;
+}
+
+.basic-info .infos .tags span{
+  width:60px;
+  display: inline-block;
+  text-align: center;
+  margin-right: 5px;
+  border: 1px solid #9B9B9B;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  font-size: 13px;
+  color: #666666;
+}
+
+.basic-info .infos .expand{
+  font-size: 12px;
+  color: #5AA3DF;
+  text-align: center;
+  padding-left: 10px;
+}
+
+.recommend .header{
+  padding:15px 0px;
+}
+.recommend .header:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.recommend-type {
+  font-size: 16px;
+  color: #4A4A4A;
+  float: left;
+}
+
+.refresh {
+  font-size: 13px;
+  color: #666666;
+  float: right;
+}
+
+.recommend {
+  margin-top: 15px
+}
+
+
+
+.home-main-bk {
+  background-color: #F2F2F2;
+  overflow: hidden;
+}

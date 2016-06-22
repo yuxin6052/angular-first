@@ -1,0 +1,176 @@
+ <!-- BEGIN SIDEBAR -->
+ <div class="page-sidebar-wrapper" data-close-on-body-click="false" >
+     <!-- BEGIN SIDEBAR -->
+     <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+     <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+     <div class="page-sidebar navbar-collapse collapse">
+         <!-- BEGIN SIDEBAR MENU -->
+         <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+         <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+         <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+         <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+         <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+         <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+
+
+
+     <ul class="page-sidebar-menu" data-keep-expanded="false" id="menuCon"  data-auto-scroll="true" data-slide-speed="200" id="sidebar" >
+         <li class="nav-item start"  >
+             <a href="javascript:;" class="nav-link nav-toggle"> <i class="fa fa-ambulance"></i>
+                 <span class="title">通知管理</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu" >
+                 <li class="nav-item start" id="company">
+                     <a ui-sref="acceptGoodsList" href="" class="nav-link " >
+
+                         <span class="title">收货通知管理</span>
+
+                     </a>
+                 </li>
+                  
+                 <li class="nav-item start" id="company">
+                     <a ui-sref="transferBatchList" href="" class="nav-link " >
+
+                         <span class="title">货权转让通知管理</span>
+
+                     </a>
+                 </li> 
+                 <li class="nav-item start  ">
+                     <a ui-sref="deliveryBatchList" href="" class="nav-link " attr="product">
+
+                         <span class="title">发货通知管理</span>
+
+                     </a>
+                 </li> 
+             </ul>
+         </li>
+              <li class="nav-item start"  >
+             <a href="javascript:;" class="nav-link nav-toggle"> <i class="fa fa-ambulance"></i>
+                 <span class="title">单据管理</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu" >
+  
+                  <li class="nav-item start" id="company">
+                     <a href="#/godownEntryList" class="nav-link " >
+
+                         <span class="title">入库单管理</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start" id="company">
+                     <a href="#/transferOrderList" class="nav-link " >
+
+                         <span class="title">货权转让单管理</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start" id="company">
+                     <a href="#/shippingList" class="nav-link " >
+
+                         <span class="title">出库单管理</span>
+
+                     </a>
+                 </li>
+
+
+
+             </ul>
+         </li>
+
+         <li class="nav-item "  >
+             <a href="javascript:;" class="nav-link nav-toggle"> <i class="icon-globe"></i>
+                 <span class="title">仓库管理</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu" >
+                 <li class="nav-item ">
+
+                     <a href="#/stockList"   class="nav-link " attr="product">
+
+                         <span class="title">库存管理</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start" id="company" ng-if="system == SYSTEM.HULK_WAREHOUSE">
+                     <a href="#/warehouseList" class="nav-link " >
+
+                         <span class="title">仓库管理</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start" ng-if="system == SYSTEM.HULK_WAREHOUSE">
+                     <a href="#/addCategory" class="nav-link " >
+
+                         <span class="title">品类管理</span>
+
+                     </a>
+                 </li>
+
+
+             </ul>
+         </li>
+         <li class="nav-item "  ng-if="system == SYSTEM.HULK_WAREHOUSE">
+             <a href="javascript:;" class="nav-link nav-toggle"> <i class="icon-globe"></i>
+                 <span class="title">客户管理</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu" >
+                 <li class="nav-item ">
+                     <a href="#/agreementList"   class="nav-link ">
+                         <span class="title">协议列表</span>
+
+                     </a>
+
+                 </li>
+                 <li class="nav-item start" ng-if="system == SYSTEM.HULK_WAREHOUSE">
+                     <a href="#/feeCaculate"   class="nav-link ">
+                         <span class="title">费用列表</span>
+
+                     </a>
+                 </li>
+             </ul>
+         </li>
+
+         <li class="nav-item "  ng-if="system == SYSTEM.HULK_WAREHOUSE">
+             <a href="javascript:;" class="nav-link nav-toggle"> <i class="icon-globe"></i>
+                 <span class="title">报表管理</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu" >
+                 <li class="nav-item start">
+                     <a href="#/cargoInReportList"   class="nav-link ">
+                         <span class="title">入库报表</span>
+                     </a>
+                 </li>
+                 <li class="nav-item ">
+                     <a href="#/cargoOutReportList"   class="nav-link ">
+                         <span class="title">出库报表</span>
+                     </a>
+                 </li>
+                 <li class="nav-item ">
+                     <a href="#/cargoTransferReportList"   class="nav-link ">
+                         <span class="title">货权转让报表</span>
+                     </a>
+
+                 </li>
+                 <li class="nav-item ">
+                     <a href="#/storageReportList"   class="nav-link ">
+                         <span class="title">库存报表</span>
+                     </a>
+                 </li>
+             </ul>
+         </li>
+
+
+     </ul>
+
+     <!-- END SIDEBAR MENU --> </div>
+ <!-- END SIDEBAR --> </div>
+ <!-- END SIDEBAR -->

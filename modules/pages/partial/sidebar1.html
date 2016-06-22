@@ -1,0 +1,129 @@
+ <!-- BEGIN SIDEBAR --> 
+ <div class="page-sidebar-wrapper" data-close-on-body-click="false" >
+     <!-- BEGIN SIDEBAR --> 
+     <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing --> 
+     <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed --> 
+     <div class="page-sidebar navbar-collapse collapse">
+         <!-- BEGIN SIDEBAR MENU --> 
+         <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) --> 
+         <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode --> 
+         <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode --> 
+         <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing --> 
+         <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded --> 
+         <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed --> 
+
+
+
+     <ul class="page-sidebar-menu" data-keep-expanded="false" id="menuCon"  data-auto-scroll="true" data-slide-speed="200" id="sidebar" >
+         <!-- ng-controller="SidebarCtrl" --> 
+         <li class="nav-item active open"  >
+             <a href="javascript:;" class="nav-link nav-toggle"> <i class="fa fa-cog"></i>
+                 <span class="title">账号管理</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu" >
+                 <li class="nav-item active">
+                     <a href="#/index"  class="nav-link " attr="product">
+
+                         <span class="title">企业信息</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start" id="company">
+                     <a href="#/account" class="nav-link " >
+
+                         <span class="title">账号安全</span>
+
+                     </a>
+                 </li>
+                
+             </ul>
+         </li>
+         
+              <li class="nav-item start"  >
+             <a href="javascript:;" class="nav-link nav-toggle"> <i class="fa fa-ambulance"></i>
+                 <span class="title">我的物流订单</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu" >
+
+                 <li class="nav-item start  ">
+                     <a href="#/vehicleDemand"   class="nav-link " attr="product">
+
+                         <span class="title">用车需求</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start" id="company">
+                     <a href="#/vehicleDispatch" class="nav-link " >
+
+                         <span class="title">派车订单</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start" id="company">
+                     <a href="#/deliverList" class="nav-link " >
+
+                         <span class="title">送货订单</span>
+
+                     </a>
+                 </li>
+
+             </ul>
+         </li>
+
+         <li class="nav-item "  >
+             <a href="javascript:;" class="nav-link nav-toggle"> <i class="icon-globe"></i>
+                 <span class="title">运力资源管理</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu" >
+                 <li class="nav-item ">
+                     <a href="#/driverList"   class="nav-link " attr="product">
+
+                         <span class="title">司机管理</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start" id="company">
+                     <a href="#/vehicleList" class="nav-link " >
+
+                         <span class="title">车辆管理</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start" id="company">
+                     <a href="#/GPSList" class="nav-link " >
+
+                         <span class="title">GPS管理</span>
+
+                     </a>
+                 </li>
+
+             </ul>
+         </li>
+         <li class="nav-item "  ng-if="system == SYSTEM.CAPTAIN">
+             <a href="javascript:;" class="nav-link nav-toggle"> <i class="icon-globe"></i>
+                 <span class="title">客户管理</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu" >
+                 <li class="nav-item ">
+                     <a href="#/agreementList"   class="nav-link ">
+                         <span class="title">协议列表</span>
+
+                     </a>
+                 </li>
+             </ul>
+         </li>
+      
+
+     </ul>
+
+     <!-- END SIDEBAR MENU --> </div>
+ <!-- END SIDEBAR --> </div>
+ <!-- END SIDEBAR --> 

@@ -1,0 +1,96 @@
+
+<div class="row " ng-controller="ModalDemoCtrl1">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption"> <i class="icon-social-dribbble font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">编辑商品</span>
+                </div>
+                <div class="actions">
+                    <a ui-sref="index.dispatch" class="btn blue">返回</a>
+                </div>
+            </div>
+
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form class="form-horizontal"  name="productForm" novalidate>
+                    <input type="hidden" name="id" value="${(it.id?c)!}">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">商品名称</label>
+                            <div class="col-md-4">
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control" ng-minlength="6"  name="productName" ng-maxlength="8" value="" required ng-model="product.productName">
+                                    <span style="color:red" ng-show="productForm.productName.$dirty && productForm.productName.$invalid">
+                                        <span ng-show="productForm.productName.$error.required">商品名称是必须的。</span>
+                                        <span ng-show="productForm.productName.$error.minlength||productForm.productName.$error.maxlength">请输入商品名字6-8位。</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">商品类别</label>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="productType" value="" ng-model="product.productType" required>
+                                    <span style="color:red" ng-show="productForm.productType.$dirty && productForm.productType.$invalid">
+                                        <span ng-show="productForm.productType.$error.required">商品类别是必须的。</span>
+
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">规格</label>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="productStandard" required value="" ng-model="product.productStandard">
+                                    <span style="color:red" ng-show="productForm.productStandard.$dirty && productForm.productStandard.$invalid">
+                                        <span ng-show="productForm.productType.$error.required">商品规格是必须的。</span>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">型号</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+
+                                    <input type="text" class="form-control" name="productMode" value="" ng-model="product.productMode" required>
+                                    <span style="color:red" ng-show="productForm.productMode.$dirty && productForm.productMode.$invalid">
+                                        <span ng-show="productForm.productMode.$error.required">商品型号是必须的。</span>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">产地</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" name="productOrigin" value="" ng-model="product.productOrigin" required>
+                                <span style="color:red" ng-show="productForm.productOrigin.$dirty && productForm.productOrigin.$invalid">
+                                    <span ng-show="productForm.productOrigin.$error.required">商品型号是必须的。</span>
+
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" class="btn green" ng-disabled="productForm.$invalid" ng-click="addProduct()">保存</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <h3 ng-show="message">{{message}}</h3>
+                <!-- END FORM--> </div>
+
+        </div>
+    </div>
+</div>

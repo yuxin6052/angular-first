@@ -1,0 +1,99 @@
+@charset "utf-8";
+blockquote,
+body,
+caption,
+dd,
+div,
+dl,
+dt,
+em,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+html,
+iframe,
+img,
+input,
+label,
+legend,
+li,
+object,
+ol,
+p,
+pre,
+span,
+strong,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr,
+ul {
+	border: 0 none;
+	margin: 0;
+	outline: 0 none;
+	padding: 0
+}
+body,
+html {
+	font: 12px/1.25 微软雅黑, Microsoft YaHei, Helvetica, Tahoma, StSun, 宋体, SimSun, sans-serif
+}
+ol,
+ul {
+	list-style: none
+}
+
+:focus {
+	outline: 0
+}
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0
+}
+a {
+	outline: 0;
+	text-decoration: none
+}
+a:hover {
+	text-decoration: none
+}
+.clear {
+	clear: both;
+	display: block;
+	margin: 0;
+	padding: 0
+}
+.clear-after:after {
+	content: "";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden
+}
+* .clear-after {
+	zoom: 1
+}
+.hide {
+	display: none
+}
+.clearfix:after {
+	display: block;
+	clear: both;
+	height: 0;
+	visibility: hidden;
+	content: "."
+}
+.clearfix {
+	display: block;
+	*display: inline-block
+}
+* html .clearfix {
+	height: 1%
+}

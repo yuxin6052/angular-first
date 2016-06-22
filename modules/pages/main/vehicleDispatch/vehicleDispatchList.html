@@ -1,0 +1,158 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">我的物流订单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#/vehicleDispatch">派车订单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">派车订单列表</span>
+    </li>
+</ul>
+<div class="row " ng-controller="vehicleDispatchList">
+    <div class="col-md-12 ">
+        <div class="tabbable-line boxless tabbable-reversed">
+            <div class="portlet light bordered minheight600">
+                <div class="portlet-title tabbable-line ">
+                    <ul class="nav nav-tabs fl">
+                        <li ng-class="{'active':queryStatus==810}">
+                            <a href="javascript:;" ng-click="query('810')"> 待审核({{unhandled}})</a>
+                        </li>
+                        <li ng-class="{'active':queryStatus==820}">
+                            <a href="javascript:;" ng-click="query('820')"> 派车中 ({{dispatching}})</a>
+                        </li>
+                        <li ng-class="{'active':queryStatus==830}">
+                            <a href="javascript:;" ng-click="query('830')"> 车辆到货、装货中 ({{loading}})</a>
+                        </li>
+                        <li ng-class="{'active':queryStatus==840}">
+                            <a href="javascript:;" ng-click="query('840')"> 派车完成、已提货 ({{completed}})</a>
+                        </li>
+                    </ul>
+                    <!-- <div class="actions col-md-3">
+                        <div class="input-group input-group-sm ">
+                            <input type="text" class="form-control" placeholder="模糊搜索">
+                            <span class="input-group-btn">
+                                                        <button class="btn blue" type="button">搜索</button>
+                                                    </span>
+                        </div>
+                    </div> -->
+                    <div class="clearfix"></div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="tab-content">
+                        <div class="tab-pane active ">
+                            <div ng-repeat="vehicleDemand in vehicleDemandList" class="temborder">
+                                <h5><span class="red red-neednum">需求编号：{{vehicleDemand.vehicleDemandNo}} </span></h5>
+                                <div class="portlet vehicledispatchrfix" style="padding-top:10px;">
+                                    <div class="portlet-title">
+                                        <ul class="nav nav-tabs fl col-md-12">
+                                            <li class="col-md-1">序号</li>
+                                            <li class="col-md-2">派车单号</li>
+                                            <li class="col-md-2">创建时间</li>
+                                            <li class="col-md-2">总重量</li>
+                                            <li class="col-md-2"> 状态</li>
+                                            <li class="col-md-2">操作</li>
+                                        </ul>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="portlet" ng-repeat="demand in vehicleDemand.vehicleDispatchList">
+                                            <div class="portlet-title" style="position: relative;">
+                                                <ul class="nav nav-tabs fl col-md-12">
+                                                    <li ng-bind="$index+1" class="col-md-1"></li>
+                                                    <li class="col-md-2">{{demand.dispatchNo}}</li>
+                                                    <li class="col-md-2"> {{demand.createdDate}}</li>
+                                                    <li class="col-md-2">{{demand.dispatchTotalWei}}{{demand.weiUnit}}</li>
+                                                    <li class="col-md-2" ng-if="demand.status==810">待审核</li>
+                                                    <li class="col-md-2" ng-if="demand.status==820">派车中</li>
+                                                    <li class="col-md-2" ng-if="demand.status==830">装货中</li>
+                                                    <li class="col-md-2" ng-if="demand.status==840">已完成</li>
+                                                </ul>
+                                                <div class="tools col-md-3" style="position: absolute;right: 0px;top: -17px;">
+                                                    <a href="javascript:;" class="wid60 noBgImg btn blue btn-sm btn-fix-zankai" ng-class="{collapse:demand.expanded,expand:!demand.expanded}" data-original-title="" ng-click="demand.expanded=!demand.expanded" title="">
+                                                        <i ng-if="!demand.expanded">展开详情</i>
+                                                        <i ng-if="demand.expanded">关闭详情</i>
+                                                    </a>
+                                                    <button ng-show="demand.status==810" ng-click="verify(demand)" class="wid70 noBgImg btn blue btn-sm">模拟ERP审核通过</button>
+                                                    <button ng-show="demand.status==820" ng-click="dispatchComplete(demand)" class="wid70 noBgImg btn blue btn-sm">模拟派车完成</button>
+                                                    <a ng-show="demand.showTransfer" href="/#/deliverDtEdit/{{demand.cargoNo}}" class="wid70 noBgImg btn blue btn-sm btn-fix-trans">派车完成/转送货单</a>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="portlet-body portlet-collapsed tempaddingcolor" id="collapseBg" style="display: none;">
+                                                <h6>货物信息</h6>
+                                                <div class="table-scrollable">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>品名 </th>
+                                                                <th>规格/牌号 </th>
+                                                                <th> 品牌 </th>
+                                                                <th> 数量 </th>
+                                                                <th> 数量单位 </th>
+                                                                <th> 总重量 </th>
+                                                                <th> 总重量单位 </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="product in demand.vehicleDispatchProducts">
+                                                                <td> {{product.productName}} </td>
+                                                                <td> {{product.productSpecify}} </td>
+                                                                <td> {{product.productBrand}} </td>
+                                                                <td> {{product.productTotalCount}} </td>
+                                                                <td>{{product.countUnit}}</td>
+                                                                <td> {{product.productTotalWei}} </td>
+                                                                <td>{{product.weiUnit}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <h6>司机信息</h6>
+                                                <div class="table-scrollable">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>车牌号 </th>
+                                                                <th>司机姓名 </th>
+                                                                <th>司机身份证号</th>
+                                                                <th> 单车装载量 </th>
+                                                                <th> 操作 </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="driver in demand.vehicleDispatchDriverList">
+                                                                <td> {{driver.deliveryToolNo}} </td>
+                                                                <td> {{driver.driverName}} </td>
+                                                                <td> {{driver.driverIdentityNumber}} </td>
+                                                                <td> {{driver.maxLoad}}吨 </td>
+                                                                <td>
+                                                                    <i ng-show="demand.status==820&&demand.driverId==null" class="btn blue" ng-click="selectDriver(driver.driverId,demand)"> 选择</i>
+                                                                    <i ng-show="demand.driverId=={{driver.driverId}}">已选择</i>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <h6>承运信息</h6>
+                                                <div class="table-scrollable">
+                                                    <table class="table table-hover">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td> 承运单位：{{demand.dispatchCompanyName}} </td>
+                                                                <td> 承运联系人：{{demand.dispatchCompanyContactor}} </td>
+                                                                <td> 承运联系人电话：{{demand.dispatchCompanyContactNumber}} </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

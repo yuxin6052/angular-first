@@ -1,0 +1,105 @@
+<ul class="page-breadcrumb breadcrumb">
+
+    <li>
+        <a href="#transferBatchList">单据管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">货权转让通知管理</span>
+    </li>
+</ul>
+<div class="row " ng-controller="transferBatchListCtrl" ng-init="init()">
+    <div class="col-md-12 ">
+
+        <div class="portlet light bordered ">
+            <div class="portlet-title tabbable-line ">
+                <ul class="nav nav-tabs fl">
+                    <li ng-class="{'active':!queryStatus}">
+                        <a href="javascript:;" ng-click="changeTab()">全部({{totalSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==CONTRACT_BATCH_STATUS.NOT_HANDLED}">
+                        <a href="javascript:;" ng-click="changeTab(CONTRACT_BATCH_STATUS.NOT_HANDLED)">未处理({{unhandledSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==CONTRACT_BATCH_STATUS.HANDLING}">
+                        <a href="javascript:;" ng-click="changeTab(200)">处理中({{handlingSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==CONTRACT_BATCH_STATUS.HANDLED}">
+                        <a href="javascript:;" ng-click="changeTab(300)">已处理({{handledSum}})</a>
+                    </li>
+                </ul>
+                <div class="actions">
+                    <a class="btn btn-orange btn-sm" ui-sref="addTransferBatch">
+                        <i class="fa fa-plus"></i> 添加货权转让通知
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="row marginBottom10 marginTop20">
+                    <div class="col-md-4">
+                        <h5 class="blueFont">货权转让通知列表</h5>
+                    </div>
+                    <div class="actions col-md-8">
+                        <div class="controls-row form-horizontal">
+                            <div class="control-group col col-md-5">
+
+                                <label class="col-md-4 control-label">批次号</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control " ng-model="queryParameters.batchNo">
+                                </div>
+
+                            </div>
+                            <div class="control-group col col-md-5">
+
+                                <label class="col-md-4 control-label">货主</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control " ng-model="queryParameters.batchNo">
+                                </div>
+
+                            </div>
+                            <div class="col-md-2">
+                                <span class="input-group-btn">
+                                        <button class="btn blue" type="button" ng-click="queryAcceptBatchList()">搜索</button>
+                                    </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active ">
+                        <div class="table-scrollable">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>货权转让批次号</th>
+                                        <th>货主</th> 
+                                        <th>通知时间</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="transferBatch in transferBatchList">
+                                        <td ng-bind="$index+1"></td>
+                                        <td>{{transferBatch.batchNo}}</td>
+                                        <td>{{transferBatch.ownerName}}</td>
+                                        <td>{{transferBatch.createdDateStr}}</td>
+                                        <td><span ng-class="{'yellowFont':transferBatch.status=={{CONTRACT_BATCH_STATUS.NOT_HANDLED}}||transferBatch.status=={{CONTRACT_BATCH_STATUS.HANDLING}},'greenFont':transferBatch.status=={{CONTRACT_BATCH_STATUS.HANDLED}}}">{{transferBatch.status | contractBatchStatus}}</span></td>
+                                        <td>
+                                            <a href="#transferBatchDt/{{transferBatch.batchNo}}" class="btn btn-sm green">查看详情</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="centerDiv">
+                            <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                                max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

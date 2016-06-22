@@ -1,0 +1,26 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>品名</th>
+      <th>规格/牌号</th>
+      <th>品牌</th>
+      <th>数量</th>
+      <th>数量单位</th>
+      <th>总重量</th>
+      <th>总重量单位</th>
+      <th>指定发货库位</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="product in productList">
+      <td> {{product.productName}} </td>
+      <td> {{product.productSpecify}} </td>
+      <td> {{product.productBrand}} </td>
+      <td> {{product.productTotalCount}} </td>
+      <td>{{product.countUnit}}</td>
+      <td> {{product.productTotalWei}} </td>
+      <td>{{product.weiUnit}}</td>
+      <td>{{product.warehouseNo}}</td>
+    </tr>
+  </tbody>
+</table>

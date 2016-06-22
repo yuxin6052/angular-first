@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en" > <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>智能仓储物流后台管理系统</title>
+
+    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/less/bootstrap.less">
+    <link rel="stylesheet" type="text/css" href="/bower_components/font-awesome/css/font-awesome.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/bower_components/rdash-ui/dist/css/rdash.css">
+    -->
+ <!-- <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" /> -->
+        <!-- <link href="lib/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" /> -->
+        <link href="lib/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="lib/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="lib/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+        <link href="lib/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <link href="lib/assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
+        <!-- END GLOBAL MANDATORY STYLES -->
+          <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="lib/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!-- BEGIN THEME GLOBAL STYLES -->
+        <link href="lib/assets/global/css/components-rounded.min.css" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="lib/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+        <!-- END THEME GLOBAL STYLES -->
+      <link href="lib/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+        <!-- BEGIN THEME LAYOUT STYLES -->
+        <link href="lib/assets/layouts/layout4/css/layout.min.css" rel="stylesheet" type="text/css" />
+        <link href="lib/assets/layouts/layout4/css/themes/light.min.css" rel="stylesheet" type="text/css" id="style_color" />
+        <link href="lib/assets/layouts/layout4/css/custom.min.css" rel="stylesheet" type="text/css" />
+        <!-- END THEME LAYOUT STYLES -->
+        <link href="/bower_components/angular-ui-select/dist/select.min.css" rel="stylesheet" type="text/css" />
+
+
+    <link href="/lib/css/modify.css" rel="stylesheet" type="text/css" />
+
+     <link rel="shortcut icon" href="favicon.ico" /> </head>
+
+</head>
+<body  class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo" >
+
+     <link rel="import" href="/modules/pages/partial/header.html?__inline"/>
+
+ <div id="dcWrap" class="page-container " ng-controller="hulkController">
+ <div class="page-sidebar-wrapper">
+    <link rel="import" href="/modules/pages/partial/hulk-sidebar.html?__inline"/>
+ </div>
+
+    <div class="page-content-wrapper">
+        <div class="page-content" >
+
+            <div ui-view=""></div>
+        </div>
+    </div>
+
+ </div>
+ <link rel="import" href="/modules/pages/partial/footer.html?__inline"/>
+
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE JQUERY PLUGINS -->
+<!--[if lt IE 9]>
+<script src="lib/assets/global/plugins/respond.min.js"></script>
+<script src="lib/assets/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+     <script src="lib/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="lib/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="lib/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+        <script src="lib/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+        <script src="lib/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="lib/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+        <script src="lib/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+        <script src="lib/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+        <script src="lib/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <script src="lib/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+        <!-- END CORE PLUGINS -->
+        <script src="lib/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+        <!-- BEGIN THEME GLOBAL SCRIPTS -->
+        <script src="lib/assets/global/scripts/app.js" type="text/javascript"></script>
+          <script src="lib/assets/pages/scripts/components-date-time-pickers.js" type="text/javascript"></script>
+        <!-- END THEME GLOBAL SCRIPTS -->
+
+        <!-- BEGIN THEME LAYOUT SCRIPTS -->
+        <script src="lib/assets/layouts/layout4/scripts/layout.js" type="text/javascript"></script>
+        <script src="lib/assets/layouts/layout4/scripts/demo.js" type="text/javascript"></script>
+        <script src="lib/assets/layouts/global/scripts/quick-sidebar.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/lib/js/BigDecimal-all-last.min.js"></script>
+    <script type="text/javascript" src="/lib/mod.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.js"></script>
+    <script type="text/javascript" src="/bower_components/ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript" src="/bower_components/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
+    <script type="text/javascript" src="/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-ui-select/dist/select.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="/bower_components/file-saver/FileSaver.min.js"></script>
+
+    <script type="text/javascript">require('main/main-hulk');</script>
+    <script type="text/ng-template" id="messageModal.html">
+        <div class="modal-header">
+            <h4 class="modal-title">{{msg}}</h4>
+        </div>
+        <div class="modal-footer">
+            <button class="btn green-haze" type="button" ng-click="ok()">确定</button>
+            <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+       </div>
+    </script>
+
+    <script type="text/javascript">
+
+      function handleEnter (field, event) {
+var keyCode = event.keyCode ? event.keyCode : event.which ?
+event.which : event.charCode;
+if (keyCode == 13) {
+var i;
+for (i = 0; i < field.form.elements.length; i++)
+if (field == field.form.elements[i])
+break;
+i = (i + 1) % field.form.elements.length;
+field.form.elements[i].focus();
+return false;
+}
+else
+return true;
+}
+</script>
+</body>
+</html>

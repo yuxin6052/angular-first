@@ -1,0 +1,271 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">我的物流订单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a ui-sref="vehicleDemand">用车需求</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">需求详情</span>
+    </li>
+</ul>
+<div class="row " ng-controller="vehicleDemandDt">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <h3 class="panel-title yellowFont">基本信息</h3>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <h5>需求编号：{{vehicleDemand.vehicleDemandNo}}</h5>
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td>取货单位:{{vehicleDemand.fromWarehouseName}}<br/><span style="width:60px;display:inline-block"></span>{{vehicleDemand.fromWarehouseAddress}}</td>
+                                
+                                <td>预装货时间:{{vehicleDemand.startDate}}</td>
+                                <td>取货联系人:{{vehicleDemand.fromWarehouseContactor}}</td>
+                                <td>取货联系电话:{{vehicleDemand.fromWarehouseContactNumber}}</td>
+                            </tr>
+                            <tr>
+                                <td>收货单位:{{vehicleDemand.toWarehouseName}}<br/><span style="width:60px;display:inline-block"></span>{{vehicleDemand.toWarehouseAddress}}</td>
+                                
+                                <td>预到货时间:{{vehicleDemand.endDate}}</td>
+                                <td>到货货联系人:{{vehicleDemand.toWarehouseContactor}}</td>
+                                <td>到货联系电话:{{vehicleDemand.toWarehouseContactNumber}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <h3 class="panel-title greenFont">货物信息</h3>
+                </div>
+                <div class="actions">
+                    <input type="text" ng-model="titleFilter" placeholder="输入关键字">
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>品名</th>
+                                <th>规格/牌号</th>
+                                <th>品牌</th>
+                                <th>数量</th>
+                                <th>数量单位</th>
+                                <th>总重量</th>
+                                <th>重量单位</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="product in productList|filter:titleFilter">
+                                <td>{{product.productName}}</td>
+                                <td>{{product.productSpecify}}</td>
+                                <td>{{product.productBrand}}</td>
+                                <td>{{product.productTotalCount}}</td>
+                                <td>{{product.countUnit}}</td>
+                                <td>{{product.productTotalWei}}</td>
+                                <td>{{product.weiUnit}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <uib-pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+            </div>
+        </div>
+    </div>
+    <open class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <h3 class="panel-title purpleFont">派车单列表</h3>
+                </div>
+                <div class="actions">
+                    <button ng-show="showCommit" class="btn btn-success" ng-click="open(null,'添加派车单')">
+                        <i class="fa fa-plus"></i> 添加派车单
+                    </button>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>选择</th>
+                                <th>派车单号</th>
+                                <th>创建时间</th>
+                                <th>重量</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="dispatch in dispatchList|filter:titleFilter">
+                                <td>
+                                    <input type="checkbox" value="{{dispatch.id}}" ng-checked="commitDispatchList.indexOf(dispatch.id)>-1" ng-click="toggleDispatchSelection(dispatch.id)"/>
+                                </td>
+                                <!--  <td ng-bind="$index+1"></td> -->
+                                <td>{{dispatch.dispatchNo}}</td>
+                                <td>{{dispatch.createdDate}}</td>
+                                <td>{{dispatch.dispatchTotalWei}}{{dispatch.weiUnit}}</td>
+                                <td ng-if="dispatch.status==800">待提交</td>
+                                <td ng-if="dispatch.status==810">待审核</td>
+                                <td ng-if="dispatch.status==820">派车中</td>
+                                <td ng-if="dispatch.status==830">装货中</td>
+                                <td ng-if="dispatch.status==840">已完成</td>
+                                <td><button ng-show="showCommit" class="btn btn-sm blue-madison" ng-click="open(dispatch,'修改派车单')">
+                                   修改派车单</button> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-2">
+                     <button ng-show="showCommit" class="btn green-haze" type="button"  ng-click="commitDispatch(null)">提交派车单</button>
+                     <i ng-show="!showCommit">该需求已提交</i>
+                     </div>
+                     <div class="col-md-2">
+                         <a class="btn grey-cascade" href="#/vehicleDemand" >返回</a>
+                     </div>
+                      <div class="col-md-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加派车单 start-->
+<script type="text/ng-template" id="vehicleDispatchDtlController.html">
+    <div class="modal-header">
+        <h5><i class="icon-notebook"></i>{{title}}</h5>
+    </div>
+    <div class="modal-body">
+        <div class="portlet ">
+            <div class="portlet-title">
+                <div class="caption font14"> <i class="icon-social-dribbble font-green"></i>
+                    <span class="caption-subject font-green uppercase">货物信息</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control" name="paroductName" ng-model="productSelectObj">
+                    <!-- <option>选择货物</option> -->
+                    <option ng-repeat="product in productList" value={{product.productId}}>{{product.productName}}-{{product.productBrand}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button class="btn blue btn-outline" type="button" ng-click="addProduct4Dispatch()">添加</button>
+            </div>
+            <div class="col-md-4" ng-if="errorMsg!==''">
+                <label class="control-label redFont padTop5">{{errorMsg}}</label>
+            </div>
+            <div class="clearfix"></div>
+            <div class="portlet-body form">
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>品名</th>
+                                <th>规格/牌号</th>
+                                <th>品牌</th>
+                                <th>数量</th>
+                                <th>数量单位</th>
+                                <th>总重量</th>
+                                <th>重量单位</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="product in product4Dispatch">
+                                <td>{{product.productName}}</td>
+                                <input type="hidden" ng-model="product.productId" />
+                                <input type="hidden" ng-model="product.id" />
+                                <td>{{product.productSpecify}}</td>
+                                <td>{{product.productBrand}}</td>
+                                <td>
+                                    <input class="wid50" required type="number" ng-model="product.productTotalCount" />
+                                </td>
+                                <td>{{product.countUnit}}</td>
+                                <td>
+                                    <input class="wid50" required type="number" ng-model="product.productTotalWei" />
+                                </td>
+                                <td>{{product.weiUnit}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="portlet ">
+            <div class="portlet-title">
+                <div class="caption font14"> <i class="icon-social-dribbble font-green"></i>
+                    <span class="caption-subject font-green uppercase">司机信息</span>
+                </div>
+                <div class="actions">
+                    <input type="text" ng-model="titleFilter" placeholder="输入关键字">
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>选择</th>
+                                <th>车牌号</th>
+                                <th>司机姓名</th>
+                                <th>司机身份证号</th>
+                                <th>单车装载量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="driver in driverList|filter:titleFilter">
+                                <td>
+                                    <input type="checkbox" ng-checked="getChecked(driver)" ng-click="toggleDriverSelection(driver)" ng-if="!standardizedDemand"/>
+                                    <input type="radio" name="driverGroup" ng-checked="getChecked(driver)" ng-click="toggleDriverSelectionRadio(driver)" ng-if="standardizedDemand"/>
+                                </td>
+                                <td>{{driver.deliveryToolNo}}</td>
+                                <td>{{driver.driverName}}</td>
+                                <td>{{driver.driverIdentityNumber}}</td>
+                                <td>{{driver.maxLoad}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h5>已选司机</h5>
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>车牌号</th>
+                                <th>司机姓名</th>
+                                <th>司机身份证号</th>
+                                <th>单车装载量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="driver in checkedDriverList">
+                                <td>{{driver.deliveryToolNo}}</td>
+                                <td>{{driver.driverName}}</td>
+                                <td>{{driver.driverIdentityNumber}}</td>
+                                <td>{{driver.maxLoad}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-sm grey-cascade" type="button" ng-click="cancel()">返回</button>
+        <button class="btn btn-sm green-haze" type="button" ng-click="ok()">保存</button>
+    </div>
+</script>
+<!--添加派车单 end-->

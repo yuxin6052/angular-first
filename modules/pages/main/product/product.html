@@ -1,0 +1,73 @@
+ <ul class="page-breadcrumb breadcrumb">
+   <li>
+     <a href="index.html">DouPHP管理中心</a> <i class="fa fa-circle"></i>
+   </li>
+   <li>
+     <span class="active">派车单维护</span>
+   </li>
+ </ul>
+
+ <div class="row ">
+   <div class="col-md-12 ">
+     <div class="portlet light bordered minheight600">
+       <div class="portlet-title">
+         <div class="caption"> <i class="icon-social-dribbble font-green"></i>
+           <span class="caption-subject font-green bold uppercase">商品列表</span>
+         </div>
+         <div class="actions">
+           <a href="/exingcai/captain/product/selectById"class="btn blue">添加</a>
+         </div>
+       </div>
+       <div class="portlet-body">
+         <div class="row">
+           <div class="col-md-12 ">
+             <form action="product.php" method="post" class="fr">
+               <select name="cat_id">
+                 <option value="0">未分类</option>
+                 <option value="1">电子数码</option>
+                 <option value="4">- 智能手机</option>
+                 <option value="5">- 平板电脑</option>
+                 <option value="2">家居百货</option>
+                 <option value="3">母婴用品</option>
+               </select>
+               <input name="keyword" type="text" class="inpMain" value="" size="20" /> 
+               <input name="submit" class="btnGray" type="submit" value="筛选" /> 
+             </form>
+           </div>
+         </div>
+          <div class="table-scrollable">
+           <input type="text" ng-model="titleFilter" placeholder="输入关键字"> 
+           <table class="table table-hover">
+             <thead>
+               <tr>
+                 <th>序号</th>
+                 <th>商品名称</th>
+                 <th>商品类别</th>
+                 <th>规格</th>
+                 <th>型号</th>
+                 <th>产地</th>
+                 <th>操作</th>
+               </tr>
+             </thead>
+             <tbody>
+
+               <tr ng-repeat="product in productList|filter:titleFilter">
+                 <td>{{product.id}}</td>
+                 <td>{{product.productName}}</td>
+                 <td>{{product.productType}}</td>
+                 <td>{{product.productStandard}}</td>
+                 <td>{{product.productMode}}</td>
+                 <td>{{product.productOrigin}}</td>
+                 <td>
+                   <a href="#/index/productAdd/{{product.id}}">修改</a>
+                   <button class="btn default" ng-click="deleteProduct($index)">删除</button>
+                 </td>
+               </tr>
+
+             </tbody>
+           </table>
+         </div>
+     </div>
+   </div>
+ </div>
+ </div>

@@ -1,0 +1,95 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">我的物流订单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">GPS列表</span>
+    </li>
+</ul>
+<div class="row " ng-controller="GPSList">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="col-md-9" style="padding-left: 0;">
+                    <button class="btn btn-sm btn-success" ng-click="openAddGPSModal('sm')">
+                        <i class="fa fa-plus"></i> 新增GPS
+                    </button>
+                </div>
+                <!-- <div class="col-md-3">
+                    <div class="input-group input-group-sm ">
+                        <input type="text" class="form-control" placeholder="模糊搜索">
+                        <span class="input-group-btn">
+                              <button class="btn blue" type="button">搜索</button>
+                        </span>
+                    </div>
+                </div> -->
+            </div>
+            <div class="portlet-body form">
+                <div class="table-scrollable driverlisttable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>GPS设备号</th>
+                                <th>GPS设备名</th>
+                                <th>状态</th>
+                                <th width="200">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="GPS in GPSList|filter:titleFilter">
+                                <td ng-bind="$index+1"></td>
+                                <td>{{GPS.gpsDeviceCode}}</td>
+                                <td>{{GPS.gpsDeviceName}}</td>
+                                <td>{{GPS.status |gpsStatus}}</td>
+                                <td>
+                                    <!--  <a ui-sref="GPSDt({GPSId:{{GPS.id}},editing:false})"  class="btn btn-sm green">查看</a> -->
+                                    <a ng-if="GPS.status==100" class="btn btn-sm blue-madison" ng-click="changeStatus(GPS)">激活</a>
+                                    <a ng-if="GPS.status==200" class="btn btn-sm blue-madison" ng-click="changeStatus(GPS)">冻结</a>
+                                    <a ng-if="GPS.status==100" class="btn btn-sm btn-danger" ng-click="delete(GPS)">删除</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <uib-pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="addGPSModal.html">
+    <div class="modal-header">
+        <h5><i class="icon-notebook"></i>新增GPS</h5>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="form-group" style="margin-left:0;margin-right:0">
+                <label for="gpsCode" class="col-sm-2 control-label" style="text-align:left;width:101px">GPS设备号</label>
+                <div class="col-sm-6" style="width:260px">
+                    <input type="text" class="form-control" id="gpsCode" ng-model="newGPS.gpsDeviceCode" placeholder="GPS设备号">
+                </div>
+            </div>
+            <div class="form-group" style="margin-left:0;margin-right:0">
+                <label for="gpsName" class="col-sm-2 control-label" style="text-align:left;width:101px">GPS设备名</label>
+                <div class="col-sm-6" style="width:260px">
+                    <input type="text" class="form-control" id="gpsName" ng-model="newGPS.gpsDeviceName" placeholder="GPS设备名">
+                </div>
+            </div>
+            <div class="form-group" style="margin-left:0;margin-right:0">
+                <label for="gpsName" class="col-sm-2 control-label" style="text-align:left;width:101px">状态</label>
+                <div class="col-sm-6" style="width:260px">
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="newGPS.status" checked value="200">有效
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="newGPS.status" value="100">无效
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn green-haze" type="button" ng-click="ok()">确定</button>
+        <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+    </div>
+</script>

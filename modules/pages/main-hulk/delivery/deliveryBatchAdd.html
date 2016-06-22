@@ -1,0 +1,268 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#deliveryBatchList">我的单据</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#deliveryBatchList">我的发货单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">增加发货单</span>
+    </li>
+</ul>
+<div class="row " ng-controller="DeliveryBatchAddCtrl as ctrl" ng-init="init()">
+    <form role="form" name="myForm" ng-submit="saveDeliveryBatch(myForm.$valid)" class="form-horizontal" novalidate>
+        <div class="col-md-12 ">
+            <div class="portlet light bordered minheight600">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject greenFont bold uppercase">基本信息</span>
+                    </div>
+                </div>
+                <div class="portlet-body ">
+                    <div class="form-horizontal">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">承运单位名称：</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control " ng-maxlength="120" name="wlCompanyName"  ng-model="deliveryBatch.wlCompanyName">
+                                    <div class="redFont padTop5" ng-show="myForm.wlCompanyName.$dirty&&myForm.wlCompanyName.$error.maxlength">最大长度120个字符.</div>
+                                   
+                                </div>
+                                <label class="col-md-2 control-label">承运单位联系人：</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control " name="wlCompanyPerson" ng-maxlength="60"  ng-model="deliveryBatch.wlCompanyPerson">
+                                    <div class="redFont padTop5" ng-show="myForm.wlCompanyPerson.$dirty&&myForm.wlCompanyPerson.$error.maxlength">最大长度60个字符.</div>
+                                   
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">承运单位联系方式：</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control " name="wlCompanyPhone" ng-pattern="/^\d{11}$/"  ng-model="deliveryBatch.wlCompanyPhone">
+                                    <div class="redFont padTop5" ng-show="myForm.wlCompanyPhone.$dirty&&myForm.wlCompanyPhone.$touched&&myForm.wlCompanyPhone.$error.pattern">请输入正确的手机号码</div>
+                                   
+                                </div>
+                                <label class="col-md-2 control-label">
+                                    <span class="redFont">*</span> 选择货主：
+                                </label>
+                                <div class="col-md-3">
+                                    <ui-select  ng-model="ctrl.ownerId" on-select="ctrl.onSelectCallback($item, $model)" theme="bootstrap" title="选择货主"
+                                        append-to-body="false">
+                                        <ui-select-match placeholder="选择货主">{{$select.selected.ownerName}}</ui-select-match>
+                                        <ui-select-choices repeat="owner.id as owner in ownerList | propsFilter: {ownerName: $select.search}">
+                                            <div ng-bind-html="owner.ownerName | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <!--<input type="text" name="ownerName" ng-model="ownerName" uib-typeahead="owner.ownerName for owner in ownerList | filter:$viewValue | limitTo:8"
+                                        class="form-control">-->
+                                    <input type="hidden" ng-model="deliveryBatch.ownerId" name="ownerId" required/>
+                                    <div class="redFont padTop5" ng-show="myForm.ownerId.$dirty&&myForm.ownerId.$error.required">请选择货主.</div>
+                                </div>
+                            </div>
+                            <!--hulk-2 <div class="form-group">
+                                <label class="col-md-2 control-label"><span class="redFont">*</span>承运单位名称：</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control " ng-maxlength="120" name="wlCompanyName"  ng-model="deliveryBatch.wlCompanyName">
+                                    <div class="redFont padTop5" ng-show="myForm.wlCompanyName.$dirty&&myForm.wlCompanyName.$error.maxlength">最大长度120个字符.</div>
+                                    <div class="redFont padTop5" ng-show="myForm.wlCompanyName.$dirty&&myForm.wlCompanyName.$error.required">请填写承运单位名称.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><span class="redFont">*</span>承运单位联系人：</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control " name="wlCompanyPerson" ng-maxlength="60"  ng-model="deliveryBatch.wlCompanyPerson">
+                                    <div class="redFont padTop5" ng-show="myForm.wlCompanyPerson.$dirty&&myForm.wlCompanyPerson.$error.maxlength">最大长度60个字符.</div>
+                                    <div class="redFont padTop5" ng-show="myForm.wlCompanyPerson.$dirty&&myForm.wlCompanyPerson.$error.required">请填写承运单位联系人.</div>
+                                </div>
+                                <label class="col-md-2 control-label"><span class="redFont">*</span>承运单位联系方式：</label>
+                                <div class="col-md-2">
+
+                                    <input type="text" class="form-control " name="wlCompanyPhone" ng-pattern="/^[1][34578][0-9]{9}$/" required ng-model="deliveryBatch.wlCompanyPhone">
+
+                                    <div class="redFont padTop5" ng-show="myForm.wlCompanyPhone.$dirty&&myForm.wlCompanyPhone.$touched&&myForm.wlCompanyPhone.$error.pattern">请输入正确的手机号码</div>
+                                    <div class="redFont padTop5" ng-show="myForm.wlCompanyPhone.$dirty&&myForm.wlCompanyPhone.$error.required">请填写承运单位联系方式.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><span class="redFont">*</span>选择货主：</label>
+                                <div class="col-md-6">
+                                    <input type="text" ng-model="ownerName" name="ownerName" required uib-typeahead="owner.ownerName for owner in ownerList | filter:$viewValue | limitTo:8"
+                                        class="form-control">
+                                    <input type="hidden" ng-model="deliveryBatch.ownerId" name="ownerId" required/>
+                                    <div class="redFont padTop5" ng-show="myForm.ownerName.$dirty&&myForm.ownerName.$error.required">请选择货主.</div>
+                                    <div class="redFont padTop5" ng-show="(myForm.ownerName.$dirty&&myForm.ownerName.$valid)&&myForm.ownerId.$error.required">货主不存在.</div>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 ">
+            <div class="portlet light bordered minheight600">
+                <div class="portlet-title no-border">
+                    <div class="caption">
+                        <span class="caption-subject greenFont bold uppercase">发货单列表</span>
+                    </div>
+                    <div class="actions">
+                        <a class="btn btn-orange no-animate" ng-click="popEditDeliveryModal()">添加发货单</a>
+                    </div>
+                </div>
+                <div class="portlet-body ">
+                    <div class="tab-content">
+                        <div class="tab-pane active ">
+                            <div class="portlet">
+                                <div class="portlet-title">
+                                    <ul class="nav nav-tabs fl col-md-12">
+                                        <li class="col-md-1 nopadding">序号</li>
+                                        <!--  <li class="col-md-2 nopadding">创建时间</li> -->
+                                        <li class="col-md-2 nopadding">司机身份证号</li>
+                                        <li class="col-md-2 nopadding">司机姓名</li>
+                                        <li class="col-md-2 nopadding">车牌号</li>
+                                        <li class="col-md-2 nopadding">载重量</li>
+                                        <li class="col-md-2 nopadding">操作</li>
+                                    </ul>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="portlet" ng-repeat="delivery in deliveryList">
+                                        <div class="portlet-title">
+                                            <ul class="nav fl col-md-12">
+                                                <li ng-bind="$index+1" class="col-md-1"></li>
+                                                <!--  <li class="col-md-2">{{delivery.createDate}}</li> -->
+                                                <li class="col-md-2 nopadding">{{delivery.driverIdentityNum}}</li>
+                                                <li class="col-md-2 nopadding">{{delivery.driverName}}</li>
+                                                <li class="col-md-2 nopadding">{{delivery.carCode}}</li>
+                                                <li class="col-md-2 nopadding">{{delivery.carLoadWeight}}吨</li>
+                                                <li class="col-md-2 nopadding">
+                                                    <div>
+                                                        <a class="wid60 noBgImg btn blue btn-sm" ng-click="delivery.expanded=!delivery.expanded">
+                                                            <span ng-if="!delivery.expanded">展开详情</span>
+                                                            <span ng-if="delivery.expanded">收起详情</span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-danger" ng-click="deleteDelivery($index)">删除</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <div class="clearfix"></div>
+                                            <div class="inline-panel" ng-show="delivery.expanded">
+                                                <div></div>
+                                                <h4><span class="blueLeftBorder "><span class="font14 paddingLeft5">货物信息</span></span></h4>
+                                                <product-table product-list="delivery.productList"></product-table>
+                                                <!--<h4><span class="blueLeftBorder "><span class="font14 paddingLeft5">司机信息</span></span></h4>
+                                                <driver-table driver-list="delivery.driverList"></driver-table>-->
+                                            </div>
+                                        </div>
+                                        <!--<div class="portlet-body inline-panel" ng-show="delivery.expanded">
+                                            <div></div>
+                                            <div><h5>货物信息</h5></div>
+                                            <product-table product-list="delivery.productList"></product-table>
+                                            <div><h5>司机信息</h5></div>
+                                            <driver-table driver-list="delivery.driverList"></driver-table>
+                                        </div>-->
+                                    </div>
+                                    <!--<div class="centerDiv">
+                                        <uib-pagination total-items="pagination.totalItems" ng-change="pageChanged()" ng-model="pagination.currentPage" max-size="pagination.maxSize"
+                                            class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                                    </div>-->
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-2">
+                                            <!--<button class="btn btn-block blue" type="button" ng-click="saveDeliveryBatch()">提交发货单</button>-->
+                                            <input class="btn btn-block blue" type="submit" value="提交发货单" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a class="btn btn-block grey-cascade" href="#/deliveryBatchList">关闭</a>
+                                        </div>
+                                        <div class="col-md-4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/ng-template" id="addDeliveryModal.html">
+    <div class="modal-header">
+        <h5><i class="icon-notebook"></i>创建发货单</h5>
+    </div>
+    <div class="modal-body" id="stock" ng-init="init()">
+        <h4><span class="blueLeftBorder "><span class="font14 paddingLeft5">出库货物</span></span></h4>
+
+        <ul class="nav col-md-12 listHeader greyBorder">
+            <li class="col-md-1 alignCenter">品名</li>
+            <li class="col-md-1">规格/牌号</li>
+            <li class="col-md-2">数量/重量</li>
+            <li class="col-md-1">品牌</li>
+            <li class="col-md-1">库位</li>
+            <li class="col-md-6">货物详情</li>
+
+        </ul>
+        <div class="col-md-12 noHorizontalPadding marginTop5 scrollHeight400">
+            <div class="note note-info" ng-repeat="repository in cardProductOwnerVoList">
+                <ul class="nav col-md-12">
+                    <li class="col-md-1">{{repository.product.productName}}</li>
+
+                    <li class="col-md-1">{{repository.product.modelName}}</li>
+                    <li class="col-md-2">数量{{repository.count}}{{repository.countUnitCode}}<br/>重量{{repository.weight}}吨</li>
+
+                    <li class="col-md-1">{{repository.product.brandName}}</li>
+                    <li class="col-md-1">{{repository.cardName}}</li>
+                    <li class="col-md-6">
+                        <ul class="nav col-md-12">
+                            <li class="col-md-1"></li>
+                            <li class="col-md-3">货位</li>
+                            <li class="col-md-2">数量</li>
+                            <li class="col-md-3">毛重 </li>
+                            <li class="col-md-3">净重</li>
+                        </ul>
+                        <ul class="nav col-md-12" ng-repeat="storage in repository.storageVoList">
+                            <label style="display:block">
+                                <li class="col-md-1"><input type="checkbox" ng-model="storage.checked" ng-click="checkStorage(repository,storage)"/></li>
+                                <li class="col-md-3"> {{storage.placeCode}}</li>
+                                <li class="col-md-2"> {{storage.count}}{{storage.countUnitCode}}</li>
+                                <li class="col-md-3"> {{storage.weightMao}}吨</li>
+                                <li class="col-md-3"> {{storage.weight}}吨</li>
+                            </label>
+                        </ul>
+                        <ul class="nav">
+                            <li class="col-md-12" style="text-align:right">已选重量:
+                                <span class="yellowFont font14">{{repository.selectedWeight.toString()}}</span>吨
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <h4><span class="blueLeftBorder "><span class="font14 paddingLeft5">司机信息</span></span></h4>
+        <div class="form-group form-horizontal">
+            <label for="gpsName" class="col-md-1 control-label">车牌号</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" ng-model="newDeliveryInfo.carCode" placeholder="">
+            </div>
+            <label for="gpsName" class="col-md-1  control-label">司机姓名</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" ng-model="newDeliveryInfo.driverName" placeholder="">
+            </div>
+            <label for="gpsName" class="col-md-1  control-label">司机身份证</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" ng-model="newDeliveryInfo.driverIdentityNum" placeholder="">
+            </div>
+            <label for="gpsName" class="col-md-1  control-label">单车载重量</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control wid80 input-inline" ng-model="newDeliveryInfo.carLoadWeight" placeholder="">
+                <span class="paddingLeft5 lineHeight32">吨</span>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn green-haze" type="button" ng-click="ok()">提交发货单</button>
+        <button class="btn grey-cascade" type="button" ng-click="cancel()">关闭</button>
+    </div>
+</script>

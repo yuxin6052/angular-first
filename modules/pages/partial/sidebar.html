@@ -1,0 +1,179 @@
+ <!-- BEGIN SIDEBAR --> 
+ <div class="page-sidebar-wrapper" data-close-on-body-click="false" ng-controller="AccordionDemoCtrl">
+     <!-- BEGIN SIDEBAR --> 
+     <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing --> 
+     <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed --> 
+     <div class="page-sidebar navbar-collapse collapse">
+         <!-- BEGIN SIDEBAR MENU --> 
+         <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) --> 
+         <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode --> 
+         <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode --> 
+         <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing --> 
+         <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded --> 
+         <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed --> 
+
+         <script type="text/ng-template" id="group-template.html">
+    <li class="panel {{panelClass || 'panel-default'}}">
+      
+        
+          <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span
+            ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+        
+     
+      <ul class="panel-collapse collapse" uib-collapse="!isOpen" ng-transclude></ul>
+    </li>
+  </script>
+
+         <uib-accordion close-others="oneAtATime">
+             <!-- <uib-accordion-group ng-repeat="group in groups" heading="{{group.title}}" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled"> 
+             <a ng-repeat="item in group.items" ui-sref="{{item.link}}"  class="nav-link ">
+
+                 <span class="title">{{item.subnav}}</span>
+
+             </a>
+         </uib-accordion-group>
+         -->
+         <uib-accordion-group  ng-repeat="group in groups">
+             <uib-accordion-heading>
+                 {{group.title}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+             </uib-accordion-heading>
+             <ul >
+                 <li ng-repeat="item in group.items">
+                     <a ui-sref="{{item.link}}"  class="nav-link ">
+
+                         <span class="title">{{item.subnav}}</span>
+
+                     </a>
+                 </li>
+             </ul>
+
+         </uib-accordion-group>
+     </uib-accordion>
+
+     <ul class="page-sidebar-menu" data-keep-expanded="false" id="menuCon"  data-auto-scroll="true" data-slide-speed="200" id="sidebar" >
+         <!-- ng-controller="SidebarCtrl" --> 
+         <li class="heading sidebar-toggler-wrapper ">
+             <!-- BEGIN SIDEBAR TOGGLER BUTTON --> 
+             <div class="sidebar-toggler"></div>
+             <div class="clearfix"></div>
+             <!-- BEGIN SIDEBAR TOGGLER BUTTON --> </li>
+         <li class="nav-item start active open"  ng-click="!isShow">
+             <a href="javascript:;" class="nav-link nav-toggle"> <i class="icon-globe"></i>
+                 <span class="title">单据维护</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu" ng-show="isShow">
+                 <li class="nav-item start active open">
+                     <a ui-sref=".productAdd"  class="nav-link " attr="product">
+
+                         <span class="title">派车单维护</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start" id="company">
+                     <a ui-sref=".product" class="nav-link " >
+
+                         <span class="title">送货单维护</span>
+
+                     </a>
+                 </li>
+
+             </ul>
+         </li>
+
+         <li class="nav-item ">
+             <a href="javascript:;" class="nav-link nav-toggle">
+                 <i class="icon-basket"></i>
+                 <span class="title">路线管理</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu">
+                 <li class="nav-item start " id="pickup">
+                     <a ui-sref=".productAdd" class="nav-link ">
+
+                         <span class="title">路线查询</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start">
+                     <a href="${caption_web}exingcai/captain/commodityCargoPickupList" class="nav-link ">
+
+                         <span class="title">路线规划</span>
+
+                     </a>
+                 </li>
+
+             </ul>
+         </li>
+         <li class="nav-item ">
+             <a href="javascript:;" class="nav-link nav-toggle">
+                 <i class="icon-info"></i>
+                 <span class="title">信息管理</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu">
+                 <li class="nav-item start ">
+                     <a href="" class="nav-link ">
+
+                         <span class="title">司机维护</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start">
+                     <a href="index.html" class="nav-link ">
+
+                         <span class="title">车辆维护</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start ">
+                     <a href="dashboard_2.html" class="nav-link ">
+
+                         <span class="title">公司信息维护</span>
+
+                     </a>
+                 </li>
+
+             </ul>
+         </li>
+         <li class="nav-item ">
+             <a href="javascript:;" class="nav-link nav-toggle">
+                 <i class="icon-user"></i>
+                 <span class="title">权限管理</span>
+                 <span class="selected"></span>
+                 <span class="arrow open"></span>
+             </a>
+             <ul class="sub-menu">
+                 <li class="nav-item start">
+                     <a href="${caption_web}exingcai/captain/commodityProductList" class="nav-link ">
+
+                         <span class="title">操作管理</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start">
+                     <a href="index.html" class="nav-link ">
+
+                         <span class="title">角色管理</span>
+
+                     </a>
+                 </li>
+                 <li class="nav-item start ">
+                     <a href="dashboard_2.html" class="nav-link ">
+
+                         <span class="title">用户管理</span>
+
+                     </a>
+                 </li>
+
+             </ul>
+         </li>
+
+     </ul>
+
+     <!-- END SIDEBAR MENU --> </div>
+ <!-- END SIDEBAR --> </div>
+ <!-- END SIDEBAR --> 

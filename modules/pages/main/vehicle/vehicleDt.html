@@ -1,0 +1,294 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">运力资源管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#/vehicleList">车辆管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">车辆详情</span>
+    </li>
+</ul>
+<div class="row " ng-controller="vehicleDt" ng-init="init()">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <!--车辆信息-->
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject yellowFont bold uppercase">基本信息</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-orange" href="#/vehicleEdit/{{deliveryTool.id}}">
+                        <i class="fa fa-pencil-square-o"></i> 修改
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <form class="form-horizontal" role="form">
+                    <div class="form-body font12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-md-3 nopadding">车队名:</label>
+                                        <div class="col-md-9 nopadding">{{deliveryTool.fleetNo}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-md-3 nopadding">车牌号:</label>
+                                        <div class="col-md-9 nopadding">{{deliveryTool.toolNo}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-md-3 nopadding">品牌:</label>
+                                        <div class="col-md-9 nopadding">{{deliveryTool.brand}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!--<div class="col-md-4">
+                            <div class="form-group">
+                                <label class=" col-md-5 nopadding">购入日期:</label>
+                                <div class="col-md-7 nopadding"> {{deliveryTool.purchaseDate}} 
+                                </div>
+                            </div>
+                        </div>-->
+                                <!--<div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md-3 nopadding">车辆类型:</label>
+                                <div class="col-md-9 nopadding">{{deliveryTool.toolType}}</div>
+                            </div>
+                        </div>-->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class=" col-md-3 nopadding">轴数:</label>
+                                        <div class="col-md-9 nopadding"> {{deliveryTool.axisNum}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-md-3 nopadding">核定载重:</label>
+                                        <div class="col-md-9 nopadding">{{deliveryTool.maxLoad}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-md-3 nopadding">总质量:</label>
+                                        <div class="col-md-9 nopadding">{{deliveryTool.totalMass}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!--<div class="col-md-4">-->
+                                <!--<div class="form-group">
+                                <label class="col-md-3 nopadding">型号:</label>
+                                <div class="col-md-9 nopadding">{{deliveryTool.fleetNo}}</div>
+                            </div>-->
+                                <!--<div class="form-group">
+                                <label class=" col-md-5 nopadding">车身颜色:</label>
+                                <div class="col-md-7 nopadding"> {{deliveryTool.surfaceColor}} 
+                                </div>
+                            </div>-->
+                                <!--</div>-->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-md-3 nopadding">车架号:</label>
+                                        <div class="col-md-9 nopadding">{{deliveryTool.recognizeCode}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-md-3 nopadding">发动机号:</label>
+                                        <div class="col-md-9 nopadding">{{deliveryTool.engineCode}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class=" col-md-3 nopadding">车身颜色:</label>
+                                        <div class="col-md-9 nopadding"> {{deliveryTool.surfaceColor}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-md-2 nopadding">使用性质:</label>
+                            <div class="col-md-10 nopadding">{{deliveryTool.useQuality}}</div>
+                        </div>
+                    </div>-->
+                        </div>
+                        <!--/row-->
+                        <!--<div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md-3 nopadding">外壳尺寸:</label>
+                                <div class="col-md-9 nopadding">{{deliveryTool.overallSize}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-md-3 nopadding">使用性质:</label>
+                                        <div class="col-md-9 nopadding">{{deliveryTool.useQuality}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class=" col-md-3 nopadding">购入日期:</label>
+                                        <div class="col-md-9 nopadding"> {{deliveryTool.purchaseDate}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-md-3 nopadding">状态:</label>
+                                        <div class="col-md-2 nopadding">
+                                            <!--  <p class="form-control-static"> {{deliveryTool.status | vehicleStatus}} </p> -->
+                                            <p class="form-control-static nopadding" ng-if="deliveryTool.status==200">有效</p>
+                                            <p class="form-control-static nopadding" ng-if="deliveryTool.status==100">无效</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="col-md-1" style="padding-right:0px">备注:</label>
+                            <div class="col-md-10 nopadding">{{deliveryTool.remark}}</div>
+                        </div>
+                    </div>
+                </div>-->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--绑定司机-->
+    <!--<div class="col-md-12 ">
+     <div class="portlet light bordered minheight600">
+       <div class="portlet-title">
+         <div class="caption">
+           <span class="caption-subject purpleFont bold uppercase">绑定司机</span>
+         </div>
+       </div>
+       <div class="portlet-body ">
+          <div class="table-scrollable table-scrollable-borderless">
+           <table class="table table-hover table-light">
+             <thead>
+               <tr>
+                 <th>司机编号</th>
+                 <th>司机姓名</th>
+                 <th>身份证号</th>
+                 <th>联系电话</th>
+                 <th>所属公司</th>
+                 <th>操作</th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr>
+                 <td ng-bind="$index+1"></td>
+                 <td>{{driver.userName}}</td>
+                 <td>{{driver.identityId}}</td>
+                 <td>{{driver.phone}}</td>
+                 <td>{{driver.companyName}}</td>
+                 <td>
+                   <a href="/#/driverDt/{{driver.id}}"  class="btn blue-madison">查看详情</a>
+                   <a class="btn blue-madison" ng-click="unBindDriver()">解除绑定</a>
+                 </td>
+               </tr>
+             </tbody>
+           </table>
+         </div>
+       </div>
+     </div>
+   </div>-->
+    <!--车辆照片-->
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject greenFont bold uppercase">车辆照片</span>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <a class=“image-preview” href="{{imgBaseurl+imgUrl[0]}}" data-lightbox="vehicle" data-title="车辆照片" ng-if="imgUrl[0]">
+                    <img src="{{imgBaseurl+imgUrl[0]}}" style="float:left;width:50%;height:300px;padding:10px 10px 10px 10px"></img>
+                </a>
+                <a class=“image-preview” href="{{imgBaseurl+imgUrl[1]}}" data-lightbox="vehicle" data-title="车辆照片" ng-if="imgUrl[1]">
+                    <img src="{{imgBaseurl+imgUrl[1]}}" style="width:50%;height:300px;padding:10px 10px 10px 10px"></img>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--绑定GPS-->
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject font-green bold uppercase">GPS信息</span>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <div class="table-scrollable table-scrollable-borderless">
+                    <table class="table table-hover table-light">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>GPS设备号</th>
+                                <th>GPS设备名</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="gpsDevice.id!=null">
+                                <td ng-bind="$index+1" ng-if="gpsDevice.id!=0"></td>
+                                <td>{{gpsDevice.gpsDeviceCode}}</td>
+                                <td>{{gpsDevice.gpsDeviceName}}</td>
+                                <td>
+                                    <!--<a href="/#/GPSDt/{{gpsDevice.id}}"  class="btn blue-madison" ng-if="angular.equals(gpsDevice,{})">查看详情</a>-->
+                                    <a class="btn blue-madison" ng-click="unBindGPS()" ng-if="gpsDevice.id!='0'">解绑</a>
+                                    <!--<a class="btn blue-madison" ng-click="unBindGPS()" ng-if="gpsDevice.id=='0'">绑定{{gpsDevice.id}}</a>-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--<div class="portlet-body form">
+          <div class="form-actions">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">
+                                <i class="fa fa-pencil"></i> 编辑</button>
+                            <button type="button" class="btn default">关闭</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6"> </div>
+            </div>
+        </div>
+       </div>-->
+        </div>
+    </div>
+</div>

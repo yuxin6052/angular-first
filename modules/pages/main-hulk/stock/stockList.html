@@ -1,0 +1,173 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#stockList">仓库管理</a> <i class="fa fa-circle"></i>
+    </li>
+
+    <li>
+        <span class="active">库存列表</span>
+    </li>
+</ul>
+<div class="row" ng-controller="stockList" ng-init="init()">
+    <div class="col-md-12">
+        <div class="portlet light bordered ">
+            <div class="portlet-title tabbable-line ">
+                <ul class="nav nav-tabs fl">
+                    <li ng-class="{'active':!queryStatus}">
+                        <a href="javascript:;" ng-click="changeTab()"> 全部 ({{totalSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus=='100'}">
+                        <a href="javascript:;" ng-click="changeTab('100')"> 可用库存 ({{availableSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus=='300'}">
+                        <a href="javascript:;" ng-click="changeTab('300')"> 在途库存 ({{inTransSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus=='200'}">
+                        <a href="javascript:;" ng-click="changeTab('200')"> 冻结库存 ({{unavailableSum}})</a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body form">
+                <div class="row marginBottom10 marginTop20" ng-if="system == SYSTEM.HULK_WAREHOUSE">
+                    <div class="col-md-3">
+                        <h5 class="blueFont">库存列表</h5>
+                    </div>
+                    <div class="col-md-9 ">
+                        <div class="no-div-padding col-md-11 form-horizontal">
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">所属仓库</label>
+                                <div class="col-md-8 paddingLeft5">
+                                    <select class="form-control input-sm" ng-options="w.id as w.name for w in warehouseList" ng-model="queryParameters.warehouserId"
+                                        ng-change="queryCardListByWarehouse(queryParameters.warehouserId)"></select>
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">库位</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <select class="form-control input-sm" ng-options="c.id as c.name for c in cardOptionList" ng-model="queryParameters.cardId"></select>
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">货主</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control" ng-model="queryParameters.ownerName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="input-group-btn">
+                                <button class="btn blue" type="button" ng-click="queryDataList()">搜索</button>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row marginBottom10 marginTop20" ng-if="system == SYSTEM.HULK_ENTERPRISE">
+                    <div class="col-md-5">
+                        <h5 class="blueFont">库存列表</h5>
+                    </div>
+                    <div class="col-md-7 ">
+                        <div class="no-div-padding col-md-10 form-horizontal">
+                            <div class="control-group col col-md-6">
+                                <label class="col-md-4 control-label">所属仓库</label>
+                                <div class="col-md-8 paddingLeft5">
+                                    <select class="form-control input-sm" ng-options="w.id as w.name for w in warehouseList" ng-model="queryParameters.warehouserId"
+                                        ng-change="queryCardListByWarehouse(queryParameters.warehouserId)"></select>
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-6">
+                                <label class="col-md-4 control-label">库位</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <select class="form-control input-sm" ng-options="c.id as c.name for c in cardOptionList" ng-model="queryParameters.cardId"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="input-group-btn">
+                                <button class="btn blue" type="button" ng-click="queryDataList()">搜索</button>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active ">
+                        <div class="portlet">
+                            <div class="portlet-title noBorder">
+                                <ul class="nav fl col-md-12 listHeader">
+                                    <li class="col-md-0-5">序号</li>
+                                    <li class="col-md-0-5">库位</li>
+                                    <li class="col-md-1">货位</li>
+                                    <li class="col-md-1">品名</li>
+                                    <li class="col-md-1 nopadding">品牌</li>
+                                    <li class="col-md-1">规格</li>
+                                    <li class="col-md-0-5">数量</li>
+                                     <li class="col-md-0-5">重量</li>
+                                    <li class="col-md-2">货主</li>
+                                    <li class="col-md-1">所属仓库</li>
+                                    <li class="col-md-1">状态</li>
+                                    <li class="col-md-1" ng-if="system == SYSTEM.HULK_WAREHOUSE">操作</li>
+
+                                </ul>
+                            </div>
+                            <div class="portlet-body ">
+                                <!--   <tr ng-repeat="obj in dataList">
+                                            <td ng-bind="$index+1"></td>
+                                            <td>{{warehouse.name}}</td>
+                                            <td>{{warehouse.address}}</td>
+                                            <td>{{warehouse.contactor}}</td>
+                                            <td>{{warehouse.contactorPhone}}</td>
+                                            <td>{{warehouse.type}}</td>
+                                            <td><span ng-class="{'yellowFont':warehouse.deleteFlag==1,'greenFont':warehouse.deleteFlag==0}">{{warehouse.deleteFlag | warehouseStatusFilter}}</span></td>
+                                            <td>
+                                                <a href="#/warehouseDt/{{warehouse.id}}" class="btn btn-sm green">查看</a>
+                                               <a class="btn btn-sm green" ngf-select ng-model="warehouse.file" ngf-multiple="false">初始化</a> 
+                                               <span ng-if="warehouse.file">{{warehouse.file.name}}</span>
+                                               <a class="btn btn-sm green" ng-if="warehouse.file" ng-click="upload(warehouse)">上传</a>
+                                            </td>
+                                        </tr> -->
+                                <ul class="nav nav-tabs no-animate fl col-md-12 padding10 font12" ng-repeat="obj in dataList">
+                                    <ng-form role="form" name="forms.myForm{{$index}}" novalidate>
+                                        <li class="col-md-0-5" ng-bind="$index+1">序号</li>
+                                        <li class="col-md-0-5" ng-show="!obj.editing">{{obj.cardName}}</li>
+                                        <li class="col-md-1" ng-show="obj.editing" ng-class="{ 'has-error': forms.myForm{{$index}}.cardName.$touched&&forms.myForm{{$index}}.cardName.$invalid }">
+                                            <select class="form-control" name="cardName" required ng-options="c.cardName as c.cardName for c in cardList" ng-model="obj.cardName"
+                                                ng-change="changeSelectedCardName(obj)"></select>
+                                        </li>
+                                        <li class="col-md-1" ng-show="!obj.editing">{{obj.placeCode}}</li>
+                                        <li class="col-md-1" ng-show="obj.editing" ng-class="{ 'has-error': forms.myForm{{$index}}.placeCode.$touched&&forms.myForm{{$index}}.placeCode.$invalid }">
+                                            <input class="form-control" name="placeCode" required ng-pattern="obj.placeCodeRegex" ng-model="obj.placeCode"／>
+                                        </li>
+                                        <li class="col-md-1">{{obj.productName}}</li>
+                                        <li class="col-md-1 nopadding">{{obj.brandName}}</li>
+                                        <li class="col-md-1">{{obj.productSize}}</li>
+                                        
+                                        <li class="col-md-0-5">{{obj.count}} {{obj.countUnitName}}</li>
+                                        <li class="col-md-0-5">{{obj.weight}}吨</li>
+                                        <li class="col-md-2">{{obj.ownerName}}</li>
+                                        <li class="col-md-1">{{obj.warehouseName}}</li>
+                                        <li class="col-md-1">{{obj.status|stockStatusFilter}}</li>
+                                        <li class="col-md-1" ng-if="system == SYSTEM.HULK_WAREHOUSE">
+                                            <div class="row">
+                                                <a class="btn btn-sm green" ng-show="!obj.editing" ng-click="modify(obj)">修改库位</a>
+                                                <input class="btn btn-sm green" ng-show="obj.editing" type="submit" value="保存" ng-click="save(obj,forms['myForm'+$index])"
+                                                />
+                                                <a class="btn btn-sm btn-orange" ng-show="obj.editing" ng-click="cancel(obj)">取消</a>
+                                            </div>
+                                        </li>
+                                    </ng-form>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="centerDiv">
+                                <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                                    max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

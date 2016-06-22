@@ -1,0 +1,252 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#deliveryBatchList">单据管理</a> <i class="fa fa-circle"></i>
+    </li>
+
+    <li>
+        <span class="active">出库单管理</span>
+    </li>
+</ul>
+<div class="row " ng-controller="ShippingListCtrl" ng-init="init()">
+    <div class="col-md-12">
+
+        <div class="portlet light bordered ">
+            <div class="portlet-title tabbable-line ">
+                <ul class="nav nav-tabs fl">
+                    <li ng-class="{'active':!queryStatus}">
+                        <a href="javascript:;" ng-click="changeTab()"> 全部 ({{totalSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==CARGO_OUT_STATUS.WAIT_FOR_HANDLING}">
+                        <a href="javascript:;" ng-click="changeTab(CARGO_OUT_STATUS.WAIT_FOR_HANDLING)"> 待处理 ({{unhandledSum}})</a>
+                    </li>
+                    <!--<li ng-class="{'active':queryStatus==CARGO_OUT_STATUS.WAIT_FOR_SHIPPING}">
+                        <a href="javascript:;" ng-click="changeTab(CARGO_OUT_STATUS.WAIT_FOR_SHIPPING)"> 待出库 ({{unshippedSum}})</a>
+                    </li>-->
+                    <li ng-class="{'active':queryStatus==CARGO_OUT_STATUS.WAIT_FOR_CONFIRM}">
+                        <a href="javascript:;" ng-click="changeTab(CARGO_OUT_STATUS.WAIT_FOR_CONFIRM)"> 待确认 ({{unConfirmedSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==CARGO_OUT_STATUS.CONFIRM_YES}">
+                        <a href="javascript:;" ng-click="changeTab(CARGO_OUT_STATUS.CONFIRM_YES)"> 司机确认无误 ({{passedSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==CARGO_OUT_STATUS.CONFIRM_NO}">
+                        <a href="javascript:;" ng-click="changeTab(CARGO_OUT_STATUS.CONFIRM_NO)">  司机确认有误({{failedSum}})</a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body form">
+                <div class="row marginBottom10 marginTop20 font12" ng-show="system == SYSTEM.HULK_WAREHOUSE"><!--ng-if="system == SYSTEM.HULK_WAREHOUSE">-->
+                    <div class="col-md-2">
+                        <h5 class="blueFont">出库单列表</h5>
+                    </div>
+                    <div class="actions col-md-10">
+                        <div class="no-div-padding col-md-11 form-horizontal">
+                            <div class="control-group col col-md-3">
+                                <label class="col-md-4 control-label">发货批次号</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control input-sm" ng-model="queryParameters.batchNo">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-3">
+                                <label class="col-md-4 control-label">出库单号</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control input-sm" ng-model="queryParameters.cargoNoShow">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-2">
+                                <label class="col-md-4 control-label">货主</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control input-sm" ng-model="queryParameters.ownerName">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-2 control-label">时间</label>
+                                <div class="col-md-10">
+                                    <div class="paddingLeft5 input-group date-picker input-daterange" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control input-sm" name="from" ng-model="queryParameters.startDate" />
+                                        <span class="input-group-addon"> 到 </span>
+                                        <input type="text" class="form-control input-sm" name="to" ng-model="queryParameters.endDate" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="input-group-btn">
+                                <button class="btn blue btn-sm" type="button" ng-click="queryShippingList()">搜索</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row marginBottom10 marginTop20 font12" ng-show="system == SYSTEM.HULK_ENTERPRISE"><!--ng-if="system == SYSTEM.HULK_ENTERPRISE">-->
+                    <div class="col-md-2">
+                        <h5 class="blueFont">出库单列表</h5>
+                    </div>
+                    <div class="actions col-md-10">
+                        <div class="no-div-padding col-md-11 form-horizontal">
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">发货批次号</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control input-sm" ng-model="queryParameters.batchNo">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">出库单号</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control input-sm" ng-model="queryParameters.cargoNoShow">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-2 control-label">时间</label>
+                                <div class="col-md-10">
+                                    <div class="paddingLeft5 input-group date-picker input-daterange" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control input-sm" name="from" ng-model="queryParameters.startDate" />
+                                        <span class="input-group-addon"> 到 </span>
+                                        <input type="text" class="form-control input-sm" name="to" ng-model="queryParameters.endDate" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="input-group-btn">
+                                <button class="btn blue btn-sm" type="button" ng-click="queryShippingList()">搜索</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" ng-repeat="shippingBatch in cargoOutBatchList">
+                        <h5><div class=" col-md-4 pinkBackground lineHeight32 marginBottom10">
+                                    发货批次号号：{{shippingBatch.batchNo}}
+                                </div></h5>
+                        <div class="portlet">
+                            <div class="portlet-title noBorder">
+                                <ul class="nav fl col-md-12 listHeader">
+                                    <li class="col-md-1">序号</li>
+                                    <li class="col-md-3 nopadding">出库单号</li>
+
+                                    <li class="col-md-1 nopadding">创建时间</li>
+                                    <li class="col-md-1 nopadding">出库时间</li>
+                                    <li class="col-md-1 nopadding"> 货主</li>
+                                    <li class="col-md-1 nopadding">货主联系方式</li>
+                                    <li class="col-md-1 nopadding">货主证件号</li>
+                                    <li class="col-md-1 nopadding">状态</li>
+                                    <li class="col-md-2 nopadding">操作</li>
+                                </ul>
+                            </div>
+                            <div class="portlet-body ">
+                                <div class="portlet" ng-repeat="shipping in shippingBatch.cargoOutList">
+                                    <div class="portlet-title">
+                                        <ul class="nav fl col-md-12 font12">
+                                            <li class="col-md-1" ng-bind="$index+1"></li>
+                                            <li class="col-md-3 nopadding">出库单号：{{shipping.cargoNoShow}}
+                                                <br/>发货单号：{{shipping.cargoNoShow_send}}
+                                            </li>
+
+                                            <li class="col-md-1 nopadding">{{shipping.createdDateStr}}</li>
+                                            <li class="col-md-1 nopadding">{{shipping.outDateStr}}</li>
+                                            <li class="col-md-1 nopadding">{{shipping.owner.ownerName}}</li>
+                                            <li class="col-md-1 nopadding">{{shipping.owner.ownerPhone}}</li>
+                                            <li class="col-md-1 nopadding">{{shipping.owner.ownerCardNum}}</li>
+                                            <li class="col-md-1 nopadding">{{shipping.status | cargoOutStatusFilter}}</li>
+                                            <li class="col-md-2 nopadding">
+                                                <div class="row alignRight">
+                                                    <a class="wid60 noBgImg btn green btn-sm" ng-click="expandDetail(shipping)">
+                                                        <span ng-if="!shipping.expanded">展开详情</span>
+                                                        <span ng-if="shipping.expanded">收起详情</span>
+                                                    </a>
+                                                    <button class="btn btn-sm blue" ng-click="openAddModal(shipping)" ng-if="shipping.status!=CARGO_OUT_STATUS.CONFIRM_YES&&shipping.status!=CARGO_OUT_STATUS.WAIT_FOR_CONFIRM && system == SYSTEM.HULK_WAREHOUSE">编辑</button>
+                                                    <button class="btn btn-sm blue" ng-click="confirmShipping(shipping)" ng-if="shipping.status!=CARGO_OUT_STATUS.CONFIRM_YES&&shipping.status!=CARGO_OUT_STATUS.WAIT_FOR_CONFIRM && system == SYSTEM.HULK_WAREHOUSE">完成</button>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="portlet-body lightGrey padding10" ng-show="shipping.expanded">
+                                        <div class="row">
+                                            <h4 class="col-sm-8"><span class="purpleLeftBorder paddingLeft5"><span class="font14">基本信息</span></span></h4>
+                                            <div class="col-sm-4 padTop5 alignRight">
+                                                <a class="btn btn-sm green" href="{{domainConfig.hulkDomain}}/hulk/cargoOut/print/{{shipping.id}}" ng-if="shipping.status==CARGO_OUT_STATUS.SHIPPED">打印出库单</a>
+                                                <a class="btn btn-sm blue"  href="{{domainConfig.hulkDomain}}/hulk/cargoOut/print/allowgo/{{shipping.id}}" ng-if="shipping.status==CARGO_OUT_STATUS.CONFIRM_YES">打印放行证</a>
+                                            </div>
+                                        </div>
+                                        <ul class="nav col-md-12 greyBorder lineHeight32 marginBottom10 whiteBackgroud font12">
+                                            <li class="col-md-2">承运单位名称：</li>
+                                            <li class="col-md-2">{{shipping.wlCompanyName}}</li>
+                                            <li class="col-md-2">承运单位联系人：</li>
+                                            <li class="col-md-1">{{shipping.wlCompanyPerson}}</li>
+                                            <li class="col-md-2"> 承运单位联系电话：</li>
+                                            <li class="col-md-2">{{shipping.wlCompanyPhone}}</li>
+                                        </ul>
+                                        <h4><span class="purpleLeftBorder "><span class="font14 paddingLeft5">出库货物</span></span></h4>
+                                        <div id="stock">
+                                            <ul class="nav col-md-12 listHeader greyBorder">
+                                                <li class="col-md-1 alignCenter">品名</li>
+                                                <li class="col-md-2">规格/牌号</li>
+                                                <li class="col-md-1">数量/重量</li>
+                                                <li class="col-md-1">品牌</li>
+                                                <li class="col-md-1">库位</li>
+                                                <li class="col-md-6">货物详情</li>
+                                            </ul>
+                                            <div class="col-md-12 noHorizontalPadding marginTop5">
+                                                <div class="note note-info" ng-repeat="repository in shipping.cardProductOwnerVoList">
+                                                    <ul class="nav col-md-12 font12">
+                                                        <li class="col-md-1">{{repository.product.productName}}</li>
+                                                        <li class="col-md-2">{{repository.product.modelName}}</li>
+                                                        <li class="col-md-1">数量{{repository.count}}{{repository.countUnitCode}}<br/>{{repository.weight}}吨</li>
+                                                        <li class="col-md-1">{{repository.product.brandName}}</li>
+                                                        <li class="col-md-1">{{repository.cardName}}</li>
+                                                        <li class="col-md-6">
+                                                        <ul class="nav col-md-12 font14" ng-repeat="storage in repository.storageVoList">
+
+                                                                <li class="col-md-3">货位</li>
+                                                                <li class="col-md-3"><span style="padding-left:5px;">数量</span></li>
+                                                                <li class="col-md-3">毛重
+                                                                </li>
+                                                                <li class="col-md-3">净重
+                                                                </li>
+                                                            </ul>
+                                                            <ul class="nav col-md-12" ng-repeat="storage in repository.storageVoList">
+
+                                                                <li class="col-md-3">{{storage.placeCode}}</li>
+                                                                <li class="col-md-3"><span style="padding-left:5px;">{{storage.count}}{{storage.countUnitCode}}</span></li>
+                                                                <li class="col-md-3">{{storage.weightMao}}吨
+                                                                </li>
+                                                                <li class="col-md-3">{{storage.weight}}吨
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <h4><span class="purpleLeftBorder"><span class="font14 paddingLeft5">司机信息</span></span></h4>
+                                        <driver-table driver-list="shipping.driverList"></driver-table>
+                                        <h4><span class="purpleLeftBorder"><span class="font14 paddingLeft5">其他信息</span></span></h4>
+                                        <ul class="nav col-md-12 greyBorder lineHeight32 marginBottom10 whiteBackgroud">
+                                            <li class="col-md-2">办单人：</li>
+                                            <li class="col-md-2">{{shipping.opPerson}}</li>
+                                            <li class="col-md-2">审核人：</li>
+                                            <li class="col-md-6">{{shipping.approvePerson}}</li>
+                                            <!-- <li class="col-md-1">备注：</li>
+                                        <li class="col-md-11">{{shipping.remark}}</li> -->
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="centerDiv">
+                        <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                            max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

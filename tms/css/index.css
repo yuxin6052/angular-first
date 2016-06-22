@@ -1,0 +1,152 @@
+.inner {
+	width: 1210px;
+	margin: 0 auto;
+}
+
+.inner:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.top {
+	padding: 20px 0px;
+}
+
+.top-nav-r .site-nav-r {
+	height: 40px;
+	line-height: 40px;
+}
+
+.main-menu-index {
+	background: #BB442A;
+	height: 40px;
+}
+
+.main-menu-index ul li {
+	width: 130px;
+	height: 40px;
+	float: left;
+	margin-right: 3px;
+}
+
+.main-menu-index ul li a {
+	width: 130px;
+	height: 40px;
+	display: inline-block;
+	line-height: 40px;
+	text-align: center;
+	color: #fff;
+	font-size: 14px;
+}
+
+.main-menu-index ul li a:hover {
+	background: #7E220D;
+	color: #fff;
+}.main-menu-index ul li a.active{
+	background: #7E220D;
+	color: #fff;
+}
+
+.main-body {
+	background: rgb(242, 242, 242);
+	overflow: hidden;
+}
+
+.main-body-inner {
+	border: 1px solid #ddd;
+	background: #fff;
+	margin: 15px auto;
+	overflow: hidden;
+}
+
+.main-body-top {
+	margin: 15px;
+}
+
+.reg-log {
+	width: 335px;
+	text-align: center;
+}
+
+.reg-log p {
+	text-align: center;
+}
+
+.reg-log .slogan {
+	color: #666666;
+	font-size: 24px;
+	margin:38px 0px
+}
+.reg-log .goto-login{
+	margin-top: 84px;
+}
+.goto-login a{
+	color:#5AA3DF;
+}
+.main-body-container {
+	text-align: center;
+}
+.main-body-container  h2{
+	width:360px;
+	font-size: 24px;
+	display: inline-block;
+	height: 36px;
+	line-height: 36px;
+	color:#666;
+	margin-top:30px;
+}
+.main-body-container  h2:before{
+	content: "";
+	display: inline-block;
+	width: 85px;
+	height: 18px;
+	border-bottom: 2px solid #979797;
+	vertical-align: top;
+	margin-right:10px;
+}
+.main-body-container  h2:after{
+	content: "";
+	display: inline-block;
+	width: 85px;
+	height: 18px;
+	border-bottom: 2px solid #979797;
+	vertical-align: top;
+	margin-left:10px;
+}
+p.sub-h2{
+	color:#DDDDDD;
+	font-size: 18px;
+}
+.main-body-container ul{
+	width: 840px;
+	margin:40px auto;
+}
+.main-body-container ul li{
+	width: 230px;
+	float: left;
+	margin-right:75px;
+	height: 170px;
+	margin-bottom: 55px;
+}
+
+
+.main-body-container ul li:nth-child(3n){
+	margin-right:0px;
+}
+
+.main-body-container ul li p{
+	color:#999;
+	font-size: 14px;
+	line-height: 22px;
+}
+.main-body-container ul li h3{
+	font-size: 18px;
+    line-height: 36px;
+}
+
+.main-body-container ul li:after{
+	content: "";
+	display: table;
+	clear: both;
+}

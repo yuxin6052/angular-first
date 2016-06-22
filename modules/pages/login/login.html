@@ -1,0 +1,108 @@
+
+<div class="login" ng-controller="LoginCtrl">
+        <!-- BEGIN LOGO -->
+        <div class="logo">
+            <a href="index.html">
+                <img src="/plugins/bootstrap/assets/pages/img/logo-big.png" alt="" /> </a>
+        </div>
+        <!-- END LOGO -->
+        <!-- BEGIN LOGIN -->
+        <div class="content">
+            <!-- BEGIN LOGIN FORM -->
+            <form class="login-form" action="/signIn" method="post" name="loginForm" ng-show="item==0">
+                <h3 class="form-title font-green">进入系统</h3>
+                <div class="alert alert-danger display-hide">
+                    <button class="close" data-close="alert"></button>
+                    <span> 请输入用户名和密码。</span>
+                </div>
+                <div class="form-group">
+                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                    <label class="control-label visible-ie8 visible-ie9">登录名</label>
+                    <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="on" placeholder="登录名" name="loginName" equired type="email" ng-model="person.email"/> 
+                    <span ng-show="!myForm.personEmail.$valid">有错</span>
+                    <span ng-show="myForm.personEmail.$error.required">必填</span>
+                    <span ng-show="myform.personEmail.$error.email">email 地址不对</span>
+                    </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">密码</label>
+                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="on" placeholder="密码" name="loginPwd" required="required"/>
+                    <label style="color:red"></label></div>
+                <div class="form-actions">
+                    <button type="submit" class="btn green uppercase"  ng-disabled="myForm.$invalid">登录</button>
+                    <label class="rememberme check">
+                        <input type="checkbox" name="remember" value="1" />记住我 </label>
+                    <a href="javascript:;" id="forget-password" class="forget-password" ng-click="show(2)">忘记密码?</a>
+                </div>
+                
+                <div class="create-account">
+                    <p>
+                        <a href="javascript:;" id="register-btn" ng-click="show(1)" class="uppercase">企业注册</a>
+                    </p>
+                </div>
+            </form>
+            <!-- END LOGIN FORM -->
+            <!-- BEGIN FORGOT PASSWORD FORM -->
+            <form class="" action="index.html" method="post" ng-show="item==2">
+                <h3 class="font-green">Forget Password ?</h3>
+                <p> Enter your e-mail address below to reset your password. </p>
+                <div class="form-group">
+                    <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email" /> </div>
+                <div class="form-actions">
+                    <button type="button" id="back-btn" class="btn btn-default" ng-click="show(0)">Back</button>
+                    <button type="submit" class="btn btn-success uppercase pull-right">Submit</button>
+                </div>
+            </form>
+            <!-- END FORGOT PASSWORD FORM -->
+            <!-- BEGIN REGISTRATION FORM -->
+            <form class="" action="/doRegister" method="post" ng-show="item==1">
+                <h3 class="font-green">企 业 注 册</h3>
+                <p class="hint"> 请输入企业基本信息</p>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">企业名称</label>
+                    <input class="form-control placeholder-no-fix" type="text" placeholder="企业名称" name="companyName" required="required" ng-model="person.companyName" ng-minlength="5" ng-maxlength="20" /> 
+                    <span class="help-block">请输入用户的真实信息 </span>
+                    </div>
+                <div class="form-group">
+                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                    <label class="control-label visible-ie8 visible-ie9">企业简称</label>
+                    <input class="form-control placeholder-no-fix" type="text" placeholder="企业简称" name="companyShortName" required="required" ng-model="person.comShorName" /> </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">企业联系方式</label>
+                    <input class="form-control placeholder-no-fix" type="text" placeholder="企业联系方式" name="companyContact" required="required" ng-model="person.companyContact"/> </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">企业地址</label>
+                    <input class="form-control placeholder-no-fix" type="text" placeholder="企业地址" name="companyAddress" required="required"/ ng-model="person.companyAddress"> </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">企业性质</label>
+                    <select name="companyType" class="form-control" ng-model="person.companyType">
+                        <option value="1">贸易企业</option>
+                        <option value="2">物流企业</option>
+                        <option value="3">仓储企业</option>
+                    </select>
+                </div>
+                <p class="hint"> 请 输 入 登 录 信 息 : </p>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">用户名</label>
+                    <input class="form-control placeholder-no-fix" type="text" id="loginName" autocomplete="off" placeholder="用户名" name="loginName" onblur="checkRegData()" required="required" ng-model="person.loginName" ng-change="function()"/> </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">密码</label>
+                    <input class="form-control placeholder-no-fix" type="password" id="loginPwd" autocomplete="off" id="register_password" placeholder="请输入密码" name="loginPwd" required="required" ng-model="person.loginPwd"/> </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">确认密码</label>
+                    <input class="form-control placeholder-no-fix" type="password" id="rloginPwd" autocomplete="off" placeholder="请再次输入密码" name="rloginPwd" required="required" ng-model="person.loginPwd"/> </div>
+                <div class="form-group margin-top-20 margin-bottom-20">
+                    <label class="check">
+                        <input type="checkbox" name="tnc" /> 我同意相关协议
+                    </label>
+                    <div id="register_tnc_error"> </div>
+                </div>
+               
+                <div class="form-actions">
+                    <button type="button" id="register-back-btn" ng-click="show(0)" class="btn btn-default">返回</button>
+                    <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">注册</button>
+                </div>
+            </form>
+            <!-- END REGISTRATION FORM -->
+        </div>
+        <div class="copyright"> 2014 © Metronic. Admin Dashboard Template. </div>
+        </div>

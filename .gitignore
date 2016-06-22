@@ -1,0 +1,8 @@
+modules/main/config.js
+modules/tms/main/config.js
+test/config.json
+**/**/.DS_Store
+.DS_Store?
+tms/.project
+bower_components
+node_modules

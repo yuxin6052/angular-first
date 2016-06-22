@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>智能仓储物流后台管理系统</title>
+    <script type="text/javascript" src="/lib/mod.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/less/bootstrap.less">
+    <link rel="stylesheet" type="text/css" href="/bower_components/font-awesome/css/font-awesome.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/bower_components/rdash-ui/dist/css/rdash.css">
+    -->
+    <!-- <link href="lib/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" /> -->
+    <link href="lib/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="lib/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="lib/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link href="lib/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="lib/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="lib/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="lib/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="lib/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="lib/assets/pages/css/login.min.css" rel="stylesheet" type="text/css" />
+    <link href="/lib/css/modify.css" rel="stylesheet" type="text/css" />
+  
+    <link rel="stylesheet" type="text/css" href="lib/css/webuploader.css">
+    <link href="/lib/css/lightbox.min.css" rel="stylesheet" type="text/css" /> 
+    <!-- END THEME LAYOUT STYLES -->
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+
+<body ng-app="exingcai_captain_web" class="login">
+    <div class="login" ng-controller="register">
+        <!-- BEGIN LOGO -->
+        <div class="logo">
+        </div>
+        <!-- END LOGO -->
+        <!-- BEGIN LOGIN -->
+        <div class="content" id="register">
+            <!-- BEGIN LOGIN FORM -->
+            <!--  <form class="login-form" name="loginForm" novalidate> -->
+            <h5 class="form-title font-green alignCenter">橙金物流后台管理系统</h5>
+            <form name="register" method="post" class="form-horizontal" novalidate ng-submit="submitForm(register.$valid)">
+                <div id="wizard">
+                    <ul id="status">
+                        <li class="active"><strong>1.</strong>创建账户</li>
+                        <li><strong>2.</strong>填写联系信息</li>
+                        <li><strong>3.</strong>上传公司资质</li>
+                        <li><strong>4.</strong>完成</li>
+                    </ul>
+                    <div class="items">
+                  
+                        <div class="page">
+                            <div class="marginBottom40 col-md-12 ">
+                                <div class="form-group height50">
+                                    <label class="col-md-3 control-label"><span class="redFont">*</span>用户名：</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control input-sm" name="loginName" ng-maxlength="20" ng-model="form.loginName" required ng-blur="validateName()" />
+                                        <span class="errorInfo step1" ng-show="register.loginName.$error.required">必填</span>
+                                        <span class="errorInfo step1" ng-show="register.loginName.$error.maxlength">用户名不宜超过20个字符</span>
+                                         <span  ng-class="errorInfoClass" ng-show="isValidate" >{{userNameInfo}}</span>
+                                       
+                                    </div>
+                                </div>
+                                <div class="form-group height50">
+                                    <label class="col-md-3 control-label"><span class="redFont">*</span>密码：</label>
+                                    <div class="col-md-9">
+                                        <input type="password" name="loginPwd" ng-maxlength="20" ng-minlength="6" class="form-control input-sm" ng-model="form.loginPwd" required />
+                                        <span class=" errorInfo step1" ng-show="register.loginPwd.$error.required">必填</span>
+                                        <span class="errorInfo step1" ng-show="register.loginPwd.$error.minlength||register.loginPwd.$error.maxlength">密码的设置为6-20位</span>
+                                    </div>
+                                </div>
+                                <div class="form-group height50">
+                                    <label class="col-md-3 control-label"><span class="redFont">*</span>确认密码：</label>
+                                    <div class="col-md-9">
+                                        <input type="password" name="loginPwd1" class="form-control input-sm " ng-model="form.loginPwd1" required />
+                                         <span class=" errorInfo step1" ng-show="register.loginPwd1.$invalid">必填</span>
+                                        <span class=" errorInfo step1"  ng-show="!(form.loginPwd1==form.loginPwd)">确认密码跟密码不一致</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn_nav">
+                                <input type="button" ng-click="validateStep1()" class="btn btn-sm green next right" value="下一步" />
+                            </div>
+                        </div>
+                        <div class="page">
+                            <div class="form-group ">
+                                <label class="col-md-3 control-label"><span class="redFont">*</span>公司名称：</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control wid280 input-sm input-inline" name="compName" ng-model="form.compName" required placeholder="">
+
+                                     <span class=" errorInfo alignCenter" ng-show="register.compName.$error.required" >必填</span>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-3 control-label"><span class="redFont">*</span>公司地址：</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-sm wid280 input-inline" name="compAddress"  ng-model="form.compAddress" required placeholder="">
+                                    <span class=" errorInfo alignCenter" ng-show="register.compAddress.$error.required">必填</span>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-3 control-label"><span class="redFont">*</span>联系人：</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-sm wid280 input-inline" name="compContact" ng-model="form.compContact" required placeholder="">
+                                     <span class=" errorInfo alignCenter" ng-show="register.compContact.$error.required">必填</span>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-3 control-label"><span class="redFont">*</span>联系方式：</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-sm wid280 input-inline" name="compPhone" ng-model="form.compPhone" required placeholder="">
+                                      <span class="redFont errorInfo alignCenter" ng-show="register.compPhone.$error.required">必填</span>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="col-md-3 control-label"><span class="redFont">*</span>企业性质：</label>
+                                <div class="col-md-9">
+                                <label class="control-label">
+                                        <input type="radio" ng-model="form.compType" name="optionsRadios" value="1" > 物流</label>
+                                    <label class="paddingLeft5 control-label">
+                                        <input type="radio" ng-model="form.compType" name="optionsRadios" value="2" checked> 仓库</label>
+                                   <label class="paddingLeft5 control-label">
+                                        <input type="radio" ng-model="form.compType" name="optionsRadios" value="3" > 贸易商</label>
+                                </div>
+                            </div>
+                            <div class="btn_nav">
+                                <input type="button" class="prev btn btn-sm blue" style="float:left" value="上一步" />
+                                <input type="button" class="next right btn btn-sm green" value="下一步" />
+                            </div>
+                        </div>
+                        <div class="page">
+                            <div class="row marginBottom90">
+                                <div class="col-md-3">
+                                    <h6><span class="redFont">*</span>营业执照</h6>
+                                    <div class="dashBox-small">
+                                    <div class="imgArea" id="fileshow">
+                                                <a ng-if="form.busLicenceFile!=null" class=“image-preview” href="{{imgBaseurl+form.busLicenceFile}}" data-lightbox="idcards" data-title="证件照片">
+                                                    <img ng-if="form.busLicenceFile!=null" ng-src={{imgBaseurl+form.busLicenceFile}} width="110" height="110">
+                                                </a>
+                                                <input type=hidden value="" ng-model="imgurl" id="imgurl" />
+                                            </div>
+                                     <div style="width: 100%;" id="filePicker"></div>
+                                            
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <h6><span class="redFont">*</span>税务登记证</h6>
+                                    <div class="dashBox-small">
+                                    <div class="imgArea" id="fileshow2">
+                                                <a ng-if="form.taxationRegFile!=null" class=“image-preview” href="{{imgBaseurl+form.taxationRegFile}}" data-lightbox="idcards" data-title="证件照片">
+                                                    <img ng-if="form.taxationRegFile!=null" ng-src={{imgBaseurl+form.taxationRegFile}} width="110" height="110"> 
+                                                </a>
+                                                <input type=hidden value="" ng-model="imgurl2" id="imgurl2" />
+                                            </div>
+                                     <div style="text-align: center;width: 100%;" id="filePicker2"></div>
+                                            
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <h6><span class="redFont">*</span>组织机构代码</h6>
+                                    <div class="dashBox-small">
+                                    
+                                            <div class="imgArea" id="fileshow3">
+                                                <a ng-if="form.organizationFile!=null" class=“image-preview” href="{{imgBaseurl+form.organizationFile}}" data-lightbox="idcards" data-title="证件照片">
+                                                    <img ng-if="form.organizationFile!=null" ng-src={{imgBaseurl+form.organizationFile}} width="110" height="110">
+                                                </a>
+                                                <input type=hidden value="" ng-model="imgurl3" id="imgurl3" />
+                                            </div>
+                                             <div style="text-align: center;width: 100%;" id="filePicker3"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <h6><span class="redFont">*</span>开户许可证</h6>
+                                    <div class="dashBox-small">
+                                
+                                            <div class="imgArea" id="fileshow4">
+                                                <a ng-if="form.openAccountFile!=null" class=“image-preview” href="{{imgBaseurl+form.openAccountFile}}" data-lightbox="idcards" data-title="证件照片">
+                                                    <img ng-if="form.openAccountFile!=null" ng-src={{imgBaseurl+form.openAccountFile}} width="110" height="110">
+                                                </a>
+                                                <input type=hidden value="" ng-model="imgurl4" id="imgurl4" />
+                                            </div>
+                                                 <div style="text-align: center;width: 100%;" id="filePicker4"></div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="height50 " style="margin-top: 20px;"><span class="redFont errorInfo paddingLeft5 lineHeight32" ng-show="pictureShow">请上传四张对应的图片</span></div>
+                            <div class="btn_nav">
+                                <input type="button" class="prev btn btn-sm blue" style="float:left" value="上一步" />
+                                <input type="button" class="next right btn btn-sm green" ng-click="submit()" value="下一步" />
+                            </div>
+                        </div>
+                        <div class="page">
+                        <div ng-show="registerReponseTrue">
+                            <h3>完成注册</h3>
+                            <h4>Helloweba欢迎您！</h4>
+                            <p>去<a href="login.html" class=" btn btn-sm green">登录</a></p>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+                         <div ng-show="!registerReponseTrue">
+                            <h3>注册失败<br/></h3>
+                           <!--  <h4>{{erroInfoRegister}}</h4> -->
+                           
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+                            <div class="btn_nav">
+                                <input type="button " class="prev btn btn-sm blue" style="float:left" value="上一步" />
+                                <a href="register.html" class=" btn btn-sm green">再次注册</a>
+                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- </form> -->
+        </div>
+    </div>
+    <script src="lib/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="lib/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="lib/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="lib/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="lib/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="lib/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="lib/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="lib/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <script src="lib/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="lib/assets/global/scripts/app.js" type="text/javascript"></script>
+    <script src="lib/js/scrollable.js" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="lib/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="lib/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="lib/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+
+         <script type="text/javascript" src="/lib/js/webuploader.min.js"></script>
+        <script type="text/javascript" src="/lib/js/uploaderInstance.js"></script>
+        <script type="text/javascript" src="/lib/js/lightbox.min.js"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="lib/assets/pages/scripts/login.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/lib/mod.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.js"></script>
+    <script type="text/javascript" src="/bower_components/ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript">
+    require('app/register');
+    </script>
+    <script type="text/javascript">
+    $(function() {
+        $("#wizard").scrollable({
+            onSeek: function(event, i) {
+                $("#status li").removeClass("active").eq(i).addClass("active");
+            },
+            onBeforeSeek: function(event, i) {
+                if(i==1){
+                    if($("input[name=loginName]").val()!=""&&$("input[name=loginPwd]").val()!=""&&$("input[name=loginPwd1]").val()!=""){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                    var isStep=1;
+                     $(".step1.errorInfo").each(function(){
+                    var $this=$(this);
+                    if($this.css("display")=="inline"){
+                        isStep=0;
+                    }
+                })
+                     if(isStep==0){
+                        return false;
+                     }
+                }
+               if(i==2){
+                    if($("input[name=compName]").val()!=""&&$("input[name=compAddress]").val()!=""&&$("input[name=compContact]").val()!=""&&$("input[name=compPhone]").val()!=""){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+             
+                if(i==3){
+                    if($('#imgurl').val() !== ""&&$('#imgurl2').val() !== ""&&$('#imgurl3').val() !== ""&&$('#imgurl4').val() !== ""){
+                        return true;
+                    }else{
+                        return false;
+                    }
+
+                }
+               
+            }
+        });
+        $("#sub").click(function() {
+            var data = $("form").serialize();
+            alert(data);
+        });
+    });
+    </script>
+</body>
+
+</html>

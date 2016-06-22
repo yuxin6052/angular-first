@@ -1,0 +1,236 @@
+<!-- <script src="lib/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+-->
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#agreementList">协议管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#agreementList">协议列表</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">物流协议</span>
+    </li>
+</ul>
+<div class="row " ng-controller="EditTransportAgreeCtrl" ng-init="init()">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered ">
+            <div class="portlet ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="blueFont font14 ">新增协议模板</span>
+                    </div>
+                </div>
+                <div class="portlet-body ">
+                    <div class="form-horizontal">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    协议标题:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" ng-model="newAgreement.agreementTitle"/>
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    乙方公司:
+                                </label>
+                                <div class="col-md-4">
+                                    <!--<input type="text" required class="form-control" ng-model="newAgreement.tradeCompanyName" ng-blur="tradeCompanyChange(newAgreement.tradeCompanyName)" ng-readonly="agreementId"/>-->
+                                    <div class="col-md-10 paddingLeft0">
+                                        <ui-select  ng-model="$.companyAId" theme="bootstrap" style="min-width: 300px;" title="选择乙方公司"
+                                        append-to-body="false">
+                                        <ui-select-match placeholder="选择乙方公司">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="person.age as person in people | propsFilter: {name: $select.search, age: $select.search}">
+                                            <div ng-bind-html="person.name | highlight: $select.search"></div>
+                                            <small>
+                                                email: {{person.email}}
+                                                age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    </div>
+                                    
+                                    <button class="col-md-2 btn-sm btn blue" ng-click="popDropdown($event)">选择公司</button>
+                                </div>
+                            </div>
+                            <!--<div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    协议类型:
+                                </label>
+                                <div class="col-md-4">
+                                    <select class="form-control"></select>
+                                </div>
+                            </div>-->
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    乙方地址:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" ng-model="newAgreement.tradeCompanyAddress" readonly/>
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    经营货品:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" ng-model="newAgreement.tradeCompanyAddress" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    银行账号:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" ng-model="newAgreement.tradeCompanyAddress" />
+                                </div><label class="col-md-1 control-label">
+                                    开户行:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" ng-model="newAgreement.tradeCompanyAddress" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    乙方联系人:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" ng-model="newAgreement.tradeCompanyContact" readonly/>
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    乙方联系方式:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" ng-model="newAgreement.tradeCompanyPhone" readonly/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    第一联系人:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" ng-model="newAgreement.tradeCompanyAddress" />
+                                </div><label class="col-md-1 control-label">
+                                    第一联系方式:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" ng-model="newAgreement.tradeCompanyAddress" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    第二联系人:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" ng-model="newAgreement.tradeCompanyAddress" />
+                                </div><label class="col-md-1 control-label">
+                                    第二联系方式:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" ng-model="newAgreement.tradeCompanyAddress" />
+                                </div>
+                            </div>
+                            <!--<div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    乙方公司:
+                                </label>
+                                <div class="col-md-4">
+                                    <div class="col-md-10 paddingLeft0">
+                                        <ui-select  ng-model="$.companyAId" theme="bootstrap" style="min-width: 300px;" title="选择乙方公司"
+                                        append-to-body="false">
+                                        <ui-select-match placeholder="选择乙方公司">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="person.age as person in people | propsFilter: {name: $select.search, age: $select.search}">
+                                            <div ng-bind-html="person.name | highlight: $select.search"></div>
+                                            <small>
+                                                email: {{person.email}}
+                                                age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    </div>
+                                    
+                                    <button class="col-md-2 btn-sm btn blue" ng-click="popDropdown($event)">选择公司</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    乙方地址:
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" required class="form-control" />
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <h5 class="blueFont">费用详情</h5>
+                    </div>
+                    <div class="actions">
+                        <a class="btn btn-sm btn-orange " ng-click="addCharge()">
+                            <i class="fa fa-plus"></i> 增加
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body ">
+                    <div class="table-scrollable">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>起送点</th>
+                                    <th>到货点</th>
+                                    <th>货品</th>
+                                    <th>起运吨数</th>
+                                    <th>运输费用（元/吨）</th>
+                                    <th>燃油附加费（元/吨）</th>
+                                    <th>车辆放空费（元/车/次）</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="charge in chargeList">
+                                    <td><input class="form-control" name="weight{{$index}}" required ng-model="charge.start"></td>
+                                    <td><input class="form-control" name="weight{{$index}}" required ng-model="charge.dest"></td>
+                                    <td><input class="form-control" name="weight{{$index}}" required ng-model="charge.product"></td>
+                                    <td><input type="number" class="form-control" name="weight{{$index}}" required ng-model="charge.minWeightToTransport"></td>
+                                    <td><input type="number" class="form-control" name="weight{{$index}}" required ng-model="charge.transportCharge"></td>
+                                    <td><input type="number" class="form-control" name="weight{{$index}}" required ng-model="charge.fuelSurcharge"></td>
+                                    <td><input type="number" class="form-control" name="weight{{$index}}" required ng-model="charge.vehicle"></td>
+                                    <td><a href="" class="btn btn-sm red-intense" ng-click="deleteCharge($index)">删除</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    上传附件:
+                                </label>
+                                <div class="col-md-1 control-label alignLeft" style="padding-right:0px"><i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    <a class="blueFont" ngf-select="uploadFiles($file)" ngf-multiple="false">
+                                        选择附件
+                                    </a>
+                                </div>
+                                <label class="col-md-3 control-label alignLeft" ng-if="newAgreement.fileName">
+                                    {{newAgreement.fileName}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padTop10">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-2">
+                            <button class="btn btn-block blue" type="button" ng-click="saveAgreement()">提交协议</button>
+                            <!--<input class="btn btn-block blue" ng-disabled="myForm.$invalid" type="submit" value="提交发货单" />-->
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn btn-block grey-cascade" href="#/agreementList">关闭</a>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

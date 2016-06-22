@@ -1,0 +1,18 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>车牌号</th>
+      <th>司机姓名</th>
+      <th>司机身份证号</th>
+      <th>单车载重量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="driver in driverList">
+      <td>{{driver.toolNo}}</td>
+      <td>{{driver.driverName}}</td>
+      <td>{{driver.driverIdentityNo}}</td>
+      <td>{{driver.maxLoadUnit}}</td>
+    </tr>
+  </tbody>
+</table>

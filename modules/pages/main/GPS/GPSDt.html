@@ -1,0 +1,124 @@
+ <ul class="page-breadcrumb breadcrumb">
+   <li>
+     <a href="index.html">我的物流订单</a> <i class="fa fa-circle"></i>
+   </li>
+   <li>
+        <a ui-sref="GPSList">GPS列表</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+     <span class="active">GPS详情</span>
+   </li>
+ </ul>
+
+ <div class="row " ng-controller="GPSDt" ng-init="init()">
+   <div class="col-md-12 no-animate" ng-hide="editing">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject yellowFont bold uppercase">GPS信息</span>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-orange no-animate" ng-click="toggleEditing()">
+                        <i class="fa fa-pencil-square-o"></i> 修改
+                    </button>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <form class="form-horizontal" role="form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label col-md-5">GPS设备号:</label>
+                                    <div class="col-md-7">
+                                        <p class="form-control-static"> {{gpsInfo.gpsDeviceCode}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label col-md-5">GPS设备名:</label>
+                                    <div class="col-md-7">
+                                        <p class="form-control-static"> {{gpsInfo.gpsDeviceName}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label col-md-5">可用情况:</label>
+                                    <div class="col-md-3">
+                                        <p class="form-control-static" > {{gpsInfo.status | gpsStatus}} </p>
+                                    </div>
+                                    <!--<div class="col-md-3">
+                                        <button class="btn default disabled form-control-static" ng-if="gpsInfo.status==200"> 冻结</button>
+                                        <button class="btn default disabled form-control-static" ng-if="gpsInfo.status==100"> 激活</button>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 no-animate" ng-show="editing">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject yellowFont bold uppercase">GPS信息</span>
+                </div>
+                <div class="actions">
+                    <button class="btn btn-orange" ng-click="saveGpsInfo()">
+                        <i class="fa fa-pencil-square-o"></i> 保存
+                    </button>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <form class="form-horizontal" role="form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label col-md-5">GPS设备号:</label>
+                                    <div class="col-md-7">
+                                        <input type="text"class="form-control" ng-model="gpsInfo.gpsDeviceCode" placeholder="GPS设备号">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label col-md-5">GPS设备名:</label>
+                                    <div class="col-md-7">
+                                        <input type="text"class="form-control" ng-model="gpsInfo.gpsDeviceName" placeholder="GPS设备名">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label col-md-5">可用情况:</label>
+                                    <div class="col-sm-7">
+                                        <label class="radio-inline">
+                                        <input type="radio" ng-model="gpsInfo.status" ng-value="200" ng-checked="gpsEditInfo.status==200">激活
+                                        </label>
+                                        <label class="radio-inline">
+                                        <input type="radio" ng-model="gpsInfo.status" ng-value="100" ng-checked="gpsEditInfo.status==100">冻结
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+ </div>

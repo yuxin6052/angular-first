@@ -1,0 +1,106 @@
+.chat-windows-main{
+	/*padding: 0 10px;*/
+	border-top: 1px solid #E8E8E8;
+	width: 450px;
+	background: #fff;
+}
+
+.chat-windows li{
+		margin:10px;
+		min-height: 30px;
+
+		/*border:1px solid #E8E8E8;*/
+}
+
+.chat-windows li div.chat-part{
+		background: #fff;
+}
+
+.title{
+	background: #E8E8E8;
+	height: 30px;
+}
+.title a{
+	line-height: 30px;
+	height: 30px;
+	display: inline-block;
+	margin-right: 9px;
+}
+.detail-company{
+	padding:10px;
+}.chat-windows li label,.chat-windows li dt span{
+	color:#999;
+	font-size: 12px;
+}
+.chat-windows li dt,.chat-windows li dl,.chat-windows li dd{
+	font-size: 12px;
+	height: 24px;
+    line-height: 18px;
+}
+}
+.chat-windows:after{
+	content: "";
+    display: table;
+    clear: both;
+}
+.main-body-inner {
+     border: none!important; 
+     background:none!important; 
+   }
+   
+.detail-company-so{
+	padding: 10px;
+}
+.chat-windows{
+	border-top: 1px solid #E8E8E8;
+	       padding: 10px 0px 30px;
+}
+.chat-windows .time{
+	text-align: center;
+	font-size: 12px;
+	color:#CCCCCC;
+}
+.chat-windows .send-cell{
+	height:40px;
+	    margin: 10px 0px;
+}
+
+.favicon{
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+	background:#D8D8D8;
+}
+.info{
+	padding:0px 10px;
+	min-height:38px;
+	line-height: 38px;
+	background: #F77B35;
+    border-radius: 4px;
+    color: #fff;
+        margin: 0px 16px;
+}
+
+.btn-yijia{
+	    width: 73px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 5px;
+    border: 1px solid #B9B9B9;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    font-size: 12px;
+    color: #8C8A8A;
+    height: 28px;
+    line-height: 28px;
+}
+
+.Bargaining{
+	text-align: center;
+}
+.Bargaining p{
+	margin: 30px 0px;
+	color:#999999;
+}

@@ -1,0 +1,176 @@
+<div class="modal-header">
+
+  <div class="col-md-2">
+    <h5><i class="icon-notebook"></i>出库单</h5>
+  </div>
+  <div class="col-md-10 form-horizontal nopadding">
+    <div class="control-group col col-md-3">
+      <label class="col-md-2 control-label">品名</label>
+      <div class="paddingLeft5 col-md-9">
+        <select ng-model="queryParameters.productCategoryId" class="form-control " required ng-options="productCategory.id as productCategory.productCategoryName for productCategory in productCategoryList"></select>
+
+      </div>
+    </div>
+    <div class="control-group col col-md-3 nopadding">
+      <label class="col-md-2 control-label ">规格</label>
+      <div class="paddingLeft5 col-md-10">
+        <select ng-model="queryParameters.modelId" class="form-control " required ng-options="model.id as model.modelName for model in modelList"></select>
+      </div>
+    </div>
+    <div class="control-group col col-md-3 nopadding">
+      <label class="col-md-2 control-label ">品牌</label>
+      <div class="paddingLeft5 col-md-10">
+        <select ng-model="queryParameters.brandId" class="form-control " required ng-options="brand.id as brand.brandName for brand in brandList"></select>
+      </div>
+    </div>
+    <div class="control-group col col-md-2 nopadding">
+      <label class="col-md-3 control-label">库位</label>
+      <div class="paddingLeft5 col-md-9 nopadding">
+        <select ng-model="queryParameters.cardId" class="form-control " required ng-options="card.id as card.cardName for card in cardList"></select>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <span class="input-group-btn">
+                                <button class="btn blue btn-sm" type="button" ng-click="getStorage()">搜索</button>
+                            </span>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal-body" ng-init="init()">
+  <form class="form-horizontal">
+    <div class="portlet">
+
+      <div class="portlet-body " id="stock">
+        <h4><span class="blueLeftBorder "><span class="font14 paddingLeft5">出库货物</span></span>
+        </h4>
+
+        <ul class="nav col-md-12 listHeader greyBorder">
+          <li class="col-md-1 alignCenter">品名</li>
+          <li class="col-md-1">规格/牌号</li>
+          <li class="col-md-1">数量/重量</li>
+          <li class="col-md-1">品牌</li>
+          <li class="col-md-1">库位</li>
+          <li class="col-md-7">货物详情</li>
+
+        </ul>
+        <div class="col-md-12 noHorizontalPadding marginTop5 scrollHeight400">
+          <div class="note note-info" ng-repeat="repository in cardProductOwnerVoList">
+            <ul class="nav col-md-12">
+              <li class="col-md-1">{{repository.product.productName}}</li>
+              <li class="col-md-1">{{repository.product.modelName}}</li>
+              <li class="col-md-1">{{repository.count}}{{repository.countUnitCode}}/{{repository.weight}}{{repository.weightUnitCode}}</li>
+              <li class="col-md-1">{{repository.product.brandName}}</li>
+              <li class="col-md-1">{{repository.cardName}}</li>
+              <li class="col-md-7">
+                <ul class="nav col-md-12">
+                  <li class="col-md-0-5"></li>
+                  <li class="col-md-2">货位</li>
+                  <li class="col-md-1-5">数量</li>
+                  <li class="col-md-2">毛重 </li>
+                  <li class="col-md-2">净重</li>
+                  <li class="col-md-2">批次号</li>
+                  <li class="col-md-2">RFID</li>
+                </ul>
+                <ul class="nav col-md-12" ng-repeat="storage in repository.storageVoList">
+                  <label style="display:block">
+                                            <li class="col-md-0-5"> <input type="checkbox" ng-model="storage.checked" ng-click="checkStorage(repository,storage)"/></li>
+                                            <li class="col-md-2"> {{storage.placeCode}}</li>
+                                            <li class="col-md-1-5"> {{storage.count}}{{storage.countUnitCode}}</li>
+                                            <li class="col-md-2"> {{storage.weightMao}}吨</li>
+                                            <li class="col-md-2"> {{storage.weight}}吨</li>
+                                            <li class="col-md-2"> {{storage.productBatch}}</li>
+                                            <li class="col-md-2"> {{storage.rfid}}</li>
+                                        </label>
+                </ul>
+                <ul class="nav">
+                  <li class="col-md-12" style="text-align:right">已选重量:
+                    <span class="yellowFont font14">{{repository.selectedWeight.toString()}}</span>吨
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <h4><span class="blueLeftBorder "><span class="font14 paddingLeft5">已选择出库货物</span></span>
+          <span class="font14 paddingLeft5 fr">已选货物总重量：<span class="yellowFont font14">{{totalSelectedWeight.toString()}}</span>吨</span>
+        </h4>
+
+        <ul class="nav col-md-12 listHeader greyBorder">
+          <li class="col-md-1 alignCenter">品名</li>
+          <li class="col-md-1">规格/牌号</li>
+          <li class="col-md-1">数量/重量</li>
+          <li class="col-md-1">品牌</li>
+          <li class="col-md-1">库位</li>
+          <li class="col-md-7">货物详情</li>
+
+        </ul>
+        <div class="col-md-12 noHorizontalPadding marginTop5 scrollHeight400">
+          <div class="note note-info" ng-repeat="repository in cardProductOwnerVoList1">
+            <ul class="nav col-md-12">
+              <li class="col-md-1">{{repository.product.productName}}</li>
+              <li class="col-md-1">{{repository.product.categoryName}}</li>
+              <li class="col-md-1">{{repository.count}}{{repository.countUnitCode}}/{{repository.weight}}{{repository.weightUnitCode}}</li>
+              <li class="col-md-1">{{repository.product.brandName}}</li>
+              <li class="col-md-1">{{repository.cardName}}</li>
+              <li class="col-md-7">
+                <ul class="nav col-md-12">
+                  <li class="col-md-0-5"></li>
+                  <li class="col-md-2">货位</li>
+                  <li class="col-md-1-5">数量</li>
+                  <li class="col-md-2">毛重 </li>
+                  <li class="col-md-2">净重</li>
+                  <li class="col-md-2">批次号</li>
+                  <li class="col-md-2">RFID</li>
+                </ul>
+                <ul class="nav col-md-12" ng-repeat="storage in repository.storageVoList">
+                  <label style="display:block">
+                      <li class="col-md-0-5"> <input type="checkbox" ng-model="storage.checked" /></li>
+                      <li class="col-md-2"> {{storage.placeCode}}</li>
+                      <li class="col-md-1-5"> {{storage.count}}{{storage.countUnitCode}}</li>
+                      <li class="col-md-2"> {{storage.weightMao}}吨</li>
+                      <li class="col-md-2"> {{storage.weight}}吨</li>
+                      <li class="col-md-2"> {{storage.productBatch}}</li>
+                      <li class="col-md-2"> {{storage.rfid}}</li>
+                  </label>
+                </ul>
+                <!--<ul class="nav">
+                                        <li class="col-md-12" style="text-align:right">已选重量:
+                                            <span class="yellowFont font14">{{repository.selectedWeight.toString()}}</span>吨
+                                        </li>
+                                    </ul>-->
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="form-group marginTop20">
+          <label for="gpsName" class="col-sm-1 control-label">操作人</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" id="gpsName" ng-model="shipping.opPerson" placeholder="">
+          </div>
+          <label for="gpsName" class="col-sm-1 control-label">审核人</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" placeholder="" ng-model="shipping.approvePerson" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-1 control-label">备注</label>
+          <div class="col-sm-5">
+            <textarea class="form-control" rows="3" ng-model="shipping.remark"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn blue-madison" type="button" ng-click="ok()">确定</button>
+  <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+</div>

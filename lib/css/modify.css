@@ -1,0 +1,353 @@
+@media (min-width: 768px) {
+
+    .modal-dialog {
+        width: 770px;
+        margin: 90px auto;
+    }
+}
+
+.portlet>.portlet-title>.fl {
+    float: left;
+}
+
+.portlet>.portlet-title>.tools>a.wid60 {
+    width: 60px;
+}
+.wid50{width: 50px;}
+.portlet>.portlet-title>.tools>a.noBgImg {
+    background-image: none;
+    padding: 1px 4px;
+    line-height: 24px;
+    height: 28px;
+}
+
+.clearfix {
+    clear: both
+}
+
+.portlet>.portlet-title>.col-md-2 {
+    padding: 1px 0 2px
+}
+
+h5>.red {
+    background: #e7505a;
+    color: #FFFFFF;
+    font-size: 12px;
+ }
+  .modal-dialog {
+    width: 860px;
+    margin: 90px auto;
+ 
+}
+  .portlet>.portlet-title>.fl{float: left;}
+  .portlet>.portlet-title>.tools>a.wid60{width: 60px;}
+  .portlet>.portlet-title>.tools>a.noBgImg{background-image: none;
+  	padding: 1px 4px;
+    line-height: 24px;
+    height: 24px;
+    color: #ffffff;
+    padding: 5px;
+}
+
+.wid50 {
+    width: 50px;
+}
+
+.portlet>.portlet-title>.font14 {
+    font-size: 14px;
+}
+
+.yellowFont {
+    color: #ffc731
+}
+
+.greenFont {
+    color: #15c281
+}
+
+
+/*63c149*/
+
+.purpleFont {
+    color: #957ddf
+}
+
+.btn-orange {
+    background-color: rgb(255, 152, 1);
+    color: #fff;
+}
+
+.font12 {
+    font-size: 12px;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.no-div-padding div[class*="col-"] {
+    padding-left: 0px; padding-right: 0px;
+}
+
+.no-animate .ng-hide-animate {
+    display: none !important;
+}
+
+.no-animate .ng-show-animate {
+    display: none !important;
+}
+
+.redFont {
+    color: red;
+}
+
+.dashBox {
+    border: 1px dashed #e5e5e5;
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+}
+
+.dashBox-small {
+    border: 1px dashed #e5e5e5;
+    width: 110px;
+    height: 110px;
+    padding: 10px;
+    float: left;
+}
+
+
+.wid100 {
+    width: 100px;
+}
+
+  .redFont{color: red;}
+  .dashBox{border: 1px dashed #e5e5e5; width: 150px; height: 150px; padding: 10px;}
+  .dashBox-small{border: 1px dashed #e5e5e5; width: 110px; height: 110px; padding: 3px; float: left;}
+.wid100{width: 100px;}
+#modalFormBody{font-size: 12px;}
+#modalFormBody .form-control{height: 28px; padding: 3px; }
+
+
+#modalFormBody {
+    font-size: 12px;
+}
+
+#modalFormBody .form-control {
+    height: 28px;
+    padding: 3px;
+}
+
+#modalFormBody .col-md-1,
+#modalFormBody .col-md-2,
+#modalFormBody .col-md-3,
+#modalFormBody .col-md-10 {
+    padding-left: 4px;
+    padding-right: 0px;
+    text-align: left;
+}
+
+.displayNone {
+    display: none;
+}
+
+.displayInline {
+    display: inline;
+}
+
+#modalFormBody .form-group {
+    margin-left: 5px;
+}
+
+.modal-sm {
+    width: 400px;
+}
+
+#collapseBg {
+    background-color: #E5E5E5;
+    font-size: 12px;
+}
+
+.padTop5 {
+    padding-top: 5px;
+}
+
+
+.padTop10 {
+    padding-top: 8px!important;
+}
+
+#collapseBg h6 {
+    padding-left: 10px;
+}
+
+#collapseBg tr th {
+    font-size: 12px;
+}
+
+#collapseBg tbody {
+    font-size: 12px;
+}
+
+.padding-left-25 {
+    padding-left: 25px;
+}
+
+/*** hulk系统**/
+.tools>.input-group[class*=col-]{float: left;}
+#acceptForm label{text-align: left}
+.wid158{width: 158px;}
+.portlet>.noBottomBorder{border-bottom: none}
+.blueLeftBorder{border-left:3px #5b9bd0 solid;}
+.purpleLeftBorder{border-left:3px #a592e3 solid;}
+.paddingLeft5{padding-left: 5px!important;}
+.paddingRight5{padding-right: 5px!important;}
+.paddingLeft0{padding-left: 0px!important;}
+.marginRight5{margin-right: 5px!important;}
+.marginLeft5{margin-left: 5px!important;}
+
+.font14{font-size: 14px;line-height: 1.1}
+.lightGrey{background-color: #f8f8f8}
+.padding10{padding: 10px;}
+.paddingTop20{padding-top: 20px;}
+.noHorizontalPadding{padding-left: 0px; padding-right: 0px;}
+.listHeader{line-height: 30px; background: #f2f5fa; color: #5c9bd0; font-size: 14px; }
+.marginTop5{margin-top: 5px!important;}
+.marginTop20{margin-top: 20px;}
+.marginBottom10{margin-bottom: 10px;}
+.marginBottom5{margin-bottom: 5px;}
+#stock{font-size: 12px;}
+#stock li,#stock ul{ padding:0px;}
+.wid36{width: 36px;}
+.note{padding:15px 5px 15px 5px;}
+label[class*=col-]{padding-left: 0px; padding-right: 0px;}
+.alignCenter{text-align: center;}
+.alignLeft{text-align: left;}
+.lineHeight32{line-height: 32px;}
+.paddingBottom5{padding-bottom: 5px;}
+.blueFont{color: #3299de}
+.portlet >.noBorder{border: 0px;}
+.greyBorder{border: 1px solid #e9ecf3; }
+.whiteBackgroud{background: #ffffff;}
+.pinkBackground{background: #ec407a; color: #ffffff;}
+
+.portlet.light.bordered>.portlet-title.no-border {
+    border-bottom: 0px;
+}
+
+.inline-panel {
+  background-color:rgb(248,248,248);
+  padding:5px 20px 10px 20px;
+}
+
+.centerDiv {
+  width: 100%;
+  text-align: center;
+}
+
+ul.pagination {
+    margin: 2px auto;
+    line-height: 1.4;
+    padding-left: 0;
+    padding-bottom: 20px;
+}
+.pagination li {
+    display: inline;
+    text-align: center;
+}
+
+.left-legend{
+  border-left:3px solid rgb(81, 116, 160);
+  padding-left:10px;
+}
+
+.editDeliveryHeader{
+  line-height:30px;
+  text-align: center;
+  background-color: rgb(242, 246, 250)
+}
+.marginTop10{
+  margin-top:10px;
+}
+.modal-dialog.modal-lg{
+  width: 1200px!important;
+}
+
+/**注册**/
+#register{ 
+    width: 500px;
+    padding:10px 0 5px;
+    }
+#register .form-control {
+    background-color: #ffffff;
+    height: 32px;
+    color: #000;
+    border: 1px solid #dde3ec;
+}
+#wizard {font-size:12px;height:350px;width:500px;overflow:hidden;position:relative;-moz-border-radius:5px;-webkit-border-radius:5px;}
+#wizard .items{width:20000px; clear:both; position:absolute;}
+#wizard .right{float:right;}
+#wizard #status{height:35px;background:#123;padding-left:15px !important;}
+#status li{float:left;color:#fff;padding:10px 25px; list-style: none;}
+#status li.active{background-color:#369;font-weight:normal;}
+.input{width:240px; height:18px; margin:10px auto; line-height:20px; border:1px solid #d3d3d3; padding:2px}
+.page{padding:25px 10px 20px 30px;width:480px;float:left;}
+.page h3{height:42px; font-size:16px; border-bottom:1px dotted #ccc; margin-bottom:5px; }
+.page h3 em{font-size:12px; font-weight:500; font-style:normal}
+.page p{line-height:24px;}
+.page p label{font-size:14px; display:block;}
+.btn_nav{height:36px; line-height:36px; margin:20px auto;}
+.prev,.next{width:100px; height:32px; border:1px solid #d3d3d3; cursor:pointer}
+.marginBottom40{margin-bottom: 40px;}
+
+.form-label-left .form-horizontal .control-label{
+  text-align:left;
+}
+.errorInfo{ line-height: 24px; color: red;}
+.rightInfo{line-height: 24px; color: green;}
+.wid80{width: 80px;}
+.marginLeft-10{margin-left: -10px!important;}
+.imgArea img{width:100px;}
+.dashBox-small img{width:100px;height:100px}
+.form-horizontal .alignLeft{text-align: left;}
+.wid280{width: 280px;}
+.height50{height: 50px;}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{vertical-align: middle;}
+
+.newPlace .form-control{height: 28px; padding: 3px; }
+.minWid80{min-width: 75px}
+@media (min-width: 992px){
+    .col-md-0-5{
+    width:4.16667%;
+}
+.col-md-1-5{
+    width:12.5%;
+}
+.col-md-0-5,.col-md-1-5{
+    float:left;
+    min-height: 1px;
+}
+}
+
+
+
+.alignRight{text-align: right}
+
+.fl{
+    float:left;
+}
+
+.fr{
+    float:right;
+}
+
+.scrollHeight400{
+    max-height: 400px;
+    overflow: auto;
+}
+
+.note:last-child{
+    margin-bottom: 0px;
+}
+.positonAbsolute{ position: absolute; top: 20px;}

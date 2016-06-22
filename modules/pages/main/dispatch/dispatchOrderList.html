@@ -1,0 +1,149 @@
+ <ul class="page-breadcrumb breadcrumb">
+   <li>
+     <a href="index.html">商品信息</a> <i class="fa fa-circle"></i>
+   </li>
+   <li>
+     <span class="active">商品信息列表</span>
+   </li>
+ </ul>
+
+ <div class="row " ng-controller="ModalDemoCtrl">
+   <div class="col-md-12 ">
+
+     <div class="portlet light bordered minheight600">
+       <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">I am a modal!</h3>
+        </div>
+        <div class="modal-body">
+        <p>
+          <select ng-change="change(x)" ng-model="x">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select>
+  </p>
+            <ul>
+                <li ng-repeat="item in items">
+                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+       <div class="portlet-title">
+         <div class="caption"> <i class="icon-social-dribbble font-green"></i>
+           <span class="caption-subject font-green bold uppercase">派车单列表</span>
+         </div>
+         <div class="actions">
+           <!--  #/index/productAdd --> 
+
+           <a href="#/productAdd/"  class="nav-link " >
+
+             <span class="title">添加商品</span>
+
+           </a>
+           <button type="button" class="btn blue" ng-click="open()">添加</button>
+           <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+
+         </div>
+       </div>
+       <div class="portlet-body form">
+         <form class="form-horizontal" name="formFilter" id="formFilter" method="post">
+           <div class="form-body">
+             <div class="form-group">
+               <label class="col-md-1 control-label">派车单号</label>
+               <div class="col-md-2">
+                 <input type="input" id="id" name="id" value=""></div>
+               <label class="col-md-2 control-label">开始日期</label>
+               <div class="col-md-2">
+                 <!-- <input type="input" id="startDate" name="startDate" value=""> 
+                 -->
+                 <p class="input-group">
+                   <input type="text" class="form-control" uib-datepicker-popup ng-model="dtStart" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" /> 
+                   <span class="input-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="open1()">
+                       <i class="glyphicon glyphicon-calendar"></i>
+                     </button>
+                   </span>
+                 </p>
+               </div>
+               <label class="col-md-2 control-label">结束日期</label>
+               <div class="col-md-2">
+                 <p class="input-group">
+                   <input type="text" class="form-control" uib-datepicker-popup ng-model="dtEnd" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" /> 
+                   <span class="input-group-btn">
+                     <button type="button" class="btn btn-default" ng-click="open2()">
+                       <i class="glyphicon glyphicon-calendar"></i>
+                     </button>
+                   </span>
+                 </p>
+                 <!--  <input type="input" id="endDate" name="endDate" value="">--></div>
+             </div>
+           </div>
+
+           <div class="form-group">
+             <label class="col-md-1 control-label">司机姓名</label>
+             <div class="col-md-2">
+               <input type="input" id="id" name="id" value=""></div>
+             <label class="col-md-2 control-label">司机证件号</label>
+             <div class="col-md-2">
+               <input type="input" id="id" name="id" value=""></div>
+             <label class="col-md-2 control-label">车牌号</label>
+             <div class="col-md-2">
+               <input type="input" id="id" name="id" value=""></div>
+           </div>
+
+           <div class="form-actions">
+             <div class="row">
+               <div class="col-md-offset-5 col-md-7">
+                 <button type="submit" class="btn green" ng-click="queryProdoct()">查询</button>
+                 <button type="submit" class="btn default">重置</button>
+
+               </div>
+             </div>
+           </div>
+         </form>
+
+         <div class="table-scrollable">
+           <input type="text" ng-model="titleFilter" placeholder="输入关键字"> 
+           <table class="table table-hover">
+             <thead>
+               <tr>
+                 <th>序号</th>
+                 <th>商品名称</th>
+                 <th>商品类别</th>
+                 <th>规格</th>
+                 <th>型号</th>
+                 <th>产地</th>
+                 <th>操作</th>
+               </tr>
+             </thead>
+             <tbody>
+
+               <tr ng-repeat="product in productList|filter:titleFilter">
+                 <td ng-bind="$index+1"></td>
+                 <td>{{product.productName}}</td>
+                 <td>{{product.productType}}</td>
+                 <td>{{product.productStandard}}</td>
+                 <td>{{product.productMode}}</td>
+                 <td>{{product.productOrigin}}</td>
+                 <td>
+                   <a href="/#/productAdd/{{product.id}}">修改</a>
+                   <button class="btn default" ng-click="deleteProduct($index)">删除</button>
+                 </td>
+               </tr>
+
+             </tbody>
+           </table>
+         </div>
+          <uib-pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+       </div>
+     </div>
+   </div>
+ </div>

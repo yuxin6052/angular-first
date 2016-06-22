@@ -1,0 +1,178 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#transferOrderList">我的单据</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#transferOrderList">我的过户单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">增加转让单</span>
+    </li>
+</ul>
+<div class="row " ng-controller="TransferOrderAddCtrl as ctrl" ng-init="init()">
+    <form role="form" name="myForm" ng-submit="saveTransferOrder(myForm.$valid)" class="form-horizontal" novalidate>
+        <div class="col-md-12 ">
+            <div class="portlet light bordered minheight600">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="caption-subject greenFont bold uppercase">基本信息</span>
+                    </div>
+                </div>
+                <div class="portlet-body ">
+                    <div class="form-horizontal font12">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
+                                     转出公司：
+                                </label>
+                                <div class="col-md-3 control-label alignLeft ">{{basicInfo.ownerName}}</div>
+                               <!--  <div class="col-md-1" ng-hide="isHideNewCompany"> -->
+                                    <!--<a class="btn btn-sm" ng-click="addCompany()"> <i class="fa fa-plus"></i>添加新客户</a>-->
+                                <!-- </div> -->
+                                <!-- <label class="col-md-2 control-label"><span class="redFont">*</span>转入单位联系人：</label> -->
+                                <!-- <div class="col-md-3">
+                                    <input type="text" class="form-control " name="companyPerson" ng-model="ctrl.toOwner.compContact" readonly>
+                                    <div class="redFont padTop5" ng-show="myForm.companyPerson.$dirty&&myForm.companyPerson.$error.required">请填写转入单位联系人.</div>
+                                </div> -->
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">
+                                    <span class="redFont">*</span> 转入公司：
+                                </label>
+                                <div class="col-md-3">
+                                    <ui-select  ng-model="ctrl.toOwner" theme="bootstrap" title="选择转入公司"
+                                        append-to-body="false">
+                                        <ui-select-match placeholder="选择转入公司">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="owner in ownerList | propsFilter: {name: $select.search, compAddress: $select.search}">
+                                            <div ng-bind-html="owner.name | highlight: $select.search"></div>
+                                            <small>
+                                                地址: <span ng-bind-html="owner.compAddress | highlight: $select.search"></span>
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <input type="hidden" ng-model="ctrl.toOwner.id" name="ownerId" required/>
+                                    <div class="redFont padTop5" ng-show="myForm.ownerId.$dirty&&myForm.ownerId.$error.required">请输入转入公司.</div>
+                                </div>
+                                <label class="col-md-3 control-label"><span class="redFont">*</span>转让时间：</label>
+                                <div class="col-md-3">
+                                    <input type="text" ng-model="ctrl.transferDate" name="transferDate" required uib-datepicker-popup is-open="opened" datepicker-options="dateOptions"
+                                        close-text="Close" ng-click="open()" class="form-control">
+                                    <div class="redFont padTop5" ng-show="myForm.transferDate.$dirty&&myForm.transferDate.$error.required">请填写转让时间.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 ">
+            <div class="portlet light bordered minheight600">
+                <div class="portlet-title no-border">
+                    <div class="caption">
+                        <span class="caption-subject greenFont bold uppercase">选择转入的货物</span>
+                    </div>
+                    <div class="actions">
+                    </div>
+                </div>
+                <div class="portlet-body ">
+                    <ul class="nav col-md-12 listHeader greyBorder">
+                        <li class="col-md-1 alignCenter">品名</li>
+                        <li class="col-md-1">规格/牌号</li>
+                        <li class="col-md-2">数量/重量</li>
+                        <li class="col-md-1">品牌</li>
+                        <li class="col-md-1">库位</li>
+                        <li class="col-md-6">转让详细</li>
+
+                    </ul>
+                    <div class="col-md-12 noHorizontalPadding marginTop5">
+                        <div class="note note-info" ng-repeat="storage in storageForTransferVos">
+                            <!--ng-repeat="storage in storageForTransferVos"-->
+                            <ul class="nav col-md-12">
+                                <li class="col-md-1">{{storage.productName}}</li>
+
+                                <li class="col-md-1">{{storage.productSize}}</li>
+                                <li class="col-md-2">总净重：{{storage.totalWeight}}吨<br/>总毛重：{{storage.totalWeightMao}}吨<br/>总数量：</li>
+
+                                <li class="col-md-1">{{storage.brandName}}</li>
+                                <li class="col-md-1">{{storage.cardName}}</li>
+                                <li class="col-md-6">
+                                    <label class="col-md-2 control-label">转让数：</label>
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control wid80 input-inline marginRight5" ng-model="storage.transferCount">件
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control wid80 input-inline marginRight5" ng-model="storage.transferWeight">吨
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-2">
+                            <!--<button class="btn btn-block blue" type="button" ng-click="saveDeliveryBatch()">提交发货单</button>-->
+                            <input class="btn btn-block blue" type="submit" value="提交转让单" />
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn btn-block grey-cascade" href="#/deliveryBatchList">关闭</a>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/ng-template" id="addCompany.html">
+    <form role="form" name="myForm" ng-submit="ok(myForm.$valid)" class="form-horizontal" novalidate>
+        <div class="modal-header">
+            <h5><i class="icon-notebook"></i>添加新客户</h5>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="gpsCode" class="col-sm-2 control-label">贸易商名</label>
+                <div class="col-sm-4">
+                    <input type="text" name="compName" required ng-maxlength="120" class="form-control" id="gpsCode" ng-model="company.compName"
+                        placeholder="">
+                </div>
+                <div class="col-sm-4 redFont">
+                    <label class="padTop10" ng-show="myForm.compName.$dirty&&myForm.compName.$error.maxlength">最大长度120个字符.</label>
+                    <label class="padTop10" ng-show="myForm.compName.$dirty&&myForm.compName.$error.required">请填写贸易商名.</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="gpsName" class="col-sm-2 control-label">贸易商联系方式</label>
+                <div class="col-sm-4">
+                    <input type="text" name="compPhone" required ng-pattern="/^\d{11}$/" class="form-control" id="gpsName" ng-model="company.compPhone"
+                        placeholder="">
+                </div>
+                <div class="col-sm-4 redFont">
+                    <label class="padTop10" ng-show="myForm.compPhone.$dirty&&myForm.compPhone.$touched&&myForm.compPhone.$error.pattern">请输入正确的手机号码.</label>
+                    <label class="padTop10" ng-show="myForm.compPhone.$dirty&&myForm.compPhone.$error.required">请填写贸易商联系方式.</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    贸易商证件号
+                </label>
+                <div class="col-sm-4">
+                    <input type="text" name="busLicenceCode" required ng-maxlength="50" class="form-control" id="gpsName" ng-model="company.busLicenceCode"
+                        placeholder="">
+                </div>
+                <div class="col-sm-4 redFont">
+                    <label class="padTop10" ng-show="myForm.busLicenceCode.$dirty&&myForm.busLicenceCode.$error.maxlength">最大长度50个字符.</label>
+                    <label class="padTop10" ng-show="myForm.busLicenceCode.$dirty&&myForm.busLicenceCode.$error.required">请填写贸易商证件号.</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn blue-madison" type="submit" value="确定" />
+            <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+        </div>
+    </form>
+</script>

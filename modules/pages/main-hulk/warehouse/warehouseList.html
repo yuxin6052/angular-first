@@ -1,0 +1,123 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#stockList">仓库管理</a> <i class="fa fa-circle"></i>
+    </li>
+
+    <li>
+        <span class="active">仓库列表</span>
+    </li>
+</ul>
+<div class="row " ng-controller="WarehouseListCtrl" ng-init="init()">
+    <div class="col-md-12 ">
+        <div class="tabbable-line boxless tabbable-reversed">
+            <div class="portlet light bordered minheight600">
+                <div class="portlet-title tabbable-line">
+                    <ul class="nav nav-tabs fl col-md-9">
+                        <li ng-class="{'active':!queryStatus}">
+                            <a href="javascript:;" ng-click="changeTab()"> 全部({{totalSum}})</a>
+                        </li>
+                        <li ng-class="{'active':queryStatus==WAREHOUSE_STATUS.AVAILABLE}">
+                            <a href="javascript:;" ng-click="changeTab(WAREHOUSE_STATUS.AVAILABLE)"> 可用仓库({{availableSum}})</a>
+                        </li>
+                        <li ng-class="{'active':queryStatus==WAREHOUSE_STATUS.UN_AVAILABLE}">
+                            <a href="javascript:;" ng-click="changeTab(WAREHOUSE_STATUS.UN_AVAILABLE)"> 失效仓库({{unavailableSum}})</a>
+                        </li>
+                        <li ng-class="{'active':queryStatus==WAREHOUSE_STATUS.WAIT_FOR_INIT}">
+                            <a href="javascript:;" ng-click="changeTab(WAREHOUSE_STATUS.WAIT_FOR_INIT)"> 待初始化仓库({{unInitSum}})</a>
+                        </li>
+                    </ul>
+                    <div class="actions">
+                        <a class="btn green btn-sm pull-right" href="{{domainConfig.hulkDomain}}/hulk/warehouse/initFileDownload">模板下载</a>
+                        <a class="marginRight5 btn btn-orange btn-sm pull-right" ui-sref="addForm">新增仓库</a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="row marginBottom10 marginTop20">
+                        <div class="col-md-2">
+                            <h5 class="blueFont">仓库列表</h5>
+                        </div>
+                        <div class="actions col-md-10">
+                            <div class="no-div-padding col-md-11 form-horizontal">
+                                <div class="control-group col col-md-3">
+                                    <label class="col-md-4 control-label">仓库名称</label>
+                                    <div class="paddingLeft5 col-md-8">
+                                        <input type="text" class="form-control" ng-model="queryParameters.name">
+                                    </div>
+                                </div>
+                                <div class="control-group col col-md-3">
+                                    <label class="col-md-4 control-label">地址</label>
+                                    <div class="paddingLeft5 col-md-8">
+                                        <input type="text" class="form-control" ng-model="queryParameters.address">
+                                    </div>
+                                </div>
+                                <div class="control-group col col-md-3">
+                                    <label class="col-md-4 control-label">联系人</label>
+                                    <div class="paddingLeft5 col-md-8">
+                                        <input type="text" class="form-control" ng-model="queryParameters.contactor">
+                                    </div>
+                                </div>
+                                <div class="control-group col col-md-3">
+                                    <label class="col-md-4 control-label">联系方式</label>
+                                    <div class="paddingLeft5 col-md-8">
+                                        <input type="text" class="form-control" ng-model="queryParameters.contactorPhone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <span class="input-group-btn">
+                                <button class="btn blue" type="button" ng-click="queryWarehouseList()">搜索</button>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active " id="tab_0">
+                            <div class="table-scrollable">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>仓库名称</th>
+                                            <th>仓库地址</th>
+
+                                            <th>仓库联系人</th>
+                                            <th>仓库联系方式</th>
+                                            <th>仓库类型</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="warehouse in warehouseList">
+                                            <td ng-bind="$index+1"></td>
+                                            <td>{{warehouse.name}}</td>
+                                            <td>{{warehouse.address}}</td>
+                                            <td>{{warehouse.contactor}}</td>
+                                            <td>{{warehouse.contactorPhone}}</td>
+                                            <td>{{warehouse.type|warehouseTypeFilter}}</td>
+                                            <td><span ng-class="{'yellowFont':warehouse.status=={{WAREHOUSE_STATUS.UN_AVAILABLE}},'greenFont':warehouse.status=={{WAREHOUSE_STATUS.AVAILABLE}}}">{{warehouse.status | warehouseStatusFilter}}</span></td>
+                                            <td>
+                                                <div class="row">
+                                                <a href="#/warehouseDt/{{warehouse.id}}" class="btn btn-sm green">查看</a>
+                                                <a class="btn btn-sm green" ngf-select ng-model="warehouse.file" ngf-multiple="false" ng-if="warehouse.status==WAREHOUSE_STATUS.WAIT_FOR_INIT">初始化</a>
+                                                <span ng-if="warehouse.file">{{warehouse.file.name}}</span>
+                                                <a class="btn btn-sm green" ng-if="warehouse.file" ng-click="upload(warehouse)">上传</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="centerDiv">
+                                <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                                    max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

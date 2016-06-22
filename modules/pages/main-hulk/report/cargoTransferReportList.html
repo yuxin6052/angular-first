@@ -1,0 +1,110 @@
+<!-- <script src="lib/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+-->
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#deliveryBatchList">我的报表</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">货权转让报表</span>
+    </li>
+</ul>
+<div class="row" ng-controller="cargoTransferReportList" ng-init="init()">
+    <div class="col-md-12">
+        <div class="portlet light bordered ">
+            <div class="portlet-body form">
+                <div class="row marginBottom10 marginTop20" >
+                      <div class="actions col-md-12">
+                          <div class="no-div-padding col-md-10 form-horizontal">
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">品名</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <select class="form-control input-sm" ng-options="p.id as p.productCategoryName for p in productCategoryList" ng-model="queryParameters.productCategoryId"></select>
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">规格</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <select class="form-control input-sm" ng-options="m.id as m.modelName for m in modelList" ng-model="queryParameters.modelId"></select>
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">品牌</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <select class="form-control input-sm" ng-options="b.id as b.brandName for b in brandList" ng-model="queryParameters.brandId"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="no-div-padding col-md-10 form-horizontal padTop10">
+                          <div class="control-group col col-md-4">
+                              <label class="col-md-4 control-label">出让货主</label>
+                              <div class="paddingLeft5 col-md-8">
+                                  <input type="text" class="form-control" ng-model="queryParameters.fromOwnerName">
+                              </div>
+                          </div>
+                          <div class="control-group col col-md-4">
+                              <label class="col-md-4 control-label">受让货主</label>
+                              <div class="paddingLeft5 col-md-8">
+                                  <input type="text" class="form-control" ng-model="queryParameters.toOwnerName">
+                              </div>
+                          </div>
+                          <div class="control-group col col-md-4">
+                              <label class="col-md-4 control-label">时间</label>
+                              <div class="col-md-8">
+                                  <div class="paddingLeft5 input-group date-picker input-daterange" data-date-format="yyyy-mm-dd">
+                                      <input type="text" class="form-control input-sm" name="from" ng-model="queryParameters.date" />
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="input-group-btn">
+                                <button class="btn blue" type="button" ng-click="queryCargoTransferReportList()">搜索</button>
+                            </span>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="input-group-btn">
+                                <button down-file="{{domainConfig.hulkDomain}}hulk/report/transfer?warehouseId={{warehouseId}}&date={{queryParameters.date}}&productCategoryId={{queryParameters.productCategoryId}}&modelId={{queryParameters.modelId}}&brandId={{queryParameters.brandId}}&fromOwnerName={{queryParameters.fromOwnerName}}&toOwnerName={{queryParameters.toOwnerName}}&isExport=true" down-file-type="xlsx" file-name="货权转让报表" class="btn blue">导出</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active ">
+                        <div class="portlet">
+                            <div class="portlet-title noBorder">
+                                <ul class="nav fl col-md-12 listHeader">
+                                    <li class="col-md-1">序号</li>
+                                    <li class="col-md-1">品名</li>
+                                    <li class="col-md-1">品牌</li>
+                                    <li class="col-md-1">规格</li>
+                                    <li class="col-md-1">毛重</li>
+                                    <li class="col-md-1">净重</li>
+                                    <li class="col-md-1">数量</li>
+                                    <li class="col-md-2">出让货主</li>
+                                    <li class="col-md-2">受让货主</li>
+                                    <li class="col-md-1">库位</li>
+                                </ul>
+                            </div>
+                            <div class="portlet-body ">
+                                <ul class="nav nav-tabs no-animate fl col-md-12 padding10 font12" ng-repeat="obj in transferReportDtlList">
+                                        <li class="col-md-1" ng-bind="$index+1">序号</li>
+                                        <li class="col-md-1" nopadding>{{obj.productCategoryName}}</li>
+                                        <li class="col-md-1" nopadding>{{obj.modelName}}</li>
+                                        <li class="col-md-1" nopadding>{{obj.brandName}}</li>
+                                        <li class="col-md-1" nopadding>{{obj.weightMao}}</li>
+                                        <li class="col-md-1" nopadding>{{obj.weight}}</li>
+                                        <li class="col-md-1" nopadding>{{obj.count}} {{obj.countUnitCode}}</li>
+                                        <li class="col-md-2" nopadding>{{obj.fromOwnerName}}</li>
+                                        <li class="col-md-2" nopadding>{{obj.toOwnerName}}</li>
+                                        <li class="col-md-1" nopadding>{{obj.cardName}}</li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

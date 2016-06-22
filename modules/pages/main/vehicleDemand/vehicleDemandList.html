@@ -1,0 +1,106 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">我的物流订单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#/vehicleDemand">用车需求</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">用车需求列表</span>
+    </li>
+</ul>
+<div class="row " ng-controller="vehicleDemandList">
+    <div class="col-md-12 ">
+        <div class="tabbable-line boxless tabbable-reversed">
+            <div class="portlet light bordered minheight600">
+                <div class="portlet-title tabbable-line ">
+                    <ul class="nav nav-tabs fl col-md-9">
+                        <li ng-class="{'active':tabpane==0}">
+                            <a href="javascript:;" ng-click="queryDemand()"> 全部需求({{totalItems}})</a>
+                        </li>
+                        <li ng-class="{'active':tabpane==1}">
+                            <a href="javascript:;" ng-click="queryDemand('1')"> 未处理 ({{unhandledSum}})</a>
+                        </li>
+                        <li ng-class="{'active':tabpane==2}">
+                            <a href="javascript:;" ng-click="queryDemand('2')"> 已处理 ({{handledSum}})</a>
+                        </li>
+                    </ul>
+                    <div class="actions col-md-3">
+                        <div class="input-group input-group-sm" style="float:right">
+                            <!-- <input type="text" class="form-control" placeholder="模糊搜索">
+                            <span class="input-group-btn">
+                                <button class="btn blue" type="button">搜索</button>
+                            </span> -->
+                            <a class="btn btn-sm btn-success" href="#/vehicleDemandAdd">
+                                <i class="fa fa-plus"></i> 新增用车需求
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="tab-content">
+                        <div class="tab-pane active " id="tab_0">
+                            <div class="table-scrollable">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>编号</th>
+                                            <th>需求编号</th>
+                                            <th>取货单位</th>
+                                            <th>到货单位</th>
+                                            <th>取货时间</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="demand in demandList|filter:titleFilter">
+                                            <td ng-bind="$index+1"></td>
+                                            <td>{{demand.vehicleDemandNo}}</td>
+                                            <td>{{demand.fromWarehouseName}}</td>
+                                            <td>{{demand.toWarehouseName}}</td>
+                                            <td>{{demand.startDate}}</td>
+                                            <td><span ng-class="{'yellowFont':demand.status=='未处理'}" ng-class="{'greenFont':demand.status=='已处理'}">{{demand.status}}</span></td>
+                                            <td>
+                                                <a href="/#/vehicleDemandDt/{{demand.id}}" class="btn btn-sm green">查看详情</a>
+                                                <a href="javascript:;" class="earthclick" ng-click="showMap('',demand.vehicleDemandNo)" ng-if="demand.status=='已派车'"></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <uib-pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="showMap.html">
+    <div class="modal-header">
+        <h5><i class="icon-notebook"></i>MAP</h5>
+    </div>
+    <div class="modal-body">
+        <div class="portlet-body gps-model" style="height:500px;width:800px;">
+            <div id="map2" style="height:500px;width:800px;"></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="cargolist" id='cargolist'>
+            <div class="houselist clearfix">
+                <div class="col-md-3" style="padding-left: 0px"><i class="cargoColor house"></i><span>取货仓库:{{fromWarehouseName}}</span></div>
+                <div class="col-md-4"><i class="cargoColor house2"></i><span>到货仓库:{{toWarehouseName}}</span></div>
+            </div>
+            <div class="cargo" ng-repeat="item in items track by $index">
+                <input type="checkbox" ng-click="togglegpsdata($index)" ng-checked="getchecked($index)" class="checkcargo">
+                <i class="cargoN car"></i>
+                <span>
+                    货单:({{item.cargoNo}})&nbsp;&nbsp;
+                    司机：叶伟&nbsp;&nbsp;
+                    货物：铜－24
+                </span>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,172 @@
+/*fix0428*/
+.portlet.light.bordered>.portlet-title {
+    border-bottom:none!important;
+}
+.page-header.navbar .page-logo .logo-default {
+    margin: 15px 10px 0!important;
+}
+
+.page-sidebar .page-sidebar-menu .sub-menu>li>a{
+	text-indent: 25px;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+	line-height: 30px!important; 
+}
+.driverlisttable .table tbody tr td:first-child{
+	text-align: center;
+}
+.table tbody tr th:first-child{
+	// text-align: center;
+}
+.driverlisttable .table>thead:first-child>tr:first-child>th:first-child{
+    text-align: center;
+}
+.fixpd7{
+	padding-top: 7px!important;
+}
+.textcenter{
+	text-align: center!important;
+}
+
+.temborder{
+	margin-top:5px;
+	border: 1px solid #999;
+    padding: 20px;
+}
+
+.tempaddingcolor{
+	background-color:#ECECEC!important;
+	padding:5px;
+}
+
+
+/*fix0503*/
+.col-md-new-3{
+	width: 105px;
+	text-align: right;
+}
+
+/*fix0504*/
+.login-bg{
+	background: url('/statics/lib/img/bg.jpg') no-repeat center top;
+}
+
+.imgArea img{width:100px;}
+.dashBox-small img{width:100px;}
+
+.portlet-body.gps-model{
+	background: url('/statics/lib/img/ajax-loading.gif') no-repeat center center;
+}
+
+
+#imgCert img{max-height: 265px;max-width: 475px;min-height: 200px;width: 100%;}
+
+.btn-fix-zankai{
+	font-style: normal!important;
+	height:30px!important;
+	line-height: 20px!important;
+	padding: 0px 5px!important;
+}
+.btn-fix-zankai i{
+	font-style: normal!important;
+	line-height: 28px!important;
+}
+.red-neednum{
+	padding:5px;
+}
+label{
+	max-width: none!important;
+}
+.btn-fix-trans{
+	line-height: 28px!important;
+	height:30px!important;
+	padding:0 5px!important;
+}
+
+body{
+	min-width: 1300px!important;
+}
+
+.captain-body .portlet.light.bordered th{
+	color:#68808A!important; 
+}
+
+.captain-body .portlet.light.bordered td{
+	color:#7E96A0!important;
+	font-size: 12px!important;
+	padding:5px!important;
+}
+
+.captain-body .table > tbody > tr > td｛
+    
+｝
+.vehicledispatchrfix{
+	    //border-top: 1px solid #333;
+	    padding-top: 5px!important;
+}
+.captain-body .portlet>.portlet-title{
+		color:#7E96A0!important
+}
+
+.wid100{min-width: 100px!important;}
+
+.earthclick{
+	display: inline-block;
+	width: 34px;
+	height:34px;
+	border-radius: 50%;
+	color: #FFF;
+    background: #32c5d2 url(../images/earth-01.png) no-repeat center center;
+    border-color: #32c5d2;
+    vertical-align: middle;
+}
+.cargolist{
+	witdh:100%;
+	height:100px;
+	color:#7E96A0;
+}
+.car{
+	display: inline-block;
+	width: 34px;
+	height:34px;
+	background: url(../images/markercar.png) no-repeat center center;
+}
+.house{
+	display: inline-block;
+	width: 34px;
+	height:34px;
+	background: url(../images/markerend.png) no-repeat center center;
+}
+.house2{
+	display: inline-block;
+	width: 34px;
+	height:34px;
+	background: url(../images/markerstart.png) no-repeat center center;
+}
+.houselist, .cargolist{
+	text-align: left;
+	width: 100%;
+}
+.houselist .col-md-3{
+	height:30px;
+	line-height: 30px;
+}
+
+.houselist span{
+	vertical-align: top;
+    display: inline-block;
+    line-height: 36px;
+    height: 30px;
+}
+.cargolist span{
+	font-size: 12px;
+	vertical-align: top;
+    display: inline-block;
+    line-height: 36px;
+    height: 30px;
+}
+.checkcargo{
+	margin-top: 12px!important;
+    display: inline;
+    vertical-align: top;
+}

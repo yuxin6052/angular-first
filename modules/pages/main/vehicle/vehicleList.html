@@ -1,0 +1,214 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">运力资源管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#/vehicleList">车辆管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">车辆管理列表</span>
+    </li>
+</ul>
+<div class="row " ng-controller="vehicleList">
+    <div class="col-md-12 ">
+        <div class="tabbable-line boxless tabbable-reversed">
+            <div class="portlet light bordered minheight600">
+                <div class="portlet-title tabbable-line ">
+                    <div class="col-md-9" style="padding-left: 0;">
+                        <a class="btn btn-sm btn-success" href="#/vehicleEdit/">
+                            <i class="fa fa-plus"></i> 新增车辆
+                        </a>
+                    </div>
+                    <!-- <div class="col-md-3">
+                        <div class="input-group input-group-sm ">
+                            <input type="text" class="form-control" placeholder="模糊搜索">
+                            <span class="input-group-btn">
+                                                        <button class="btn blue" type="button">搜索</button>
+                                                    </span>
+                        </div>
+                    </div> -->
+                    <div class="clearfix"></div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="tab-content">
+                        <div class="tab-pane active " id="tab_0">
+                            <div class="table-scrollable driverlisttable">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>车牌号</th>
+                                            <th>品牌</th>
+                                            <th>轴数</th>
+                                            <th>核定载重</th>
+                                            <th>已绑GPS</th>
+                                            <th>状态</th>
+                                            <th width=250>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="vehicle in vehicleList|filter:titleFilter">
+                                            <td ng-bind="$index+1"></td>
+                                            <td>{{vehicle.toolNo}}</td>
+                                            <td>{{vehicle.brand}}</td>
+                                            <td>{{vehicle.axisNum}}</td>
+                                            <td>{{vehicle.maxLoad}}吨</td>
+                                            <td>{{vehicle.gpsCode}}</td>
+                                            <td>{{vehicle.status | vehicleStatus}}</td>
+                                            <td>
+                                                <a href="/#/vehicleDt/{{vehicle.id}}" class="btn btn-sm green">查看</a>
+                                                <a ng-if="vehicle.status==100" class="btn btn-sm blue-madison" ng-click="changeStatus(vehicle,200)">激活</a>
+                                                <a ng-if="vehicle.status==200" class="btn btn-sm blue-madison" ng-click="changeStatus(vehicle,100)">冻结</a>
+                                                <a ng-if="vehicle.status==100" class="btn btn-sm btn-danger" ng-click="deleteVehicle(vehicle)">删除</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <uib-pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h5><i class="icon-notebook"></i>新增车辆</h5>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal" ng-init="init()">
+            <div class="form-body" id="modalFormBody">
+                <div class="form-group">
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>车队编号</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control wid100" ng-model="vehicle.fleetNo">
+                    </div>
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>车牌号</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control wid100" ng-model="vehicle.toolNo">
+                    </div>
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>品牌</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control wid100" ng-model="vehicle.brand">
+                    </div>
+                    <!--<label class="col-md-1 control-label"><span class="redFont">*</span>公司名称</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control input-small" ng-model="vehicle.companyName">
+                                    
+                                    </div>-->
+                </div>
+                <div class="form-group">
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>轴数</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control wid100" ng-model="vehicle.axisNum">
+                    </div>
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>核定载重</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control wid100" ng-model="vehicle.maxLoad">
+                    </div>
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>总重量</label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control wid100 " ng-model="vehicle.totalMass">
+                    </div>
+                    <!--<label class="col-md-1 control-label"><span class="redFont">*</span>车辆类型</label>
+                                    <div class="col-md-1">
+                                        <select class="form-control" ng-model="vehicle.toolType">
+                                                                                        <option value="01">汽车</option>
+                                                                                        <option value="02">轮船</option>
+                                                                                        <option value="03">飞机</option>
+                                                                                    
+                                                                                    </select>
+                                    </div>-->
+                    <!--<label class="col-md-1 control-label"><span class="redFont">*</span>型号</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control wid100" placeholder="Enter text">
+
+                                    </div>-->
+                </div>
+                <div class="form-group">
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>车架号</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control wid100" ng-model="vehicle.recognizeCode">
+                    </div>
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>发动机号</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control wid100" ng-model="vehicle.engineCode">
+                    </div>
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>车身颜色</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control wid100" ng-model="vehicle.surfaceColor">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <!--<label class="col-md-1 control-label"><span class="redFont">*</span>外壳尺寸</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control wid100" ng-model="vehicle.overallSize">
+                                    
+                                    </div>-->
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>使用性质</label>
+                    <div class="col-md-3">
+                        <select class="form-control wid100" ng-model="vehicle.useQulity">
+                            <option value="01">自购</option>
+                            <option value="02">租赁</option>
+                        </select>
+                    </div>
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>购入日期</label>
+                    <div class="col-md-3 date date-picker" data-date-format="yyyymmdd">
+                        <input type="text" class="form-control wid100" ng-model="vehicle.purchaseDate">
+                        <!--<span class="input-group-btn">
+                                            <button class="btn default" type="button">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>-->
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label class="col-md-1 control-label"><span class="redFont">*</span>状态</label>
+                    <div class="col-md-3">
+                        <input type="radio" name="optionsRadios" ng-model="vehicle.status" value="200"> 有效
+                        <input type="radio" name="optionsRadios" ng-model="vehicle.status" id="" value="100"> 无效
+                    </div>
+                </div>
+                <h5>证件照片</h5>
+                <div class="form-group last">
+                    <div class="col-md-12">
+                        <div class="dashBox-small">
+                        </div>
+                        <div class="dashBox-small">
+                        </div>
+                    </div>
+                </div>
+                <h5>绑定GPS</h5>
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>GPS设备号</th>
+                                <th>GPS设备名</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="gps in GPSList">
+                                <td>{{driver.name}}</td>
+                                <td>{{gps.gpsDeviceCode}}</td>
+                                <td>{{gps.gpsDeviceName}}</td>
+                                <td>
+                                    <a href="/#/vehicleDemandDt/{{gps.id}}" class="btn btn-sm green">查看详情</a>
+                                    <button ng-click="bindgps(gps.id)" class="btn btn-sm blue-madison displayInline" ng-class="{'disabled':(bindgps===gps.id)}" ng-show="!(bindgps==gps.id)">绑定</button>
+                                    <button ng-click="unbindgps(gps.id)" class="btn btn-sm btn-warning displayNone" ng-class="{'displayInline':bindgps==gps.id}">解绑</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn green-haze" type="button" ng-click="ok()">确定</button>
+        <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+    </div>
+</script>

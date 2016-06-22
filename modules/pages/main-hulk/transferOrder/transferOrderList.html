@@ -1,0 +1,209 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#deliveryBatchList">单据管理</a> <i class="fa fa-circle"></i>
+    </li>
+
+    <li>
+        <span class="active">货权转让单管理</span>
+    </li>
+</ul>
+<div class="row " ng-controller="transferOrderList" ng-init="init()">
+
+    <div class="col-md-12">
+        <div class="portlet light bordered  ">
+            <div class="portlet-title tabbable-line ">
+                <ul class="nav nav-tabs fl">
+                    <li ng-class="{'active':!queryStatus}">
+                        <a href="javascript:;" ng-click="changeTab()"> 全部({{totalSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus=='100'}">
+                        <a href="javascript:;" ng-click="changeTab('100')"> 待处理 ({{unhandledSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus=='110'}">
+                        <a href="javascript:;" ng-click="changeTab('110')"> 处理中 ({{handlingSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus=='120'}">
+                        <a href="javascript:;" ng-click="changeTab('120')"> 转让完成 ({{completeSum}})</a>
+                    </li>
+                </ul>
+                <!-- //ng-if="system == SYSTEM.HULK_ENTERPRISE" -->
+                <!-- <div class="actions" >
+                    <a class="btn btn-orange btn-sm" href="#transferOrderAdd/new" >
+                        <i class="fa fa-plus"></i> 添加货权转让单
+                    </a>
+                </div> -->
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body form">
+                <div class="row marginBottom10 marginTop20" ng-if="system == SYSTEM.HULK_WAREHOUSE">
+                    <div class="col-md-3">
+                        <h5 class="blueFont">过户单列表</h5>
+                    </div>
+                    <div class="actions col-md-9">
+                        <div class="no-div-padding col-md-11 form-horizontal">
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">转让单号</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control" ng-model="queryParameters.cargoNo">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">出让公司</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control" ng-model="queryParameters.fromOwnerName">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">受让货主</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control" ng-model="queryParameters.toOwnerName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="input-group-btn">
+                                <button class="btn blue" type="button" ng-click="queryData()">搜索</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row marginBottom10 marginTop20" ng-if="system == SYSTEM.HULK_ENTERPRISE">
+                    <div class="col-md-5">
+                        <h5 class="blueFont">过户单列表</h5>
+                    </div>
+                    <div class="actions col-md-7">
+                        <div class="no-div-padding col-md-10 form-horizontal">
+                            <div class="control-group col col-md-6">
+                                <label class="col-md-4 control-label">转让单号</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control" ng-model="queryParameters.cargoNo">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">受让货主</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control" ng-model="queryParameters.toOwnerName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="input-group-btn">
+                                <button class="btn blue" type="button" ng-click="queryData()">搜索</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active ">
+
+                        <div class="portlet">
+                            <div class="portlet-title noBorder">
+                                <ul class="nav fl col-md-12 listHeader">
+                                    <li class="col-md-1">序号</li>
+                                    <li class="col-md-2">转让单号</li>
+                                    <li class="col-md-2">出让公司</li>
+                                    <li class="col-md-2">受让货主</li>
+                                    <li class="col-md-2">转让时间</li>
+
+                                    <li class="col-md-2">状态</li>
+                                    <li class="col-md-1">操作</li>
+                                </ul>
+                            </div>
+                            <div class="portlet-body ">
+                                <div class="portlet" ng-repeat="obj in dataList">
+                                    <div class="portlet-title">
+                                        <ul class="nav fl col-md-12 ">
+                                            <li class="col-md-1" ng-bind="$index+1"></li>
+                                            <li class="col-md-2">{{obj.cargoNo}}</li>
+                                            <li class="col-md-2">{{obj.fromOwnerName}}</li>
+                                            <li class="col-md-2">{{obj.toOwnerName}}</li>
+                                            <li class="col-md-2">{{obj.transferDate}}</li>
+
+
+                                            <li class="col-md-2">{{obj.status|transferStatusFilter}}</li>
+                                            <li class="col-md-1">
+                                                <button class="btn btn-sm green" ng-click="getDetail(obj)">展开详情</button>
+
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="portlet-body lightGrey padding10" ng-show="obj.expand">
+                                        <div class="row">
+                                            <h4 class="col-sm-8"><span class="purpleLeftBorder paddingLeft5"><span class="font14">基本信息</span></span></h4>
+                                            <div class="col-sm-2 padTop5">
+                                                <a class="btn btn-sm green" ng-if="obj.status == 120" href="{{domainConfig.hulkDomain}}/hulk/cargoTransfer/print/{{obj.cargoTransferId}}">打印过户单</a>
+                                            </div>
+                                        </div>
+                                        <ul class="nav col-md-12 greyBorder lineHeight32 marginBottom10 whiteBackgroud">
+                                            <li class="col-md-2">操作人：</li>
+                                            <li class="col-md-2">{{obj.opPerson}}</li>
+                                            <li class="col-md-2">审核人：</li>
+                                            <li class="col-md-6">{{obj.approvePerson}}</li>
+                                            <li class="col-md-1">备注：</li>
+                                            <li class="col-md-11">{{obj.remark}}</li>
+                                        </ul>
+                                        <h4><span class="purpleLeftBorder "><span class="font14 paddingLeft5">入库货物</span></span></h4>
+                                        <div id="stock">
+                                            <ul class="nav col-md-12 listHeader greyBorder">
+                                                <li class="col-md-1 alignCenter">品名</li>
+                                                <li class="col-md-2">数量/重量</li>
+                                                <li class="col-md-1">品牌</li>
+                                                <li class="col-md-1">库位</li>
+                                                <li class="col-md-5">货物详情</li>
+                                                <li class="col-md-1">状态</li>
+                                                <li class="col-md-1">操作</li>
+
+                                            </ul>
+                                            <div class="col-md-12 noHorizontalPadding marginTop5">
+                                                <div class="note note-info" ng-repeat="detail in obj.cargoTransferNoticeDtlVos">
+                                                    <ul class="nav col-md-12">
+                                                        <li class="col-md-1">{{detail.productName}}</li>
+                                                        <li class="col-md-2">数量：{{detail.totalCount}}{{detail.countUnitCode}}/总重量{{detail.totalWeight}}吨</li>
+                                                        <li class="col-md-1">{{detail.brandName}}</li>
+                                                        <li class="col-md-1">{{detail.cardName}}</li>
+                                                        <li class="col-md-5">
+                                                            <ul class="nav col-md-10" ng-repeat="positon in detail.cargoTransferDtlVos">
+                                                                <li class="col-md-1" ng-if="obj.status!=TRANSFER_STATUS.TRANSFER_SUCCESS"><input type="checkbox" ng-click="changeChecked(positon)"
+                                                                        ng-checked="positon.isSelected=='1'" /></li>
+                                                                <li class="col-md-4">货位:{{positon.placeCode}}
+
+                                                                    <span style="padding-left:5px;">数量:{{positon.count}}{{positon.countUnitCode}}</span></li>
+                                                                <li class="col-md-3">毛重: {{positon.weightMao}}吨
+                                                                </li>
+                                                                <li class="col-md-4">净重: {{positon.weight}}吨
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="col-md-1">{{detail.status|transferNoticeStatusFilter}}</li>
+                                                        <li class="col-md-1">
+                                                            <button class="btn btn-sm blue" ng-if="detail.status==TRANSFER__NOTICE_STATUS.NOT_CONFIRMED&&obj.status!=TRANSFER_STATUS.TRANSFER_SUCCESS&&system == SYSTEM.HULK_WAREHOUSE"
+                                                                ng-click="makeSure(detail)">确认转让</button>
+                                                            <button class="btn btn-sm blue" ng-if="detail.status==TRANSFER__NOTICE_STATUS.CONFIRMED&&obj.status!=TRANSFER_STATUS.TRANSFER_SUCCESS&&system == SYSTEM.HULK_WAREHOUSE"
+                                                                ng-click="cancelConfirm(detail)">取消转让</button>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-offset-10 col-md-2"><button class="btn btn-sm green" ng-if="obj.status!=TRANSFER_STATUS.TRANSFER_SUCCESS&&system == SYSTEM.HULK_WAREHOUSE"
+                                                ng-click="transfer(obj)">全部过户</button></div>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="centerDiv">
+                                <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                                    max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

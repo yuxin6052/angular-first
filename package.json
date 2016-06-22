@@ -1,0 +1,28 @@
+{
+  "name": "Exingcai-fis3-front",
+  "version": "0.0.2",
+  "description": "build angular app with fis3",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhangtao07/fis3-angular-demo.git"
+  },
+  "keywords": [
+    "angular",
+    "fis",
+    "fis3",
+    "client-side"
+  ],
+  "dependencies": {
+    "file-saver": "^1.3.2",
+    "fis-parser-less": "*",
+    "fis-preprocessor-annotate": "*",
+    "fis3-hook-module": "*",
+    "fis3-postpackager-loader": "*"
+  },
+  "author": "zhangtao07",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhangtao07/fis3-angular-demo/issues"
+  },
+  "homepage": "http://fis.baidu.com"
+}

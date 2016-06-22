@@ -1,0 +1,174 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">运力资源管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#/driverList">司机管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">司机详情 </span>
+    </li>
+</ul>
+<div class="row " ng-controller="driverDt">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered ">
+            <div class="portlet-title">
+                <div class="caption"> <i class="icon-social-dribbble font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">基本信息</span>
+                </div>
+                <div class="actions">
+                    <a class="btn blue" href="#/driverEdit/{{userId}}">编辑</a>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <div class="form-horizontal">
+                    <div class="form-body" id="modalFormBody">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label"><span class="redFont">*</span>司机姓名</label>
+                            <div class="col-md-2 padTop10">
+                                {{newDriver.name}}
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-1 control-label" style="width:100px;"><span class="redFont">*</span>性别</label>
+                            <div class="col-md-2 padTop10">
+                                {{newDriver.gender}}
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-1 control-label"><span class="redFont">*</span>出生日期</label>
+                            <div class="col-md-2 padTop10">
+                                {{newDriver.birthday}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-1 control-label"><span class="redFont">*</span>证件号</label>
+                            <div class="col-md-2 padTop10">
+                                {{newDriver.identity}}
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-1 control-label" style="width:100px;"><span class="redFont">*</span>准驾车型</label>
+                            <div class="col-md-2 padTop10">
+                                {{newDriver.driverLicenseType}}
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-1 control-label"><span class="redFont">*</span>联系电话</label>
+                            <div class="col-md-2 padTop10">
+                                {{newDriver.mobile}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-1 control-label"><span class="redFont">*</span>从业资格类型</label>
+                            <div class="col-md-2 padTop10">
+                                {{newDriver.professionQulificationType}}
+                            </div>
+                            <div class="col-md-1"></div>
+                            <label class="col-md-1 control-label" style="width:100px;"><span class="redFont">*</span>从业资格证号码</label>
+                            <div class="col-md-3 padTop10">
+                                {{newDriver.professionQulificationCode}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-1 control-label"><span class="redFont">*</span>家庭住址</label>
+                            <div class="col-md-3 padTop10">
+                                {{newDriver.address}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-1 control-label"><span class="redFont">*</span>状态</label>
+                            <div class="col-md-1 padTop10">
+                                {{newDriver.isAvaliable}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet light bordered ">
+            <div class="portlet-title">
+                <div class="caption"> <i class="icon-social-dribbble font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">身份证信息</span>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <div class="form-horizontal">
+                    <div class="form-body" id="modalFormBody">
+                        <div class="form-group ">
+                            <div class="col-md-4">
+                                <h5><span class="redFont">*</span>证件照片</h5>
+                                <div class="dashBox-small">
+                                <a ng-if="newDriver.driverLicenseFaceFile!=null" class=“image-preview” href="{{imgBaseurl+newDriver.driverLicenseFaceFile}}" data-lightbox="idcards" data-title="证件照片">
+                                    <img ng-if="newDriver.driverLicenseFaceFile!=null" ng-src={{imgBaseurl+newDriver.driverLicenseFaceFile}}>
+                                    </a>
+                                </div>
+                                <div class="dashBox-small">
+                                <a ng-if="newDriver.driverLicenseBackFile!=null" class=“image-preview” href="{{imgBaseurl+newDriver.driverLicenseBackFile}}" data-lightbox="idcards" data-title="证件照片">
+                                    <img ng-if="newDriver.driverLicenseBackFile!=null" ng-src={{imgBaseurl+newDriver.driverLicenseBackFile}}>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-4">
+                                <h5><span class="redFont">*</span>驾驶证照片</h5>
+                                <div class="dashBox-small">
+                                </div>
+                                <div class="dashBox-small">
+                                </div>
+                            </div> -->
+                            <div class="col-md-4">
+                                <h5><span class="redFont">*</span>从业资格证照片</h5>
+                                <div class="dashBox-small">
+                                    <a ng-if="newDriver.professionQulificationFaceFile!=null" class=“image-preview” href="{{imgBaseurl+newDriver.professionQulificationFaceFile}}" data-lightbox="require" data-title="从业资格证照片">
+                                        <img ng-if="newDriver.professionQulificationFaceFile!=null" ng-src={{imgBaseurl+newDriver.professionQulificationFaceFile}}>
+                                    </a>
+                                </div>
+                                <div class="dashBox-small">
+                                    <a ng-if="newDriver.professionQulificationBackFile!=null" class=“image-preview” href="{{imgBaseurl+newDriver.professionQulificationBackFile}}" data-lightbox="require" data-title="从业资格证照片">
+                                        <img ng-if="newDriver.professionQulificationBackFile!=null" ng-src={{imgBaseurl+newDriver.professionQulificationBackFile}}>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet light bordered ">
+            <div class="portlet-title">
+                <div class="caption"> <i class="icon-social-dribbble font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">车辆绑定</span>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <div class="form-horizontal">
+                    <div class="form-body" id="modalFormBody">
+                        <div class="table-scrollable">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>车牌号</th>
+                                        <th>品牌</th>
+                                        <th>轴数</th>
+                                        <th>核定载重</th>
+                                        <th>已绑GPS</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="newDriver.toolNo!=null">
+                                        <td>{{newDriver.toolNo}}</td>
+                                        <td>{{newDriver.brand}}</td>
+                                        <td>{{newDriver.axisNum}}</td>
+                                        <td>{{newDriver.maxLoad}}</td>
+                                        <td>{{newDriver.gpsDeviceCode}}</td>
+                                        <td>
+                                            <!--  <a href="/#/vehicleDemandDt/{{demand.id}}" class="btn btn-sm green" ng-if="demand.id!=null">查看详情</a> -->
+                                            <a class="btn blue-madison" ng-click="unBindvehicle()" ng-if="newDriver.toolNo!=null">解绑</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

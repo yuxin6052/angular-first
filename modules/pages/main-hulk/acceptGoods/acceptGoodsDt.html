@@ -1,0 +1,675 @@
+<!-- <script src="lib/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+-->
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#deliveryBatchList">我的单据</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#acceptGoodsList">我的收货单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">收货单详情</span>
+    </li>
+</ul>
+<div class="row " ng-controller="acceptGoodsDt" ng-init="init()">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered ">
+            <!-- <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-social-dribbble font-green"></i>
+            <span class="caption-subject font-green bold uppercase">基本信息</span>
+        </div>
+
+    </div>
+    -->
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-social-dribbble font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">基本信息</span>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <div class="form-horizontal">
+                    <div class="form-body" id="acceptForm">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-2 control-label">收货批次号：</div>
+                                <div class="col-md-3 control-label alignLeft">{{basicInfo.batchNo}}</div>
+                                <div class="col-md-2 control-label">承运单位名称：</div>
+                                <div class="col-md-2 control-label alignLeft">{{basicInfo.wlCompanyName}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 control-label">承运单位联系人：</div>
+                                <div class="col-md-3 control-label alignLeft">{{basicInfo.wlCompanyPerson}}</div>
+                                <div class="col-md-2 control-label">承运单位联系方式：</div>
+                                <div class="col-md-1 control-label alignLeft">{{basicInfo.wlCompanyPhone}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 control-label">货主：</div>
+                                <div class="col-md-3 control-label alignLeft">{{basicInfo.ownerName}}</div>
+                                <div class="col-md-2 control-label">货主联系方式：</div>
+                                <div class="col-md-1 control-label alignLeft">{{basicInfo.ownerPhone}}</div>
+                                <div class="col-md-2 control-label">货主证件号：</div>
+                                <div class="col-md-1 control-label alignLeft">{{basicInfo.ownerCardNum}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 control-label">货物备注：</div>
+                                <div class="col-md-3 control-label alignLeft">{{basicInfo.remark}}</div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="portlet light bordered ">
+            <div class="portlet-title ">
+                <div class="caption">
+                    <i class="icon-social-dribbble font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">收货单列表</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-sm btn-orange" ng-click="openAddAcceptModal()">
+                        <i class="fa fa-plus"></i> 添加收货单
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <ul class="nav listHeader col-md-12">
+                    <li class="col-md-0-5 noHorizontalPadding">序号</li>
+                    <li class="col-md-2 noHorizontalPadding">收货单号</li>
+                    <li class="col-md-1 noHorizontalPadding">创建时间</li>
+                    <li class="col-md-1 noHorizontalPadding">司机姓名</li>
+                    <li class="col-md-1-5 noHorizontalPadding">司机身份证号</li>
+                    <li class="col-md-1 noHorizontalPadding alignCenter">车牌号</li>
+                    <li class="col-md-1 noHorizontalPadding">单车装载</li>
+                    <li class="col-md-1 noHorizontalPadding">验收方式</li>
+                    <li class="col-md-1 noHorizontalPadding">状态</li>
+                    <li class="col-md-2 noHorizontalPadding">操作</li>
+                </ul>
+                <div class="portlet font12" ng-repeat="cargoRecieve in cargoRecieveList">
+                    <div class="portlet-title ">
+                        <ul class="nav nav-tabs fl col-md-12 lineHeight32 paddingBottom5">
+                            <li ng-bind="$index+1" class="col-md-0-5 noHorizontalPadding"></li>
+                            <li class="col-md-2 noHorizontalPadding">{{cargoRecieve.cargoNoShow}}</li>
+                            <li class="col-md-1 noHorizontalPadding">{{cargoRecieve.createdDateStr}}</li>
+                            <li class="col-md-1 noHorizontalPadding " ng-bind="cargoRecieve.driverName"></li>
+                            <li class="col-md-1-5 noHorizontalPadding"> {{cargoRecieve.driverIdentityNum}}</li>
+                            <li class="col-md-1 noHorizontalPadding alignCenter">{{cargoRecieve.carCode}}</li>
+                            <li class="col-md-1 noHorizontalPadding">{{cargoRecieve.carLoadWeight}}吨</li>
+                            <li class="col-md-1 noHorizontalPadding"><span ng-if="cargoRecieve.isCopyCode==1">抄码;</span>
+                            <span ng-if="cargoRecieve.isBigPound==1">过大磅;</span>
+                            <span ng-if="cargoRecieve.isSmallPound==1">过小磅</span>
+                            </li>
+                            <li class="col-md-1 noHorizontalPadding">{{cargoRecieve.status | cargoRecieveStatusFilter}}</li>
+                            <li class="col-md-2 noHorizontalPadding">
+                                <div class="row">
+                                    <a class="wid60 noBgImg btn blue btn-sm" ng-click="expandcargoRecieveDetail(cargoRecieve)">
+                                        <span ng-if="!cargoRecieve.expanded">查看详情</span>
+                                        <span ng-if="cargoRecieve.expanded">收起详情</span>
+                                    </a>
+                                    <!--  <a class="btn btn-sm blue" ng-click="checkCargoRecieve(cargoRecieve)" ng-if="cargoRecieve.status==CARGO_RECIEVE_STATUS.NOT_REACHED&&!cargoRecieve.existCargoOut&&system == SYSTEM.HULK_ENTERPRISE">核对完成</a> -->
+                                    <a class="btn btn-sm blue" ng-click="openAddModal(cargoRecieve)" ng-if="!cargoRecieve.existCargoOut">生成入库单</a>
+                                    <a class="btn btn-sm blue" ng-click="openAddAcceptModal(cargoRecieve)" ng-if="!cargoRecieve.existCargoOut">编辑</a>
+
+                                </div>
+                                 <div class="clearfix"></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="portlet-body lightGrey padding10" ng-show="cargoRecieve.expanded">
+                        <div class="row">
+                            <h4 class="col-sm-8"><span class="purpleLeftBorder paddingLeft5"><span class="font14">货物详情</span></span></h4>
+                            <div class="col-sm-2 padTop5">
+                                <a class="btn btn-sm green" href="{{domainConfig.hulkDomain}}/hulk/cargoRecieve/print/{{cargoRecieve.id}}">打印收货单</a>
+                            </div>
+                        </div>
+                        <div class="table-scrollable">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>品名</th>
+                                        <th>规格/牌号</th>
+                                        <th>品牌</th>
+                                        <th>数量</th>
+                                        <th>数量单位</th>
+                                        <th>重量</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="product in cargoRecieve.productList">
+                                        <td> {{product.productName}} </td>
+                                        <td> {{product.categoryName}} </td>
+                                        <td> {{product.brandName}} </td>
+                                        <td> {{product.count}} </td>
+                                        <td>{{product.countUnitCode}}</td>
+                                        <td> {{product.weight}}吨 </td>
+                                   
+
+                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="centerDiv">
+                    <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                        max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="addModal.html">
+    <form role="form" name="myForm" ng-submit="ok(myForm.$valid)" novalidate>
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <h5><i class="icon-notebook"></i>入库单</h5>
+        </div>
+        <div class="modal-body" ng-init="init()">
+            <div class="portlet">
+
+                <div class="portlet-body " id="stock">
+                    <div class="form-group padTop10" ng-if="isBigPound==1">
+                        <label for="gpsName" class="col-sm-1 control-label" style="text-align:center">过大磅毛重</label>
+                        <div class="col-sm-3" style="padding-left:0px;">
+                            <input type="text" class="form-control input-inline" required name="bigMaoWeight" ng-model="form.bigGrossWeight" placeholder="" onkeypress="return handleEnter(this, event)"><span>吨</span>
+
+                            <div class="redFont padTop5" ng-show="myForm.bigMaoWeight.$dirty&&myForm.bigMaoWeight.$error.required">请填写过大榜毛重.</div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12" ng-repeat="obj in cardProductOwnerVoList">
+                    <ul class="nav col-md-12 listHeader marginTop20" >
+                        <li class="col-md-1 alignCenter">品名:</li>
+                        <li class="col-md-1">{{obj.product.productName}}</li>
+                        <li class="col-md-1">规格/牌号:</li>
+                        <li class="col-md-1">{{obj.product.modelName}}</li>
+                        
+                        <li class="col-md-1">总重量：{{obj.weight}}</li>
+                        <li class="col-md-1">数量：{{obj.count}}{{obj.countUnitCode}}</li>
+
+                        <li class="col-md-1">品牌:</li>
+                         <li class="col-md-1">{{obj.product.brandName}}</li>
+                        <li class="col-md-1">库位:</li>
+                        <li class="col-md-1">{{obj.cardName}}</li>
+
+                        
+                        <!--<li class="col-md-1">生产日期</li>-->
+                    </ul>
+                    <div class="col-md-12 noHorizontalPadding marginTop5">
+                        <div class="note note-info" >
+
+                            <ul class="nav col-md-12">
+                            <li class="col-md-1">货物详情</li>
+                                
+
+                                <li class="col-md-11">
+
+                                    <ul class="nav fl col-md-11 marginBottom5">
+                                    <li class="fl " style="width:6%">序号</li>
+                                        <li class="fl " style="width:14%">批次号</li>
+                                        
+                                        <li class="fl " style="width:8%">抄码毛重</li>
+                                        <li class="fl " style="width:8%">抄码净重</li>
+                                        <li class="fl " style="width:8%" ng-if="isSmallPound==1">小磅毛重</li>
+                                        <li class="fl " style="width:8%" ng-if="isSmallPound==1">小磅净重</li>
+                                        <li class="fl" style="width:8%">货位</li>
+                                        <li class="fl " style="width:12%">RFID</li>
+                                        
+                                        <li class="fl " style="width:12%">生产日期</li>
+                                        <li class="fl " style="width:4%">数量</li>
+                                        <li class="fl" style="width:8%">备注</li>
+                                    </ul>
+                                    <ul class="newPlace nav fl col-md-11 marginBottom5" ng-repeat="place in obj.storageVoList">
+                                      <li class="fl " style="width:6%" ng-bind="$index+1"></li>
+                                        <li style="width:14%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.batchNo{{$parent.$index}}{{$index}}.$touched&&myForm.batchNo{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.productBatch" name="batchNo{{$parent.$index}}{{$index}}"
+                                                required ng-maxlength="30" />
+                                        </li>
+                                       
+                                        <li style="width:8%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.weightMao{{$parent.$index}}{{$index}}.$touched&&myForm.weightMao{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.copyCodeGrossWeight" name="weightMao{{$parent.$index}}{{$index}}"
+                                                required ng-pattern="/^\d+(\.\d{1,6})*$/"  ng-blur="analyseCopyCodeNetWeight(place.copyCodeGrossWeight,$parent.$index,$index)" />
+                                        </li>
+                                        <li style="width:8%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.weight{{$parent.$index}}{{$index}}.$touched&&myForm.weight{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.copyCodeNetWeight" name="weight{{$parent.$index}}{{$index}}"
+                                                required ng-pattern="/^\d+(\.\d{1,6})*$/"/>
+                                        </li>
+                                        <li style="width:8%" ng-if="isSmallPound==1" class="fl paddingRight5" ng-class="{ 'has-error': myForm.weightMao{{$parent.$index}}{{$index}}.$touched&&myForm.weightMao{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.smallGrossWeight" name="weightMao{{$parent.$index}}{{$index}}"
+                                                required ng-pattern="/^\d+(\.\d{1,6})*$/" />
+                                        </li>
+                                        <li style="width:8%" ng-if="isSmallPound==1" class="fl paddingRight5" ng-class="{ 'has-error': myForm.weight{{$parent.$index}}{{$index}}.$touched&&myForm.weight{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.smallNetWeight" name="weight{{$parent.$index}}{{$index}}"
+                                                required ng-pattern="/^\d+(\.\d{1,6})*$/" />
+                                        </li>
+                                        <li style="width:8%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.placeCode{{$parent.$index}}{{$index}}.$touched&&myForm.placeCode{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input type="text" class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.placeCode" name="placeCode{{$parent.$index}}{{$index}}"
+                                                required  />
+                                        </li>
+                                        <li style="width:12%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.RFID{{$parent.$index}}{{$index}}.$touched&&myForm.RFID{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.rfid" name="RFID{{$parent.$index}}{{$index}}"
+                                                 ng-maxlength="30" />
+                                        </li>
+                                        
+                                        <li style="width:12%" class="fl alignCenter">
+                                            <input type="text" class="form-control " uib-datepicker-popup ng-model="place.produceDateStr" is-open="place.opened" datepicker-options="dateOptions"
+                                                close-text="Close" ng-click="openDatePicker(place)" onkeypress="return handleEnter(this, event)"/>
+                                        </li>
+                                         <li style="width:4%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.count{{$parent.$index}}{{$index}}.$touched&&myForm.count{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.count" name="count{{$parent.$index}}{{$index}}"
+                                                required ng-pattern="/^[0-9]*[1-9][0-9]*$/" />
+                                        </li>
+                                         <li style="width:8%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.placeCode{{$parent.$index}}{{$index}}.$touched&&myForm.placeCode{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input type="text" class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.remark" name="remark{{$parent.$index}}{{$index}}"
+                                                  />
+                                        </li>
+                                        <li class="fl"><i class="fa fa-close control-label" ng-click="removePlace($parent.$index,$index)"></i></li>
+                                    </ul>
+                                    <label class="col-md-1 positonAbsolute" ><a class="btn btn-sm blue"ng-click="addPlace(obj)">增加</a></label>
+                                    <div class="clearfix"></div>
+                                    <div class=" padTop5" >
+                                    <a  class="btn btn-sm blue-madison wid60" ng-click="sum(obj)">
+                                    计算</a>
+                                    <span style="paddding-left:50px; " class="lineHeight32">
+                                     抄码总毛重{{maoWeightCopy}}吨;抄码总净重{{netWeightCopy}}吨
+                                       <!-- <span ng-if="isSmallPound==1">小磅总毛重：{{maoWeight}}吨;小磅总净重{{netWeight}}吨</span>-->
+                                    </span>
+                                    </div>
+                                    
+                                </li>
+                                <div class="clearfix"></div>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-group padTop10">
+                        <label for="gpsName" class="col-sm-1 control-label" style="text-align:center">入库方式</label>
+                        <div class="col-sm-2" style="padding-left:0px;">
+                             
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group padTop10">
+                        <label for="gpsName" class="col-sm-1 control-label" style="text-align:center">操作人</label>
+                        <div class="col-sm-2" style="padding-left:0px;">
+                        <span >{{form.opPerson}}</span>
+                            <!--<input type="text" class="form-control" name="opPerson" ng-maxlength="20" ng-model="form.opPerson" placeholder="" onkeypress="return handleEnter(this, event)">
+                            <div class="redFont padTop5" ng-show="myForm.opPerson.$dirty&&myForm.opPerson.$error.maxlength" >最大长度20个字符.</div>
+                            <div class="redFont padTop5" ng-show="myForm.opPerson.$dirty&&myForm.opPerson.$error.required">请填写操作人.</div>-->
+                        </div>
+                        <label for="gpsName" class="col-sm-1 control-label">审核人</label>
+                        <div class="col-sm-2">
+                         
+                           <input type="text" class="form-control" name="approvePerson" ng-maxlength="20" ng-model="form.approvePerson" placeholder="" onkeypress="return handleEnter(this, event)">
+                            <!-- <label  class="control-label" ng-model="form.approvePerson">审核人</label>
+                            <div class="redFont padTop5" ng-show="myForm.approvePerson.$dirty&&myForm.approvePerson.$error.maxlength">最大长度20个字符.</div>
+                            <div class="redFont padTop5" ng-show="myForm.approvePerson.$dirty&&myForm.approvePerson.$error.required">请填写审核人.</div>-->
+                        </div>
+                    </div>
+                    <div class="form-group padTop10">
+                        <label for="gpsName" class="col-sm-1 control-label" style="text-align:center;">备注</label>
+                        <div class="col-sm-5" style="padding-left:0px;">
+                            <textarea class="form-control" rows="3" ng-model="form.remark"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn blue-madison" type="submit" value="确定" />
+            <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+        </div>
+        </form>
+</script>
+<script type="text/ng-template" id="addAcceptModal.html">
+    <form role="form" name="myForm" class="form-horizontal" novalidate>
+        <div class="modal-header">
+            <h5><i class="icon-notebook"></i>添加收货单</h5>
+        </div>
+        <div class="modal-body" ng-init="init()">
+            <div class="portlet ">
+                <div class="portlet-title noBottomBorder">
+                    <div class="caption">
+                        <span class="caption-subject blueLeftBorder paddingLeft5 "><span class="font14">收货货物</span></span>
+                    </div>
+                    <div class=" actions">
+                        <a class="btn btn-sm btn-orange" ng-click="addGoods()"> <i class="fa fa-plus"></i> 加一行
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body ">
+                    <div class="form-horizontal">
+                        <div class="form-body" id="modalFormBody">
+                            <div class="table-scrollable">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-2">品名</th>
+                                            <th class="col-md-1">规格/牌号</th>
+                                            <th class="col-md-2">品牌</th>
+                                            <th class="col-md-1">数量</th>
+                                            <th class="col-md-1">数量单位</th>
+                                            <th class="col-md-1">重量</th>
+                                            <!-- <th class="col-md-1">抄码毛重</th>-->
+                                            <th class="col-md-1">库位</th>
+                                            <th class="col-md-1">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="no-animate" ng-repeat="product in form.productDtlList">
+                                            <td ng-class="{ 'has-error': myForm.gzProduct{{$index}}.$touched&&myForm.gzProduct{{$index}}.$invalid }">
+                                                <select class="form-control " name="gzProduct{{$index}}" required ng-model="product.gzProductId" ng-options="product.id as product.productCategoryName for product in productList"
+                                                    ng-change="getModelOrBrand(product,product.gzProductId)"></select>
+                                            </td>
+                                            <td ng-show="!product.modelList">无</td>
+                                            <td ng-if="product.modelList" ng-class="{ 'has-error': myForm.gzModel{{$index}}.$touched&&myForm.gzModel{{$index}}.$invalid }">
+                                                <select class="form-control " name="gzModel{{$index}}" required ng-model="product.gzModelId" ng-options="model.id as model.modelName for model in product.modelList"
+                                                    ng-change="getModelOrBrand(product,product.gzProductId,product.gzModelId)"></select>
+                                            </td>
+                                            <td class="col-md-2" ng-class="{ 'has-error': myForm.brand{{$index}}.$touched&&myForm.brand{{$index}}.$invalid }">
+                                                <select class="form-control" name="brand{{$index}}" required ng-model="product.productId" ng-options="brand.id as brand.brandName for brand in product.brandList">
+
+                                            </select></td>
+                                            <td ng-class="{ 'has-error': myForm.count{{$index}}.$touched&&myForm.count{{$index}}.$invalid }"><input class="wid36 form-control" name="count{{$index}}" required ng-model="product.count"
+                                                /></td>
+                                            <td ng-class="{ 'has-error': myForm.countUnitCode{{$index}}.$touched&&myForm.countUnitCode{{$index}}.$invalid }"><select class="form-control col-md-1" name="countUnitCode{{$index}}" required
+                                                    ng-model=product.countUnitCode ng-options=" countUnit for countUnit in countUnitList"></select></td>
+                                            <!-- <td ng-class="{ 'has-error': myForm.netWeight{{$index}}.$touched&&myForm.netWeight{{$index}}.$invalid }"><input class="wid36 input-inline form-control" name="netWeight{{$index}}" required ng-model="product.netWeight">吨</td>-->
+                                            <td ng-class="{ 'has-error': myForm.weight{{$index}}.$touched&&myForm.weight{{$index}}.$invalid }"><input class="wid36 input-inline form-control" name="weight{{$index}}" required
+                                                    ng-model="product.weight">吨</td>
+                                            <td ng-class="{ 'has-error': myForm.card{{$index}}.$touched&&myForm.card{{$index}}.$invalid }"><select class="form-control col-md-1" name="card{{$index}}" required ng-model=product.cardId
+                                                    ng-options="card.id as card.cardName for card in cardList"></select></td>
+                                            <td>
+                                                <button class="btn btn-sm green" ng-click="deleteGoods($index)">删除</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="row">
+                                <h4 class="col-sm-2"><span class="blueLeftBorder paddingLeft5"><span class="font14">验收方式</span></span></h4>
+                                <div class="col-sm-5 padTop10">
+                                    <label class="col-sm-4">
+                                            <input class="marginRight5" type="checkbox" ng-model="form.isCopyCode"  name="acceptType" value="1"/>抄码
+                                        </label>
+                                    <label class="col-sm-4">
+                                            <input class="marginRight5" type="checkbox" ng-model="form.isBigPound"  name="acceptType" value="1"/>过大磅
+                                        </label>
+                                    <label class="col-sm-4">
+                                            <input class="marginRight5" type="checkbox" ng-model="form.isSmallPound"  name="acceptType" value="1"/>过小磅
+                                        </label>
+                                    <!--<input class="" type="radio" ng-model="form.acceptType" name="acceptType" required/>&nbsp;&nbsp;抄码&nbsp&nbsp&nbsp&nbsp
+                                        <input class="" type="radio" ng-model="form.acceptType" name="acceptType" required/>&nbsp;&nbsp;过磅-->
+                                </div>
+                                <!--<div class="col-sm-1"><input class="form-control" type="radio" name="acceptType"/></div>
+                                    <div class="col-sm-1"><input class="form-control" type="radio" name="acceptType"/></div>-->
+                            </div>
+                            <!-- <div class="row">
+                                    <h4 class="col-sm-2"><span class="blueLeftBorder paddingLeft5"><span class="font14">入库校验</span></span></h4>
+                                    <div class="col-sm-3 padTop10">
+                                        <label class="col-sm-6">
+                                            <input class="marginRight5" type="radio" ng-model="form.isExactWeight" required name="verifyType" ng-value="{{VERIFY_TYPE.EXACT_WEIGHT}}"/>精确重量
+                                        </label>
+                                        <label class="col-sm-6">
+                                            <input class="marginRight5" type="radio" ng-model="form.isExactWeight" required name="verifyType" ng-value="{{VERIFY_TYPE.ESTIMATE_WEIGHT}}"/>未精确重量
+                                        </label>
+                                    </div>
+                                </div>
+                                -->
+                            <h4><span class="blueLeftBorder paddingLeft5"><span class="font14">司机信息</span></span></h4>
+                            <div class="form-group">
+                                <label for="gpsName" class="col-sm-2 control-label">车牌号</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="carCode" required ng-maxlength="20" class="form-control" id="gpsName" ng-model="form.carCode" placeholder="">
+                                    <div class="redFont padTop5" ng-show="myForm.carCode.$dirty&&myForm.carCode.$error.maxlength">最大长度20个字符.</div>
+                                    <div class="redFont padTop5" ng-show="myForm.carCode.$dirty&&myForm.carCode.$error.required">请填写车牌号.</div>
+                                </div>
+                                <label for="gpsName" class="col-sm-2 control-label">司机姓名</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="driverName" ng-maxlength="20" class="form-control" id="gpsName" ng-model="form.driverName" placeholder="">
+                                    <div class="redFont padTop5" ng-show="myForm.driverName.$dirty&&myForm.driverName.$error.maxlength">最大长度20个字符.</div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="gpsName" class="col-sm-2 control-label">司机身份证号</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="driverIdentityNum" ng-pattern="/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/" class="form-control" id="gpsName"
+                                        ng-model="form.driverIdentityNum" placeholder="">
+                                    <div class="redFont padTop5" ng-show="myForm.driverIdentityNum.$dirty&&myForm.driverIdentityNum.$error.pattern">请输入正确的身份证号码.</div>
+
+                                </div>
+                                <label for="gpsName" class="col-sm-2 control-label">单车载重量</label>
+                                <div class="col-sm-3">
+                                    <input type="text" name="carLoadWeight" class="form-control input-inline" id="gpsName" ng-model="form.carLoadWeight" placeholder="">吨
+
+                                </div>
+                            </div>
+                            <div class="form-group padTop10">
+                                <label for="gpsName" class="col-sm-2 control-label">备注</label>
+                                <div class="col-sm-8">
+
+                                    <textarea class="form-control" rows="3" name="remark" ng-model="form.remark"></textarea>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <input class="btn blue-madison" type="submit" ng-click="ok(myForm.$valid)" value="确定" />
+            <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="bigWeigh.html">
+    <div class="modal-header">
+        <h5><i class="icon-notebook"></i>编辑大磅毛重</h5>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="form-group" style="margin-left:0;margin-right:0">
+                <label for="gpsCode" class="col-sm-2 control-label" style="text-align:left;width:101px">收货单号：</label>
+                <label class="col-sm-6 alignLeft control-label" style="width:260px">
+                    {{cargoNoShow}}
+                </label>
+            </div>
+            <div class="form-group" style="margin-left:0;margin-right:0">
+                <label for="gpsName" class="col-sm-2 control-label" style="text-align:left;width:101px">大磅毛重：</label>
+                <div class="col-sm-6" style="width:260px">
+                    <input type="number" class="form-control" id="gpsName" ng-model="weight" placeholder="大磅毛重">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn green-haze" type="button" ng-click="ok()">确定</button>
+        <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+    </div>
+</script>
+<script type="text/ng-template" id="smallWeigh.html">
+    <div class="modal-header">
+        <h5><i class="icon-notebook"></i>编辑小磅毛重</h5>
+    </div>
+    <div class="modal-body">
+        <div class="portlet">
+            <div class="portlet-body form">
+                <div class="form-horizontal">
+                    <div class="form-group" style="margin-left:0;margin-right:0">
+                        <label for="gpsCode" class="col-sm-2 control-label" style="text-align:left;width:101px">收货单号：</label>
+                        <label class="col-sm-6 alignLeft control-label" style="width:260px">
+                            {{form.cargoNoShow}}
+                        </label>
+                    </div>
+                </div>
+                <div class="table-scrollable driverlisttable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>品名</th>
+                                <th>规格/牌号</th>
+                                <th>品牌</th>
+                                <th>小磅毛重</th>
+                                <th>小磅净重</th>
+                                <th>重量单位</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="product in form.productList">
+                                <td>{{product.name}}</td>
+                                <td>{{product.model}}</td>
+                                <td>{{product.brand}}</td>
+                                <td><input type="number" ng-model="product.grossWeight" /></td>
+                                <td><input type="number" ng-model="product.netWeight" /></td>
+                                <td>吨</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn green-haze" type="button" ng-click="ok()">确定</button>
+        <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+    </div>
+</script>
+<script type="text/ng-template" id="confirmBigWeight.html">
+    <div class="modal-header">
+        <h5><i class="icon-notebook"></i>确认大磅毛重</h5>
+    </div>
+    <div class="modal-body">
+        <div class="portlet">
+            <div class="portlet-body form">
+                <div class="form-horizontal">
+                    <div class="form-group" style="margin-left:0;margin-right:0">
+                        <label for="gpsCode" class="col-sm-2 control-label" style="text-align:left;width:101px">收货单号：</label>
+                        <label class="col-sm-3 alignLeft control-label">
+                            {{form.cargoNoShow}}
+                        </label>
+                    </div>
+                    <div class="form-group" style="margin-left:0;margin-right:0">
+                        <label for="gpsCode" class="col-sm-2 control-label" style="text-align:left;width:101px">大磅毛重：</label>
+                        <label class="col-sm-3 alignLeft control-label">
+                            {{form.bigMaoWeight}}吨
+                        </label>
+                        <label for="gpsCode" class="col-sm-2 control-label" style="text-align:left;width:101px">是否过小磅：</label>
+                        <label class="col-sm-3 alignLeft control-label">
+                            <input type="checkbox" ng-model="form.needSmallWeigh" ng-value="true"></input>
+                            需过小磅
+                        </label>
+                    </div>
+                </div>
+                <div class="table-scrollable driverlisttable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>品名</th>
+                                <th>规格/牌号</th>
+                                <th>品牌</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="product in form.productList">
+                                <td>{{product.name}}</td>
+                                <td>{{product.model}}</td>
+                                <td>{{product.brand}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn green-haze" type="button" ng-click="ok()">确定</button>
+        <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+    </div>
+</script>
+<script type="text/ng-template" id="confirmSmallWeight.html">
+    <div class="modal-header">
+        <h5><i class="icon-notebook"></i>确认小磅毛重</h5>
+    </div>
+    <div class="modal-body">
+        <div class="portlet">
+            <div class="portlet-body form">
+                <div class="form-horizontal">
+                    <div class="form-group" style="margin-left:0;margin-right:0">
+                        <label for="gpsCode" class="col-sm-2 control-label" style="text-align:left;width:101px">收货单号：</label>
+                        <label class="col-sm-6 alignLeft control-label" style="width:260px">
+                            {{form.cargoNoShow}}
+                        </label>
+                    </div>
+                </div>
+                <div class="table-scrollable driverlisttable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>品名</th>
+                                <th>规格/牌号</th>
+                                <th>品牌</th>
+                                <th>小磅毛重</th>
+                                <th>小磅净重</th>
+                                <th>重量单位</th>
+                                <th>入库方式</th>
+                                <th class="alignCenter col-md-4">协商重量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="product in form.productList">
+                                <td>{{product.name}}</td>
+                                <td>{{product.model}}</td>
+                                <td>{{product.brand}}</td>
+                                <td>{{product.grossWeight}}</td>
+                                <td>{{product.netWeight}}</td>
+                                <td>吨</td>
+                                <td>
+                                    <select class="form-control">
+                                        <option>以小磅为准</option>
+                                        <option>以抄码为准</option>
+                                        <option>自定义</option>
+                                    </select>
+                                </td>
+                                <td class="form-horizontal col-md-4">
+                                    <div style="margin-left:0;margin-right:0">
+                                        <label class="col-md-2 control-label">毛重</label>
+                                        <div class="col-md-4">
+                                            <input class=" form-control" type="number" />
+                                        </div>
+                                        <label class="col-md-2 control-label">净重</label>
+                                        <div class="col-md-4">
+                                            <input class=" form-control" type="number" />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn green-haze" type="button" ng-click="ok()">确定</button>
+        <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+    </div>
+</script>
+<script type="text/javascript">
+ 
+
+</script>

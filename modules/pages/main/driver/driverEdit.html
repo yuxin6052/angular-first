@@ -1,0 +1,222 @@
+<!-- <script src="lib/assets/global/plugins/jquery.min.js" type="text/javascript"></script> -->
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">运力资源管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#/driverList">司机管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">司机详情</span>
+    </li>
+</ul>
+<div class="row " ng-controller="driverEdit">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered ">
+            <!-- <div class="portlet-title">
+         <div class="caption"> <i class="icon-social-dribbble font-green"></i>
+           <span class="caption-subject font-green bold uppercase">基本信息</span>
+         </div>
+        
+       </div> -->
+            <div class="portlet-body ">
+                <div class="portlet ">
+                    <div class="portlet-title">
+                        <div class="caption"> <i class="icon-social-dribbble font-green"></i>
+                            <span class="caption-subject font-green bold uppercase">基本信息</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body ">
+                        <div class="form-horizontal">
+                            <div class="form-body" id="modalFormBody">
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label"><span class="redFont">*</span>司机姓名</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control " required ng-model="newDriver.name">
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <label class="col-md-1 control-label"><span class="redFont">*</span>性别</label>
+                                    <div class="col-md-2">
+                                        <select  class="form-control" style="width:50px;" ng-model="newDriver.gender">
+                                                 <option ng-repeat="option in userGenderEnumRefs" value="{{option.code}}">{{option.value}}</option>
+                                            </select> 
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <label class="col-md-1 control-label" style="padding-left: 25px;"><span class="redFont">*</span>出生日期</label>
+                                    <div class="col-md-3">
+                                        <input type="text" required data-date-format="yyyy-mm-dd" readonly class="form-control input-small date-picker" ng-model="newDriver.birthday">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label"><span class="redFont">*</span>证件号</label>
+                                    <div class="col-md-2">
+                                        <input type="text" required class="form-control " ng-model="newDriver.identity">
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <label class="col-md-1 control-label"><span class="redFont">*</span>准驾车型</label>
+                                    <div class="col-md-2">
+                                        <select  class="form-control" ng-model="newDriver.driverLicenseType">
+                                            <option ng-repeat="option in driverLicenseTypeEnumRef" value="{{option.code}}">{{option.code}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <label class="col-md-1 control-label " style="padding-left: 25px;"><span class="redFont">*</span>联系电话</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" required ng-model="newDriver.mobile">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label"><span class="redFont">*</span>从业资格类型</label>
+                                    <div class="col-md-2">
+                                        <select  class="form-control" ng-model="newDriver.professionQulificationType">
+                                                 <option ng-repeat="option in driverProfessQualityTypeEnumRef" value="{{option.code}}">{{option.value}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <label class="col-md-1 control-label"><span class="redFont">*</span>从业资格证号</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control input-small " required ng-model="newDriver.professionQulificationCode">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label"><span class="redFont">*</span>家庭住址</label>
+                                    <div class="col-md-2">
+                                        <input type="text" required class="form-control input-inline input-medium" ng-model="newDriver.address">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label"><span class="redFont">*</span>状态</label>
+                                    <div class="col-md-2 padTop5">
+                                        <input type="radio" name="status" ng-model="newDriver.isAvaliable" ng-value="1" ng-check="newDriver.isAvaliable==1"> 有效&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" name="status" ng-model="newDriver.isAvaliable" ng-value="0" ng-check="newDriver.isAvaliable==0"> 无效
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet ">
+                    <div class="portlet-title">
+                        <div class="caption"> <i class="icon-social-dribbble font-green"></i>
+                            <span class="caption-subject font-green bold uppercase">身份证信息</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body ">
+                        <div class="form-horizontal">
+                            <div class="form-body" id="modalFormBody">
+                                <div class="form-group ">
+                                    <div class="col-md-4">
+                                        <h5><span class="redFont">*</span>证件照片</h5>
+                                        <div class="dashBox-small">
+                                            <div style="text-align: center;width: 100%;top:73px;" id="filePicker"></div>
+                                            <div class="imgArea" id="fileshow">
+                                                <a ng-if="newDriver.driverLicenseFaceFile!=null" class=“image-preview” href="{{imgBaseurl+newDriver.driverLicenseFaceFile}}" data-lightbox="idcards" data-title="证件照片">
+                                                    <img ng-if="newDriver.driverLicenseFaceFile!=null" ng-src={{imgBaseurl+newDriver.driverLicenseFaceFile}}>
+                                                </a>
+                                                <input type=hidden value="" ng-model="imgurl" id="imgurl" />
+                                            </div>
+                                        </div>
+                                        <div class="dashBox-small">
+                                            <div style="text-align: center;width: 100%;top:73px;" id="filePicker2"></div>
+                                            <div class="imgArea" id="fileshow2">
+                                                <a ng-if="newDriver.driverLicenseBackFile!=null" class=“image-preview” href="{{imgBaseurl+newDriver.driverLicenseBackFile}}" data-lightbox="idcards" data-title="证件照片">
+                                                    <img ng-if="newDriver.driverLicenseBackFile!=null" ng-src={{imgBaseurl+newDriver.driverLicenseBackFile}}>
+                                                </a>
+                                                <input type=hidden value="" ng-model="imgurl2" id="imgurl2" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-4">
+                                        <h5><span class="redFont">*</span>驾驶证照片</h5>
+                                        <div class="dashBox-small">
+                                        </div>
+                                        <div class="dashBox-small">
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-4">
+                                        <h5><span class="redFont">*</span>从业资格证照片</h5>
+                                        <div class="dashBox-small">
+                                            <div style="text-align: center;width: 100%;top:73px;" id="filePicker3"></div>
+                                            <div class="imgArea" id="fileshow3">
+                                                <a ng-if="newDriver.professionQulificationFaceFile!=null" class=“image-preview” href="{{imgBaseurl+newDriver.professionQulificationFaceFile}}" data-lightbox="require" data-title="从业资格证照片">
+                                                    <img ng-if="newDriver.professionQulificationFaceFile!=null" ng-src={{imgBaseurl+newDriver.professionQulificationFaceFile}}>
+                                                </a>
+                                                <input type=hidden value="" ng-model="imgurl3" id="imgurl3" />
+                                            </div>
+                                        </div>
+                                        <div class="dashBox-small">
+                                            <div style="text-align: center;width: 100%;top:73px;" id="filePicker4"></div>
+                                            <div class="imgArea" id="fileshow4">
+                                                <a ng-if="newDriver.professionQulificationBackFile!=null" class=“image-preview” href="{{imgBaseurl+newDriver.professionQulificationBackFile}}" data-lightbox="require" data-title="从业资格证照片">
+                                                    <img ng-if="newDriver.professionQulificationBackFile!=null" ng-src={{imgBaseurl+newDriver.professionQulificationBackFile}}>
+                                                </a>
+                                                <input type=hidden value="" ng-model="imgurl4" id="imgurl4" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet   ">
+                    <div class="portlet-title">
+                        <div class="caption"> <i class="icon-social-dribbble font-green"></i>
+                            <span class="caption-subject font-green bold uppercase">车辆绑定</span>
+                        </div>
+                    </div>
+                    <i ng-show="$parent.newDriver.deliveryToolId!=null&&$parent.newDriver.deliveryToolId!=''">当前已绑定车辆:{{$parent.newDriver.toolNo}}</i>
+                    <div class="portlet-body " ng-show="$parent.newDriver.toolNo==null||$parent.newDriver.toolNo==''">
+                        <div class="form-horizontal">
+                            <div class="form-body" id="modalFormBody">
+                                <div class="table-scrollable">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>选择</th>
+                                                <th>车牌号</th>
+                                                <th>品牌</th>
+                                                <th>轴数</th>
+                                                <th>核定载重</th>
+                                                <th>已绑GPS</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="vehicle in vehicleList">
+                                                <td>
+                                                    <input type="radio" name="select" ng-value="vehicle.id" ng-model="$parent.newDriver.deliveryToolId" ng-check="$parent.newDriver.deliveryToolId==vehicle.id">
+                                                </td>
+                                                <td>{{vehicle.toolNo}}</td>
+                                                <td>{{vehicle.brand}}</td>
+                                                <td>{{vehicle.axisNum}}</td>
+                                                <td>{{vehicle.maxLoad}}</td>
+                                                <td>{{vehicle.gpsCode}}</td>
+                                                <td>
+                                                    <a href="/#/vehicleDt/{{vehicle.id}}" class="btn btn-sm green">查看详情</a>
+                                                    <!--  <button ng-click="selectVehicle(vehicle.id)" class="btn btn-sm btn-warning displayInline" ng-class="{'disabled':(bindVehicle!=vehicle.id&&bindVehicle!=0)}" ng-show="!(bindVehicle==vehicle.id)">绑定</button>
+
+                                  <button ng-click="unbindVehicle(vehicle.id)" class="btn btn-sm btn-warning displayNone"  ng-class="{'displayInline':bindVehicle==vehicle.id}">解绑</button> -->
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-2">
+                        <button class="btn green-haze" type="button" ng-click="saveDriver()">保存</button>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn grey-cascade" href="#/driverList">返回</a>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

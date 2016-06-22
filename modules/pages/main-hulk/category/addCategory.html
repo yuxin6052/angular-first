@@ -1,0 +1,142 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#deliveryBatchList">仓库管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">添加品类信息</span>
+    </li>
+</ul>
+<div class="row " ng-controller="AddCategoryCtrl" ng-init="init()">
+    <form role="form" name="myForm1" ng-submit="addProductCategory(myForm1.$valid)" class="form-horizontal" novalidate>
+        <div class="col-md-12 ">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="blueFont font14 ">添加品名</span>
+                    </div>
+                </div>
+                <div class="portlet-body ">
+                    <div class="form-horizontal">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    品类:
+                                </label>
+                                <div class="col-md-2">
+                                    <select required class="form-control" ng-model="newProductCategory.categoryId" ng-options="category.id as category.categoryName for category in categoryList"/>
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    品名:
+                                </label>
+                                <div class="col-md-2">
+                                    <input type="text" required class="form-control" ng-model="newProductCategory.productCategoryName" />
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    编码:
+                                </label>
+                                <div class="col-md-2">
+                                    <input type="text" required class="form-control" ng-model="newProductCategory.productCategoryCode" /> 
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-1">
+                                    <input class="btn btn-sm blue btn-block" type="submit" value="保存"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <form role="form" name="myForm2" ng-submit="addModelBrand(myForm2.$valid)" class="form-horizontal" novalidate>
+        <div class="col-md-12 ">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <span class="blueFont font14 ">添加规格/品牌</span>
+                    </div>
+                </div>
+                <div class="portlet-body ">
+                    <div class="form-horizontal">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    品类:
+                                </label>
+                                <div class="col-md-2">
+                                    <select required class="form-control" ng-model="newModelBrand.categoryId" ng-options="category.id as category.categoryName for category in categoryList" ng-change="changeCategory(newModelBrand.categoryId)"/>
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    品名:
+                                </label>
+                                <div class="col-md-2">
+                                    <select required class="form-control" ng-model="product" ng-options="pc as pc.productCategoryName for pc in productCategoryList" ng-change="modelBrandProductChange(product)"/>
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    编码:
+                                </label>
+                                <div class="col-md-2">
+                                    <input type="text" required class="form-control" ng-model="newModelBrand.productCategoryCode" readonly/>
+                                </div>
+                            </div>
+                            <!--Z-->
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">
+                                    类别:
+                                </label>
+                                <div class="col-md-4 control-label">
+                                    <label class="col-md-2 alignLeft">
+                                        <input class="marginRight5" type="radio" name="typeGroup" ng-model="type" value="1"/>规格
+                                    </label>
+                                    <label class="col-md-2 alignLeft">
+                                        <input class="marginRight5" type="radio" name="typeGroup" ng-model="type" value="2"/>品牌
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="type==1">
+                                <label class="col-md-1 control-label">
+                                    名称:
+                                </label>
+                                <div class="col-md-2">
+                                    <input required class="form-control" ng-model="newModelBrand.modelName"/>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="type==2">
+                                <label class="col-md-1 control-label">
+                                    名称:
+                                </label>
+                                <div class="col-md-2">
+                                    <input type="text" required class="form-control" ng-model="newModelBrand.brandName"/>
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    生产商:
+                                </label>
+                                <div class="col-md-2">
+                                    <input type="text" required class="form-control" ng-model="newModelBrand.producer"/>
+                                </div>
+                                <label class="col-md-1 control-label">
+                                    产地:
+                                </label>
+                                <div class="col-md-2">
+                                    <input type="text" required class="form-control" ng-model="newModelBrand.country"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padTop10">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-2">
+                            <input class="btn btn-block blue" type="submit" value="保存"/>
+                            <!--<input class="btn btn-block blue" ng-disabled="myForm.$invalid" type="submit" value="提交发货单" />-->
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn btn-block grey-cascade" href="#/agreementList">关闭</a>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

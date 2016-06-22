@@ -1,0 +1,77 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">我的物流订单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#/deliverList">送货订单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">送货单列表</span>
+    </li>
+</ul>
+<div class="row " ng-controller="DeliverList" ng-init="init()">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title tabbable-line">
+                <ul class="nav nav-tabs fl">
+                    <li ng-class="{'active':queryStatus==0}">
+                        <a href="javascript:;" ng-click="queryDeliver(0)"> 全部订单({{allSize}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==300}">
+                        <a href="javascript:;" ng-click="queryDeliver('300')"> 运送中({{delivering}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==309}">
+                        <a href="javascript:;" ng-click="queryDeliver('309')"> 待收货({{prepare}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==310}">
+                        <a href="javascript:;" ng-click="queryDeliver('310')"> 已送达({{complete}})</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="portlet-body form">
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>送货单编号</th>
+                                <th>车牌号</th>
+                                <th>司机姓名</th>
+                                <th>司机证件号</th>
+                                <th>状态</th>
+                                <th>到货单位</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="delivery in deliverList|filter:titleFilter">
+                                <td ng-bind="$index+1"></td>
+                                <td>{{delivery.deliverCargoNo}}</td>
+                                <td>{{delivery.toolNo}}</td>
+                                <td>{{delivery.driverName}}</td>
+                                <td>{{delivery.driverIdentityNo}}</td>
+                                <td>{{delivery.status}}</td>
+                                <td>{{delivery.inWarehouseName}}</td>
+                                <td>
+                                    <a href="/#/deliverDt/{{delivery.id}}" class="btn btn-sm green">查看详情</a>
+                                    <!-- <a class="btn btn-sm purple-plum" ng-show="delivery.status=='送货中'" ng-click="popTrailModal(delivery.cargoNo)">运送轨迹</a> -->
+                                    <!-- <a class="btn btn-sm blue-madison" ng-click="changeDeliverStatus(delivery.id,delivery.completeCert)" ng-show="inWarehouseId!=null&&outWarehouseId!=null">送货完成</a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <uib-pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="trailModal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="close()" aria-hidden="true"></button>
+        <h4 class="modal-title">运送轨迹</h4>
+    </div>
+    <div clas="modal-body" ng-init="initMap()">
+        <div id="trailMap" style="height:300px"></div>
+    </div>
+</script>

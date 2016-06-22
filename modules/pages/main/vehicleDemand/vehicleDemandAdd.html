@@ -1,0 +1,308 @@
+<!-- <script src="lib/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+-->
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">我的物流订单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#/vehicleDemand">用车需求</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">添加用车需求</span>
+    </li>
+</ul>
+<div class="row " ng-controller="vehicleDemandAdd">
+    <div class="col-md-12 ">
+        <form role="form" name="myForm" ng-submit="save(myForm.$valid)" class="form-horizontal" novalidate>
+            <div class="portlet light bordered ">
+                <div class="portlet ">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="blueFont font14 ">添加基本信息</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body ">
+                        <div class="form-horizontal">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label wid100">
+                                        <span class="redFont">*</span>取货仓库名称
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control " name="name" required ng-model="newVhicleDemand.fromWhName">
+                                        <!-- <div class="redFont padTop5" ng-show="myForm.name.$dirty&&myForm.name.$error.required">请填写仓库名称.</div> -->
+                                    </div>
+                                    <label class="col-md-1 control-label wid100">
+                                        <span class="redFont">*</span>取货仓库地址
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control " name="name" required ng-model="newVhicleDemand.fromWhAddress">
+                                        <!-- <div class="redFont padTop5" ng-show="myForm.name.$dirty&&myForm.name.$error.required">请填写仓库名称.</div> -->
+                                    </div>
+                                    <div class="col-md-1 wid100">
+                                       <a href="javascript:;" class="earthclick" ng-click="showMap(pickupaddress)" ng-hide="true"></a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label wid100">
+                                        <span class="redFont">*</span>预装货时间
+                                    </label>
+                                    <div class="col-md-2" style="width:175px;">
+                                        <input type="text" required data-date-format="yyyy-mm-dd" readonly class="form-control input-small date-picker" id="date-picker1" ng-model="newVhicleDemand.pickupEndTime">
+                                    </div>
+                                    <div class="col-md-1 control-label" style="width:20px">
+                                        <span>至</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" required data-date-format="yyyy-mm-dd" readonly class="form-control input-small date-picker" id="date-picker2" ng-model="newVhicleDemand.pickupStartTime">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label wid100">
+                                        <span class="redFont">*</span>取货联系人
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control " name="name" required ng-model="newVhicleDemand.fromWhContactor">
+                                        <!-- <div class="redFont padTop5" ng-show="myForm.name.$dirty&&myForm.name.$error.required">请填写仓库名称.</div> -->
+                                    </div>
+                                    <label class="col-md-1 control-label wid100">
+                                        <span class="redFont">*</span>取货联系方式
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control " name="name" required ng-model="newVhicleDemand.fromWhContactPhone">
+                                        <!-- <div class="redFont padTop5" ng-show="myForm.name.$dirty&&myForm.name.$error.required">请填写仓库名称.</div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label wid100">
+                                        <span class="redFont">*</span>到货仓库名称
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control " name="name" required ng-model="newVhicleDemand.toWhName">
+                                        <!-- <div class="redFont padTop5" ng-show="myForm.name.$dirty&&myForm.name.$error.required">请填写仓库名称.</div> -->
+                                    </div>
+                                    <label class="col-md-1 control-label wid100">
+                                        <span class="redFont">*</span>到货仓库地址
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control " name="name" required ng-model="newVhicleDemand.toWhAddress">
+                                        <!-- <div class="redFont padTop5" ng-show="myForm.name.$dirty&&myForm.name.$error.required">请填写仓库名称.</div> -->
+                                    </div>
+                                    <div class="col-md-1 wid100">
+                                       <a href="javascript:;" class="earthclick" ng-click="showMap(arriveaddress)" ng-hide="true"></a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label wid100">
+                                        <span class="redFont">*</span>预到货时间
+                                    </label>
+                                    <div class="col-md-2" style="width:175px;">
+                                        <input type="text" required data-date-format="yyyy-mm-dd" readonly class="form-control input-small date-picker" id="date-picker1" ng-model="newVhicleDemand.arriveEndTime">
+                                    </div>
+                                    <div class="col-md-1 control-label" style="width:20px">
+                                        <span>至</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" required data-date-format="yyyy-mm-dd" readonly class="form-control input-small date-picker" id="date-picker2" ng-model="newVhicleDemand.arriveStartTime">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label wid100">
+                                        <span class="redFont">*</span>到货联系人
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control " name="name" required ng-model="newVhicleDemand.toWhContactor">
+                                        <!-- <div class="redFont padTop5" ng-show="myForm.name.$dirty&&myForm.name.$error.required">请填写仓库名称.</div> -->
+                                    </div>
+                                    <label class="col-md-1 control-label wid100">
+                                        <span class="redFont">*</span>到货联系方式
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control " name="name" required ng-model="newVhicleDemand.toWhContactPhone">
+                                        <!-- <div class="redFont padTop5" ng-show="myForm.name.$dirty&&myForm.name.$error.required">请填写仓库名称.</div> -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label wid100">
+                                        <span class="redFont">*</span>承运单位
+                                    </label>
+                                    <div class="col-md-3">
+                                        <select class="form-control" ng-model="newVhicleDemand.transCompanyId">
+                                            <option ng-repeat="option in transCompanyList" value="{{option.id}}">{{option.compName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet ">
+                    <div class="portlet-title ">
+                        <div class="caption">
+                            <span class="blueFont font14">添加品类信息</span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-sm btn-orange" ng-click="openAddModal()">
+                                <i class="fa fa-plus"></i> 添加新品类
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body ">
+                        <div class="table-scrollable">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>品名</th>
+                                        <th>规格／牌号</th>
+                                        <th>品牌</th>
+                                        <th>数量</th>
+                                        <th>数量单位</th>
+                                        <th>总重量</th>
+                                        <th>重量单位</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="product in acceptGoodsBatch.cargoRecieveBatchArr.productDtlList">
+                                        <td ng-bind="$index+1"></td>
+                                        <td>{{product.productName}}</td>
+                                        <td>{{product.productSpecifyName}}</td>
+                                        <td>{{product.brandName}}</td>
+                                        <td>{{product.amount}}</td>
+                                        <td>{{product.countUnit}}</td>
+                                        <td>{{product.weight}}</td>
+                                        <td>{{product.weiUnit}}</td>
+                                        <td>
+                                            <a class="btn btn-sm green" ng-click="delete($index)">删除</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="blueFont font14 ">备注</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body col-md-12">
+                        <div class="form-horizontal">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <textarea class="form-control col-md-12 margin-bottom-10" ng-model="newVhicleDemand.remark">请填写您的特殊要求，如司机，线路等</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row paddingTop20">
+                    <div class="col-md-offset-6 col-md-2">
+                        <input class="btn green-haze" type="submit" value="提交" ng-click="saveNewVehicleDemand()" />
+                        <a class="btn grey-cascade" href="/#/vehicleDemand">返回</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/ng-template" id="addModal.html">
+    <form role="form" name="myForm" ng-submit="ok(myForm.$valid)" class="form-horizontal" novalidate>
+        <div class="modal-header">
+            <h5><i class="icon-notebook"></i>添加新品类</h5>
+        </div>
+        <div class="modal-body">
+            <div class="portlet ">
+                <div class="portlet-title noBottomBorder">
+                    <div class="caption">
+                        <span class="caption-subject blueLeftBorder paddingLeft5 "><span class="font14">收货货物</span></span>
+                    </div>
+                    <div class=" actions">
+                        <a class="btn btn-sm btn-orange" ng-click="addGoods()"> <i class="fa fa-plus"></i> 加一行
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body ">
+                    <div class="form-horizontal">
+                        <div class="form-body" id="modalFormBody">
+                            <div class="table-scrollable">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-2">品名</th>
+                                            <th>规格/牌号</th>
+                                            <th class="col-md-2">品牌</th>
+                                            <th>数量</th>
+                                            <th class="col-md-1">数量单位</th>
+                                            <th>总重量</th>
+                                            <th>总重量单位</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="product in form.productDtlList">
+                                            <!--  <td>
+                                                <select class="form-control " ng-model=product.productCatagoryId ng-options="product.id as product.name for product in productList">
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control " ng-model=product.productSpecifyId ng-options="product.id as product.name for product in productList">
+                                                </select>
+                                            </td>
+                                            <td class="col-md-2">
+                                                <select class="form-control" ng-model="product.brandId" ng-options="brand.id as brand.name for brand in brandList">
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input class="wid36" ng-model="product.amount" />
+                                            </td>
+                                            <td>
+                                                <select class="form-control col-md-1" ng-model=product.countUnit ng-options=" countUnit for countUnit in countUnitList"></select>
+                                            </td>
+                                            <td>
+                                                <input class="wid36" ng-model="product.weight">
+                                            </td>
+                                            <td>{{product.weightUnitCode}}</td>
+                                            <td>
+                                                <button class="btn btn-sm green" ng-click="deleteGoods($index)">删除</button>
+                                            </td> -->
+                                            <td>
+                                                <input class="form-control" ng-model="product.productCatagoryName" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" ng-model="product.productSpecifyName" />
+                                            </td>
+                                            <td class="col-md-2">
+                                                <input class="form-control" ng-model="product.brandName" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control wid36" ng-model="product.amount" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control wid36" ng-model="product.countUnit" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control wid36" ng-model="product.weight">
+                                            </td>
+                                            <td>
+                                                <input class="form-control wid36" ng-model="product.weiUnit">
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm green" ng-click="deleteGoods($index)">删除</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn blue-madison" ng-disabled="myForm.$invalid" type="submit" value="确定" />
+            <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+        </div>
+    </form>
+</script>

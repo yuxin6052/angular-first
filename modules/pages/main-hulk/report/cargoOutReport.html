@@ -1,0 +1,54 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#orderFeeList">费用管理</a><i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">费用列表</span>
+    </li>
+</ul>
+<div class="row " ng-controller="OrderFeeListCtrl" ng-init="init()">
+    <div class="col-md-12 ">
+        <div class="tabbable-line boxless tabbable-reversed">
+            <div class="portlet light bordered minheight600">
+                <div class="portlet-title  tabbable-line">
+                    <div class="caption">
+                        <h5 class="blueFont">费用列表</h5>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="table-scrollable">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>日期</th>
+                                    <th>乙方公司</th>
+                                    <th>单据类型</th>
+                                    <th>单据号</th>
+                                    <th>费用金额（元）</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="orderFee in orderFeeList">
+                                    <td ng-bind="$index+1"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="col-md-2">
+                                        <a href="#/editWarehouseAgree/{{agreement.agreementId}}" class="btn btn-sm green" ng-if="system==SYSTEM.HULK_WAREHOUSE">详情</a> 
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="centerDiv">
+                        <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                            max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

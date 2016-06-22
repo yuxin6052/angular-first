@@ -1,0 +1,76 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#agreementList">协议管理</a><i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">协议列表</span>
+    </li>
+</ul>
+<div class="row " ng-controller="AgreementListCtrl" ng-init="init()">
+    <div class="col-md-12 ">
+        <div class="tabbable-line boxless tabbable-reversed">
+            <div class="portlet light bordered minheight600">
+                <div class="portlet-title  tabbable-line">
+                    <div class="caption">
+                        <h5 class="blueFont">协议列表</h5>
+                    </div>
+                    <div class="actions">
+                        <a class="btn btn-sm btn-orange " ng-if="system==SYSTEM.HULK_WAREHOUSE" ui-sref="editWarehouseAgree">
+                            <i class="fa fa-plus"></i> 新建协议
+                        </a>
+                        <a class="btn btn-sm btn-orange " ng-if="system==SYSTEM.CAPTAIN" ui-sref="editTransportAgree">
+                            <i class="fa fa-plus"></i> 新建协议
+                        </a>
+                    </div>
+                    <!--<div class="row">
+                        <div class="col-md-10">
+                            <h5 class="blueFont">协议列表</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn btn-sm btn-orange " ng-if="system==SYSTEM.HULK_WAREHOUSE" ui-sref="editWarehouseAgree">
+                                <i class="fa fa-plus"></i> 新建协议
+                            </a>
+                            <a class="btn btn-sm btn-orange " ng-if="system==SYSTEM.CAPTAIN" ui-sref="editTransportAgree">
+                                <i class="fa fa-plus"></i> 新建协议
+                            </a>
+                        </div>
+                    </div>-->
+                </div>
+                <div class="portlet-body form">
+                    <div class="table-scrollable">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>合同号</th>
+                                    <th>协议标题</th>
+                                    <th>乙方公司</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="agreement in agreementList">
+                                    <td ng-bind="$index+1"></td>
+                                    <td>{{agreement.contractNumber}}</td>
+                                    <td>{{agreement.agreementTitle}}</td>
+                                    <td>{{agreement.tradeCompanyName}}</td>
+                                    <td>{{agreement.createdDate}}</td>
+                                    <td class="col-md-2">
+                                        <a href="#/editWarehouseAgree/{{agreement.agreementId}}" class="btn btn-sm green" ng-if="system==SYSTEM.HULK_WAREHOUSE">编辑</a>
+                                        <a href="#/editTransportAgree/{{agreement.agreementId}}" class="btn btn-sm green" ng-if="system==SYSTEM.CAPTAIN">编辑</a>
+                                        <a href="" class="btn btn-sm green">预览</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="centerDiv">
+                        <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                            max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

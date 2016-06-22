@@ -1,0 +1,41 @@
+{
+  "name": "pure-angular-demo",
+  "version": "0.0.0",
+  "authors": [
+    "hefangshi <hefangshi@gmail.com>"
+  ],
+  "keywords": [
+    "fis",
+    "angular"
+  ],
+  "license": "BSD",
+  "homepage": "https://github.com/hefangshi/pure-angular-demo",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hefangshi/pure-angular-demo.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "~1.2.5",
+    "angular": "~1.5.0",
+    "angular-animate": "~1.5.0",
+    "angular-touch": "~1.5.0",
+    "bootstrap": "3.3.4",
+    "angular-cookies": "~1.5.0",
+    "font-awesome": "~4.3.0",
+    "rdash-ui": "~1.0.1",
+    "ui-router": "~0.2.14",
+    "angular-ui-grid": "~3.0.0",
+    "ng-file-upload-shim": "^12.0.4",
+    "angular-ui-select": "^0.17.1"
+  },
+  "resolutions": {
+    "angular": "~1.5.0"
+  }
+}

@@ -1,0 +1,478 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#deliveryBatchList">单据管理</a> <i class="fa fa-circle"></i>
+    </li>
+
+    <li>
+        <span class="active">入库单管理</span>
+    </li>
+</ul>
+<div class="row " ng-controller="godownEntryList" ng-init="init()">
+    <div class="col-md-12 ">
+
+        <div class="portlet light bordered ">
+            <div class="portlet-title tabbable-line ">
+                <ul class="nav nav-tabs fl">
+                    <li ng-class="{'active':!queryStatus}">
+                        <a href="javascript:;" ng-click="changeTab()"> 全部({{totalSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==CARGO_IN_STATUS.WAIT_FOR_HANDLING}">
+                        <a href="javascript:;" ng-click="changeTab(CARGO_IN_STATUS.WAIT_FOR_HANDLING)"> 待处理 ({{unhandledSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==CARGO_IN_STATUS.WAIT_FOR_STORING}">
+                        <a href="javascript:;" ng-click="changeTab(CARGO_IN_STATUS.WAIT_FOR_STORING)"> 待入库 ({{unstoredSum}})</a>
+                    </li>
+                    <li ng-class="{'active':queryStatus==CARGO_IN_STATUS.STORED}">
+                        <a href="javascript:;" ng-click="changeTab(CARGO_IN_STATUS.STORED)"> 入库完成 ({{storedSum}})</a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body form">
+                <div class="row marginBottom10 marginTop20 font12" ng-show="system == SYSTEM.HULK_WAREHOUSE">
+                    <!--ng-if="system == SYSTEM.HULK_WAREHOUSE">-->
+                    <div class="col-md-2">
+                        <h5 class="blueFont">入库单列表</h5>
+                    </div>
+                    <div class="actions col-md-10">
+                        <div class="no-div-padding col-md-11 form-horizontal">
+                            <div class="control-group col col-md-3">
+                                <label class="col-md-4 control-label ">收货批次号</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control input-sm" ng-model="queryParameters.batchNo">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-3">
+                                <label class="col-md-4 control-label ">入库单号</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control input-sm" ng-model="queryParameters.cargoNoShow">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-2">
+                                <label class="col-md-4 control-label ">货主</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control input-sm" ng-model="queryParameters.ownerName">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-2 control-label">时间</label>
+                                <div class="col-md-10">
+                                    <div class="paddingLeft5 input-group date-picker input-daterange" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control input-sm" name="from" ng-model="queryParameters.startDate" />
+                                        <span class="input-group-addon"> 到 </span>
+                                        <input type="text" class="form-control input-sm" name="to" ng-model="queryParameters.endDate" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="input-group-btn">
+                                <button class="btn blue btn-sm" type="button" ng-click="queryCargoInBatchList()">搜索</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row marginBottom10 marginTop20 font12" ng-show="system == SYSTEM.HULK_ENTERPRISE">
+                    <!--ng-if="system == SYSTEM.HULK_ENTERPRISE">-->
+                    <div class="col-md-2">
+                        <h5 class="blueFont">入库单列表</h5>
+                    </div>
+                    <div class="actions col-md-10">
+                        <div class="no-div-padding col-md-11 form-horizontal">
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">收货批次号</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control input-sm" ng-model="queryParameters.batchNo">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-4 control-label">入库单号</label>
+                                <div class="paddingLeft5 col-md-8">
+                                    <input type="text" class="form-control input-sm" ng-model="queryParameters.cargoNoShow">
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-4">
+                                <label class="col-md-2 control-label">时间</label>
+                                <div class="col-md-10">
+                                    <div class="paddingLeft5 input-group date-picker input-daterange" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control input-sm" name="from" ng-model="queryParameters.startDate" />
+                                        <span class="input-group-addon"> 到 </span>
+                                        <input type="text" class="form-control input-sm" name="to" ng-model="queryParameters.endDate" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="input-group-btn">
+                                <button class="btn blue btn-sm" type="button" ng-click="queryCargoInBatchList()">搜索</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active " ng-repeat="cargoInBatch in cargoInBatchList">
+                        <h5><div class=" col-md-4 pinkBackground lineHeight32 marginBottom10">
+                        收货批次号：{{cargoInBatch.batchNo}}
+                    </div></h5>
+                        <div class="portlet">
+                            <div class="portlet-title noBorder">
+                                <ul class="nav fl col-md-12 listHeader">
+                                    <li class="col-md-1">序号</li>
+
+                                    <li class="col-md-3 nopadding">单号</li>
+                                    <li class="col-md-1 nopadding">创建时间</li>
+                                    <li class="col-md-1 nopadding">入库时间</li>
+                                    <li class="col-md-1 nopadding">货主</li>
+                                    <li class="col-md-1 nopadding">联系方式</li>
+                                    <li class="col-md-1 nopadding">货主证件号</li>
+                                    <li class="col-md-1 nopadding">状态</li>
+                                    <li class="col-md-2 nopadding">操作</li>
+                                </ul>
+                            </div>
+                            <div class="portlet-body ">
+                                <div class="portlet" ng-repeat="cargoIn in cargoInBatch.cargoInList">
+                                    <div class="portlet-title">
+                                        <ul class="nav fl col-md-12 font12">
+                                            <li class="col-md-1" ng-bind="$index+1"></li>
+                                            <li class="col-md-3 nopadding">入库单号：{{cargoIn.cargoNoShow}}<br/>收货单号：{{cargoIn.cargoNoShow_recieve}}</li>
+
+                                            <li class="col-md-1 nopadding">{{cargoIn.createdDateStr}}</li>
+                                            <li class="col-md-1 nopadding">{{cargoIn.inDateStr}}</li>
+                                            <li class="col-md-1 nopadding">{{cargoIn.owner.ownerName}}</li>
+                                            <li class="col-md-1 nopadding">{{cargoIn.owner.ownerPhone}}</li>
+                                            <li class="col-md-1 nopadding">{{cargoIn.owner.ownerCardNum}}</li>
+                                            <li class="col-md-1 nopadding">{{cargoIn.status | cargoInStatusFilter}}</li>
+                                            <li class="col-md-2 nopadding">
+                                                <div class="alignRight">
+                                                    <a class="wid60 noBgImg btn green btn-sm" ng-click="expandDetail(cargoIn)">
+                                                        <span ng-if="!cargoIn.expanded">展开详情</span>
+                                                        <span ng-if="cargoIn.expanded">收起详情</span>
+                                                    </a>
+                                                    <button class="btn btn-sm blue" ng-click="openAddModal(cargoIn)" ng-if="cargoIn.status != CARGO_IN_STATUS.STORED && system == SYSTEM.HULK_WAREHOUSE">编辑</button>
+                                                    <button class="btn btn-sm blue" ng-click="confirmCargoIn(cargoIn)" ng-if="cargoIn.status != CARGO_IN_STATUS.STORED && system == SYSTEM.HULK_WAREHOUSE">完成</button>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="portlet-body lightGrey padding10" ng-show="cargoIn.expanded">
+                                        <div class="row">
+                                            <h4 class="col-sm-9"><span class="purpleLeftBorder paddingLeft5"><span class="font14">基本信息</span></span></h4>
+                                            <div class="col-sm-3 padTop5 alignRight" ng-if="cargoIn.status == CARGO_IN_STATUS.STORED"ng-change="function()">
+                                                <a class="btn btn-sm green" href="{{domainConfig.hulkDomain}}/hulk/cargoIn/print/{{cargoIn.id}}">打印入库单</a>
+                                            </div>
+                                        </div>
+                                        <ul class="nav col-md-12 greyBorder lineHeight32 marginBottom10 whiteBackgroud font12">
+                                            <li class="col-md-2">承运单位名称：</li>
+                                            <li class="col-md-2 nopadding">{{cargoIn.wlCompanyName}}</li>
+                                            <li class="col-md-2">承运单位联系人：</li>
+                                            <li class="col-md-1 nopadding">{{cargoIn.wlCompanyPerson}}</li>
+                                            <li class="col-md-2"> 承运单位联系电话：</li>
+                                            <li class="col-md-2 nopadding">{{cargoIn.wlCompanyPhone}}</li>
+                                        </ul>
+                                        <h4><span class="purpleLeftBorder "><span class="font14 paddingLeft5">入库货物</span></span></h4>
+                                        <div id="stock">
+                                            <ul class="nav col-md-12 listHeader greyBorder">
+                                                <li class="col-md-0-5 alignCenter">品名</li>
+                                                <li class="col-md-1">规格/牌号</li>
+                                                <li class="col-md-1">数量/重量</li>
+                                                <li class="col-md-1">品牌</li>
+                                                <li class="col-md-0-5">库位</li>
+                                                <li class="col-md-1">入库方式</li>
+                                               
+                                                <li class="col-md-6">货物详情</li>
+                                            </ul>
+                                            <div class="col-md-12 noHorizontalPadding marginTop5">
+                                                <div class="note note-info" ng-repeat="cargo in cargoIn.cargoList">
+                                                    <ul class="nav col-md-12">
+                                                        <li class="col-md-0-5">{{cargo.product.productName}}</li>
+                                                        <li class="col-md-1">{{cargo.product.modelName}}</li>
+                                                        <li class="col-md-1">{{cargo.count}}{{cargo.countUnitCode}}/{{cargo.weight}}{{cargo.weightUnitCode}}</li>
+                                                        <li class="col-md-1">{{cargo.product.brandName}}</li>
+                                                        <li class="col-md-0-5">{{cargo.cardName}}</li>
+                                                        <li class="col-md-1">{{obj.checkType}}</li>
+                                                       
+                                                        <li class="col-md-6">
+                                                        <ul class="nav fl col-md-12 marginBottom5 font14">
+                                                            <li class="fl " style="width:14%">批次号</li>
+                                                            
+                                                            <li class="fl " style="width:14%" >净重</li>
+                                                            <li class="fl " style="width:14%" >毛重</li>
+                                                             <li class="fl" style="width:14%">货位</li>
+                                                            <li class="fl " style="width:14%">RFID</li>
+                                                           
+                                                            <li class="fl " style="width:10%">数量</li>
+                                                             <li class="fl " style="width:20%">生产日期</li>
+                                                           
+                                                         </ul>
+
+                                                            <ul class="nav col-md-12" ng-repeat="cargoItem in cargo.dtlList">
+                                                                <li style="width:14%" class="fl">
+                                                                 <label>{{cargoItem.productBatch}}</label>
+                                                                </li>
+                                                               
+                                                                <li style="width:14%" class="fl">
+                                                                   
+                                                                    <label>{{cargoItem.weight}}{{cargoItem.weightUnitCode}}</label>
+                                                                </li>
+                                                                <li style="width:14%" class="fl">
+                                                                   
+                                                                    <label>{{cargoItem.weightMao}}{{cargoItem.weightUnitCode}}</label>
+                                                                </li>
+                                                                <li style="width:14%" class="fl">
+                                                                   <label>{{cargoItem.placeCode}}</label>
+                                                                </li>
+                                                                <li style="width:14%" class="fl">
+                                                                   
+                                                                    <label>{{cargoItem.rfid}}</label>
+                                                                </li>
+                                                                
+                                                                 <li style="width:10%" class="fl">
+                                                                   
+                                                                    <label>{{cargoItem.count}}{{cargoItem.countUnitCode}}</label>
+                                                                </li>
+                                                                <li style="width:20%" class="fl">
+                                                                   
+                                                                    <label>{{cargoItem.produceDateStr}}</label>
+                                                                </li>
+
+                                                            </ul>
+                                                        </li>
+                                                        <!--<li class="col-md-1">{{cargo.produceDateStr}}</li>-->
+                                                    </ul>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="centerDiv">
+                        <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                            max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/ng-template" id="addModal.html">
+    <form role="form" name="myForm" ng-submit="ok(myForm.$valid)" class="form-horizontal" novalidate>
+        <div class="modal-header">
+            <h5><i class="icon-notebook"></i>入库单</h5>
+        </div>
+        <div class="modal-body" ng-init="init()">
+            <div class="portlet">
+
+                <div class="portlet-body " id="stock">
+
+                    <div class="form-group padTop10" ng-if="isBigPound==1">
+                        <label for="gpsName" class="col-sm-1 control-label" style="text-align:center">过大磅毛重</label>
+                        <div class="col-sm-3" style="padding-left:0px;">
+                            <input type="text" class="form-control input-inline" required name="bigMaoWeight" ng-model="form.bigGrossWeight" placeholder="" onkeypress="return handleEnter(this, event)"><span>吨</span>
+
+                            <div class="redFont padTop5" ng-show="myForm.bigMaoWeight.$dirty&&myForm.bigMaoWeight.$error.required">请填写过大榜毛重.</div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 marginTop20" ng-repeat="obj in cardProductOwnerVoList">
+                     <ul class="nav col-md-12 listHeader" >
+                        <li class="col-md-1 alignCenter">品名:</li>
+                        <li class="col-md-1">{{obj.product.productName}}</li>
+                        <li class="col-md-1">规格/牌号:</li>
+                        <li class="col-md-1">{{obj.product.modelName}}</li>
+                        
+                        <li class="col-md-1">总重量：{{obj.weight}}</li>
+                        <li class="col-md-1">数量：{{obj.count}}{{obj.countUnitCode}}</li>
+
+                        <li class="col-md-1">品牌:</li>
+                         <li class="col-md-1">{{obj.product.brandName}}</li>
+                        <li class="col-md-1">库位:</li>
+                        <li class="col-md-1">{{obj.cardName}}</li>
+
+                        
+                        <!--<li class="col-md-1">生产日期</li>-->
+                    </ul>
+                   
+                    <div class="col-md-12 noHorizontalPadding marginTop5">
+                        <div class="note note-info" >
+
+                            <ul class="nav col-md-12">
+                               
+                                <li class="col-md-1">货物详情：</li>
+
+                                <li class="col-md-11">
+                                    <!--<ul class="nav col-md-11 marginBottom5" ng-repeat="place in obj.storageVoList">
+                                        <li class="col-md-2">货位<input type="text" class="wid36 " ng-model="place.placeCode" name="placeCode{{$parent.$index}}{{$index}}"
+                                                required ng-pattern="obj.placeCodeRegex" />
+                                            <div class="redFont padTop5" ng-show="myForm.placeCode{{$parent.$index}}{{$index}}.$touched&&myForm.placeCode{{$parent.$index}}{{$index}}.$error.pattern">库位+第几排(两位数字)+第几层(字母)</div>
+                                            <div class="redFont padTop5" ng-show="myForm.placeCode{{$parent.$index}}{{$index}}.$dirty&&myForm.placeCode{{$parent.$index}}{{$index}}.$error.required">货位不能为空</div>
+                                        </li>
+                                        <li class="col-md-1">数量<input class="wid36" ng-model="place.count" name="count{{$parent.$index}}{{$index}}" required ng-pattern="/^[0-9]*[1-9][0-9]*$/"
+                                            />{{obj.countUnitCode}}
+                                            <div class="redFont padTop5" ng-show="myForm.count{{$parent.$index}}{{$index}}.$touched&&myForm.count{{$parent.$index}}{{$index}}.$error.pattern">必须为正整数</div>
+                                            <div class="redFont padTop5" ng-show="myForm.count{{$parent.$index}}{{$index}}.$dirty&&myForm.count{{$parent.$index}}{{$index}}.$error.required">数量不能为空</div>
+                                        </li>
+                                        <li class="col-md-2">毛重<input class="wid36" ng-model="place.weightMao" name="weightMao{{$parent.$index}}{{$index}}" required
+                                                ng-pattern="/^\d+(\.\d{1,6})*$/" />吨
+                                            <div class="redFont padTop5" ng-show="myForm.weightMao{{$parent.$index}}{{$index}}.$touched&&myForm.weightMao{{$parent.$index}}{{$index}}.$error.pattern">必须为正数，精确到6位小数</div>
+                                            <div class="redFont padTop5" ng-show="myForm.weightMao{{$parent.$index}}{{$index}}.$dirty&&myForm.weightMao{{$parent.$index}}{{$index}}.$error.required">毛重不能为空</div>
+                                        </li>
+                                        <li class="col-md-2">净重<input class="wid36" ng-model="place.weight" name="weight{{$parent.$index}}{{$index}}" required ng-pattern="/^\d+(\.\d{1,6})*$/"
+                                            />吨
+                                            <div class="redFont padTop5" ng-show="myForm.weight{{$parent.$index}}{{$index}}.$touched&&myForm.weight{{$parent.$index}}{{$index}}.$error.pattern">必须为正数，精确到6位小数</div>
+                                            <div class="redFont padTop5" ng-show="myForm.weight{{$parent.$index}}{{$index}}.$dirty&&myForm.weight{{$parent.$index}}{{$index}}.$error.required">净重不能为空</div>
+                                        </li>
+                                        <li class="col-md-2">RFID<input class="wid36" ng-model="place.rfid" name="RFID{{$parent.$index}}{{$index}}"  ng-maxlength="30"
+                                            />
+                                            <div class="redFont padTop5" ng-show="myForm.RFID{{$parent.$index}}{{$index}}.$dirty&&myForm.RFID{{$parent.$index}}{{$index}}.$error.maxlength">最大长度30个字符</div>
+                                            
+                                        </li>
+                                        <li class="col-md-2">批次号<input class="wid36" ng-model="place.productBatch" name="batchNo{{$parent.$index}}{{$index}}" required
+                                                ng-maxlength="30" /><i class="fa fa-close" ng-click="removePlace(obj,place)"></i>
+                                            <div class="redFont padTop5" ng-show="myForm.batchNo{{$parent.$index}}{{$index}}.$dirty&&myForm.batchNo{{$parent.$index}}{{$index}}.$error.maxlength">最大长度30个字符</div>
+                                            <div class="redFont padTop5" ng-show="myForm.batchNo{{$parent.$index}}{{$index}}.$dirty&&myForm.batchNo{{$parent.$index}}{{$index}}.$error.required">货物批次号不能为空</div>
+                                        </li>
+
+                                    </ul>-->
+                                    <ul class="nav fl col-md-11 marginBottom5">
+                                        <li class="fl " style="width:14%">批次号</li>
+                                       
+                                        <li class="fl " style="width:10%">抄码毛重</li>
+                                        <li class="fl " style="width:10%">抄码净重</li>
+                                        <li class="fl " style="width:10%" ng-if="isSmallPound==1">小磅毛重</li>
+                                        <li class="fl " style="width:10%" ng-if="isSmallPound==1">小磅净重</li>
+                                         <li class="fl" style="width:8%">货位</li>
+                                        <li class="fl " style="width:12%">RFID</li>
+                                       
+                                        <li class="fl " style="width:12%">生产日期</li>
+                                         <li class="fl " style="width:4%">数量</li>
+                                        <li class="fl " style="width:8%">备注</li>
+                                    </ul>
+                                    <ul class="newPlace nav fl col-md-11 marginBottom5" ng-repeat="place in obj.storageVoList">
+                                        <li style="width:14%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.batchNo{{$parent.$index}}{{$index}}.$touched&&myForm.batchNo{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.productBatch" name="batchNo{{$parent.$index}}{{$index}}"
+                                                 ng-maxlength="30" />
+                                        </li>
+
+                                       
+                                        <li style="width:10%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.copyCodeGrossWeight{{$parent.$index}}{{$index}}.$touched&&myForm.copyCodeGrossWeight{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.copyCodeGrossWeight" name="copyCodeGrossWeight{{$parent.$index}}{{$index}}"
+                                                 ng-pattern="/^\d+(\.\d{1,6})*$/" ng-blur="analyseCopyCodeNetWeight(place.copyCodeGrossWeight,$parent.$index,$index)" />
+                                        </li>
+                                        <li style="width:10%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.copyCodeNetWeight{{$parent.$index}}{{$index}}.$touched&&myForm.copyCodeNetWeight{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.copyCodeNetWeight" name="copyCodeNetWeight{{$parent.$index}}{{$index}}"
+                                                 ng-pattern="/^\d+(\.\d{1,6})*$/" />
+                                        </li>
+                                         <li style="width:10%" ng-if="isSmallPound==1" class="fl paddingRight5" ng-class="{ 'has-error': myForm.smallGrossWeight{{$parent.$index}}{{$index}}.$touched&&myForm.smallGrossWeight{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.smallGrossWeight" name="smallGrossWeight{{$parent.$index}}{{$index}}"
+                                                 ng-pattern="/^\d+(\.\d{1,6})*$/" />
+                                        </li>
+                                        <li style="width:10%" ng-if="isSmallPound==1" class="fl paddingRight5" ng-class="{ 'has-error': myForm.smallNetWeight{{$parent.$index}}{{$index}}.$touched&&myForm.smallNetWeight{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.smallNetWeight" name="smallNetWeight{{$parent.$index}}{{$index}}"
+                                                 ng-pattern="/^\d+(\.\d{1,6})*$/" />
+                                        </li>
+                                         <li style="width:8%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.placeCode{{$parent.$index}}{{$index}}.$touched&&myForm.placeCode{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input type="text" class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.placeCode" required name="placeCode{{$parent.$index}}{{$index}}"
+                                                     />
+                                        </li>
+                                        <li style="width:12%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.RFID{{$parent.$index}}{{$index}}.$touched&&myForm.RFID{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.rfid" name="RFID{{$parent.$index}}{{$index}}"
+                                                 ng-maxlength="30" />
+                                        </li>
+
+                                        
+                                        <li style="width:12%" class="fl alignCenter" ng-class="{ 'has-error': myForm.date{{$parent.$index}}{{$index}}.$touched&&myForm.date{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input type="text" class="form-control " uib-datepicker-popup name="date{{$parent.$index}}{{$index}}" ng-model="place.produceDateStr" is-open="place.opened" datepicker-options="dateOptions"
+                                                 close-text="Close" ng-click="openDatePicker(place)" onkeypress="return handleEnter(this, event)"/>
+
+                                        </li>
+                                         <li style="width:4%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.count{{$parent.$index}}{{$index}}.$touched&&myForm.count{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input class="form-control" ng-model="place.count" onkeypress="return handleEnter(this, event)" name="count{{$parent.$index}}{{$index}}"
+                                                required ng-pattern="/^[0-9]*[1-9][0-9]*$/" />
+                                        </li>
+                                         <li style="width:8%" class="fl paddingRight5" ng-class="{ 'has-error': myForm.placeCode{{$parent.$index}}{{$index}}.$touched&&myForm.placeCode{{$parent.$index}}{{$index}}.$invalid }">
+                                            <input type="text" class="form-control" onkeypress="return handleEnter(this, event)" ng-model="place.remark" name="remark{{$parent.$index}}{{$index}}"
+                                                  />
+                                        </li>
+                                        <li class="fl"><i class="fa fa-close control-label" ng-click="removePlace($parent.$index,$index)"></i></li>
+                                    </ul>
+                                    <label class="col-md-1"><a class="btn btn-sm blue"ng-click="addPlace(obj)">增加</a></label>
+                                    <div class="clearfix"></div>
+                                    <div class="redFont padTop5" ng-show="obj.weightError">总重量校验失败</div>
+                                    <div class="redFont padTop5" ng-show="obj.countError">总数量校验失败</div>
+                                </li>
+                                
+
+                            </ul>
+                             <div class="clearfix"></div>
+                        </div>
+                          
+                        </div>
+                         
+                    </div>
+                    <div class="form-group padTop10">
+                        <label for="gpsName" class="col-sm-1 control-label" style="text-align:center">入库方式</label>
+                        <div class="col-sm-2" style="padding-left:0px;">
+                            <select ng-model="form.checkType" class="form-control " required ng-options="checkType.value as checkType.name for checkType in checkTypeList"
+                                ng-change="gzProductChange(product,product.gzProduct)" onkeypress="return handleEnter(this, event)">
+                            </select>
+
+                        </div>
+
+                    </div>
+                    <div class="form-group padTop10">
+                        <label for="gpsName" class="col-sm-1 control-label" style="text-align:center">操作人</label>
+                        <div class="col-sm-2" style="padding-left:0px;">
+                            <input type="text" class="form-control" name="opPerson" required ng-maxlength="20" ng-model="form.opPerson" placeholder="" onkeypress="return handleEnter(this, event)">
+                            <div class="redFont padTop5" ng-show="myForm.opPerson.$dirty&&myForm.opPerson.$error.maxlength">最大长度20个字符.</div>
+                            <div class="redFont padTop5" ng-show="myForm.opPerson.$dirty&&myForm.opPerson.$error.required">请填写操作人.</div>
+                        </div>
+                        <label for="gpsName" class="col-sm-1 control-label">审核人</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="approvePerson" required ng-maxlength="20" ng-model="form.approvePerson" placeholder="" onkeypress="return handleEnter(this, event)">
+                            <div class="redFont padTop5" ng-show="myForm.approvePerson.$dirty&&myForm.approvePerson.$error.maxlength">最大长度20个字符.</div>
+                            <div class="redFont padTop5" ng-show="myForm.approvePerson.$dirty&&myForm.approvePerson.$error.required">请填写审核人.</div>
+                        </div>
+                    </div>
+                     <div class="form-group padTop10">
+                        <label for="gpsName" class="col-sm-1 control-label" style="text-align:center">备注</label>
+                        <div class="col-sm-10" style="padding-left:0px;">
+                           
+                            <textarea class="form-control" rows="3" name="opPerson" ng-model="form.remark" ></textarea>
+                           
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn blue-madison" type="submit" value="确定" />
+            <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button>
+        </div>
+    </form>
+</script>
+<script type="text/javascript">
+    function handleEnter (field, event) {
+var keyCode = event.keyCode ? event.keyCode : event.which ?
+event.which : event.charCode;
+if (keyCode == 13) {
+var i;
+for (i = 0; i < field.form.elements.length; i++)
+if (field == field.form.elements[i])
+break;
+i = (i + 1) % field.form.elements.length;
+field.form.elements[i].focus();
+return false;
+}
+else
+return true;
+}
+
+</script>

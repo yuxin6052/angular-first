@@ -1,0 +1,193 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">我的物流订单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#/deliverList">送货订单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">送货单详情</span>
+    </li>
+</ul>
+<div class="row " ng-controller="DeliverDt" ng-init="init()">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject yellowFont bold uppercase">基本信息</span>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <form class="form-horizontal" role="form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label col-md-5">派车单编号:</label>
+                                    <div class="col-md-7">
+                                        <p class="form-control-static"> {{delivery.dispatchNo}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">送货单位:</label>
+                                    <div class="col-md-9">
+                                        <p class="form-control-static">{{delivery.inWarehouseName}},{{delivery.inWarehouseAddr}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label col-md-5">送货单编号:</label>
+                                    <div class="col-md-7">
+                                        <p class="form-control-static"> {{delivery.deliverCargoNo}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">取货单位:</label>
+                                    <div class="col-md-9">
+                                        <p class="form-control-static"> {{delivery.outWarehouseName}},{{delivery.outWarehouseAddr}} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject greenFont bold uppercase">货物信息</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>品名</th>
+                                <th>规格/牌号</th>
+                                <th>品牌</th>
+                                <th>数量</th>
+                                <th>数量单位</th>
+                                <th>总重量</th>
+                                <th>总重量单位</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="product in delivery.cargoDeliverDtls">
+                                <td>{{product.productName}}</td>
+                                <td>{{product.productSpecify}}</td>
+                                <td>{{product.productBrand}}</td>
+                                <td>
+                                    {{product.productTotleCount}}
+                                </td>
+                                <td>{{product.countUnit}}</td>
+                                <td>
+                                    {{product.actualProductWei}}
+                                </td>
+                                <td>{{product.weiUnit}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject purpleFont bold uppercase">司机信息</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>车牌号</th>
+                                <th>司机姓名</th>
+                                <th>司机身份证号</th>
+                                <th>单车载重量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{delivery.toolNo}}</td>
+                                <td>{{delivery.driverName}}</td>
+                                <td>{{delivery.driverIdentityNo}}</td>
+                                <td>{{delivery.maxLoad}}吨</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-social-dribbble font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">位置信息</span>
+                </div>
+                <a href="javascript:;" class="btn btn-sm green" ng-click="showMap()" style="float:right">查看</a>
+            </div>
+            <div class="portlet-body" style="height:300px">
+                <div id="map" style="height:100%"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-social-dribbble font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">凭证上传完成送货</span>
+                </div>
+            </div>
+            <div class="portlet-body fileinput fileinput-new" data-provides="fileinput" style="height:300px">
+                <div>
+                    <span>
+                            <div class="imgArea" id="imgCert">
+                                <a ng-if="delivery.completeCert!=null" class=“image-preview” href="{{imgBaseurl+delivery.completeCert}}" data-lightbox="idcards" data-title="证件照片">
+                                    <img ng-if="delivery.completeCert!=null" style="" ng-src={{imgBaseurl+delivery.completeCert}}>
+                                </a>
+                                <input type=hidden value="" ng-model="imgurl" id="imgCertValue" data-cargono="{{delivery.cargoNo}}"/>
+                            </div>
+                            <div  id="filepicker1" >上传凭证</div>
+                            
+                            
+                    </div>
+            </div>
+        </div>
+    </div>
+ </div>
+<script type="text/ng-template" id="showMap.html">
+    <div class="modal-header">
+        <h5><i class="icon-notebook"></i>MAP</h5>
+    </div>
+    <div class="modal-body" ng-init="init()">
+     <div class="portlet-body gps-model" style="height:500px;width:800px;">
+        <div id="map2" style="height:500px;width:800px;"></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <!--<button class="btn green-haze" type="button" ng-click="ok()">确定</button>
+        <button class="btn grey-cascade" type="button" ng-click="cancel()">取消</button> -->
+    </div>
+</script>

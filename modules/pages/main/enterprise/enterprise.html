@@ -1,0 +1,78 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="index.html">账号管理</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">企业信息</span>
+    </li>
+</ul>
+<div class="row " ng-controller="enterprise">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered ">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-social-dribbble font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">基础信息</span>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <div class="table-scrollable ">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+
+                                <td><label class="col-md-3 control-label col-md-new-3">公司名称：</label>{{basicInfo.compName}}</td>
+                                <td><label class="col-md-3 control-label col-md-new-3">公司地址：</label>{{basicInfo.compAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td><label class="col-md-3 control-label col-md-new-3">联系人：</label>{{basicInfo.compContact}}</td>
+                                <td><label class="col-md-3 control-label col-md-new-3">联系方式：</label>{{basicInfo.compPhone}}</td>
+                            </tr>
+                            <tr>
+                                <td ><label class="col-md-3 control-label col-md-new-3">企业性质：</label>{{basicInfo.compType | comType}}</td>
+                                <td > </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="portlet light bordered ">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject font-green bold uppercase">企业执照</span>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <div class="row ">
+                    <div class="col-md-3">
+                        <h5><span class="redFont">*</span>营业执照</h5>
+                        <div class="dashBox">
+
+                            <img  src="{{basicInfo.busLicenceFile}}"  width=100/>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5><span class="redFont">*</span>税务登记证</h5>
+                        <div class="dashBox">
+                             <img  src="{{basicInfo.taxationRegFile}}"  width=100/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5><span class="redFont">*</span>组织机构代码</h5>
+                        <div class="dashBox">
+                            <img  src="{{basicInfo.organizationFile}}"  width=100/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5><span class="redFont">*</span>开户许可证</h5>
+                        <div class="dashBox">
+                            <img  src="{{basicInfo.organizationFile}}"  width=100/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

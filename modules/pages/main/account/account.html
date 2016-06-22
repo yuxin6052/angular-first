@@ -1,0 +1,54 @@
+ <ul class="page-breadcrumb breadcrumb">
+   <li>
+     <a href="index.html">账号管理</a> <i class="fa fa-circle"></i>
+   </li>
+   
+    <li>
+     <span class="active">企业信息</span>
+   </li>
+ </ul>
+
+ <div class="row " ng-controller="account">
+   <div class="col-md-12 ">
+        <div class="portlet light bordered ">
+            <div class="portlet-title">
+                <div class="caption">
+                   
+                    <span class="caption-subject yellowFont font14">修改密码</span>
+                </div>
+               
+            </div>
+            <div class="portlet-body ">
+            <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label for="inputEmail1" class="col-md-2 control-label">原密码</label>
+                                            <div class="col-md-4">
+                                                <input type="password" class="form-control" required ng-model="account.oldPwd" id="inputEmail1" placeholder="Password"> </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword12" class="col-md-2 control-label">新密码</label>
+                                            <div class="col-md-4">
+                                                <input type="password" class="form-control" required ng-model="account.newPwd" placeholder="Password"> </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword12" class="col-md-2 control-label">确认密码</label>
+                                            <div class="col-md-4">
+                                                <input type="password" class="form-control" required ng-model="account.newPwd1" placeholder="Password"> </div>
+                                        </div>
+                                      
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <button type="button" ng-click="modifyAccount()" class="btn green-meadow">提交</button>
+                                            </div>
+                                        </div>
+                                    </form>
+             
+              </div>
+            </div>
+             
+        </div>
+    </div>
+    <div class="col-md-12 ">
+       
+    </div>
+ 

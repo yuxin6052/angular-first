@@ -1,0 +1,314 @@
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="#deliveryBatchList">我的单据</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <a href="#deliveryBatchList">我的发货单</a> <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span class="active">发货单详情</span>
+    </li>
+</ul>
+<div class="row " ng-controller="DeliveryBatchDtCtrl" ng-init="init()">
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject greenFont bold uppercase">基本信息</span>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <div class="form-horizontal">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-2 control-label">发货批次号：</div>
+                            <div class="col-md-3 control-label alignLeft ">{{basicInfo.batchNo}}</div>
+                            <div class="col-md-2 control-label">承运单位名称：</div>
+                            <div class="col-md-1 control-label alignLeft ">{{basicInfo.wlCompanyName}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 control-label">承运单位联系人：</div>
+                            <div class="col-md-3 control-label alignLeft ">{{basicInfo.wlCompanyPerson}}</div>
+                            <div class="col-md-2 control-label">承运单位联系方式：</div>
+                            <div class="col-md-1 control-label alignLeft ">{{basicInfo.wlCompanyPhone}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 control-label">货主：</div>
+                            <div class="col-md-3 control-label alignLeft ">{{basicInfo.ownerName}}</div>
+                            <div class="col-md-2 control-label">货主联系方式：</div>
+                            <div class="col-md-1 control-label alignLeft ">{{basicInfo.ownerPhone}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 control-label">货主证件号：</div>
+                            <div class="col-md-3 control-label alignLeft ">{{basicInfo.ownerCardNum}}</div>
+                            <div class="col-md-2 control-label">备注：</div>
+                            <div class="col-md-3 control-label alignLeft " style="word-wrap: break-word;">{{basicInfo.remark}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 ">
+        <div class="portlet light bordered minheight600">
+            <div class="portlet-title no-border">
+                <div class="caption">
+                    <span class="caption-subject greenFont bold uppercase">发货单列表</span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-orange no-animate" ng-click="popEditDeliveryModal()">添加发货单</a>
+                </div>
+            </div>
+            <div class="portlet-body ">
+                <div class="tab-content">
+                    <div class="tab-pane active ">
+                        <div class="portlet">
+                            <div class="portlet-title">
+                                <ul class="nav nav-tabs fl col-md-12">
+                                    <li class="col-md-1 nopadding">序号</li>
+                                    <li class="col-md-2 nopadding">发货单号</li>
+                                    <li class="col-md-2 nopadding">司机身份证号</li>
+                                    <li class="col-md-2 nopadding">司机姓名</li>
+                                    <li class="col-md-1 nopadding">车牌号</li>
+                                    <li class="col-md-1 nopadding">载重量</li>
+                                    <li class="col-md-1 nopadding">状态</li>
+                                    <li class="col-md-2 nopadding">操作</li>
+                                </ul>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="portlet" ng-repeat="delivery in deliveryList">
+                                    <div class="portlet-title">
+                                        <ul class="nav fl col-md-12">
+                                            <li ng-bind="$index+1" class="col-md-1"></li>
+                                            <li class="col-md-2 nopadding">{{delivery.cargoNoShow}}</li>
+                                            <li class="col-md-2 nopadding">{{delivery.driverIdentityNum}}</li>
+                                            <li class="col-md-2 nopadding">{{delivery.driverName}}</li>
+                                            <li class="col-md-1 nopadding">{{delivery.carCode}}</li>
+                                            <li class="col-md-1 nopadding">{{delivery.carLoadWeight}}吨</li>
+                                            <li class="col-md-1 nopadding">{{delivery.status | cargoSendStatusFilter}}</li>
+                                            <li class="col-md-2 nopadding">
+                                                <div class="row">
+                                                    <a class="btn blue btn-sm" ng-click="expandDetail(delivery)">
+                                                        <span ng-if="!delivery.expanded">查看详情</span>
+                                                        <span ng-if="delivery.expanded">收起详情</span>
+                                                    </a>
+                                                    <!--<a class="btn btn-sm blue" ng-click="checkDelivery(delivery)" ng-if="delivery.status==CARGO_SEND_STATUS.WAIT_FOR_DELIVERY&&!delivery.existCargoOut&&system == SYSTEM.HULK_WAREHOUSE">核对完成</a>-->
+                                                    <a class="btn btn-sm blue" ng-click="createShippingOrder(delivery)" ng-if="!delivery.existCargoOut">生成出库单</a>
+                                                    <a class="btn btn-sm blue" ng-click="popEditDeliveryModal(delivery)" ng-if="!delivery.existCargoOut">编辑</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+
+                                        <div class="clearfix"></div>
+                                        <div class="inline-panel" ng-show="delivery.expanded">
+                                            <div></div>
+                                            <div class="row">
+                                                <h4 class="col-sm-8"><span class="blueLeftBorder paddingLeft5"><span class="font14">货物信息</span></span></h4>
+                                                <div class="col-sm-2 padTop5">
+                                                    <a class="btn btn-sm green" href="{{domainConfig.hulkDomain}}/hulk/cargoSend/print/{{delivery.id}}">打印发货单</a>
+                                                </div>
+                                            </div>
+                                            <!--<h4><span class="blueLeftBorder "><span class="font14 paddingLeft5">货物信息</span></span></h4>-->
+                                            <product-table product-list="delivery.productList"></product-table>
+                                            <!--<div>
+                                                <h5>司机信息</h5></div>
+                                            <driver-table driver-list="delivery.driverList"></driver-table>-->
+                                        </div>
+                                    </div>
+                                    <!--<div class="portlet-body inline-panel" ng-show="delivery.expanded">
+                                        <div></div>
+                                        <div><h5>货物信息</h5></div>
+                                        <product-table product-list="delivery.productList"></product-table>
+                                        <div><h5>司机信息</h5></div>
+                                        <driver-table driver-list="delivery.driverList"></driver-table>
+                                    </div>-->
+                                </div>
+                                <div class="centerDiv">
+                                    <uib-pagination total-items="pagination.totalItems" items-per-page="pagination.pageSize" ng-change="pageChanged()" ng-model="pagination.currentPage"
+                                        max-size="pagination.maxSize" class="pagination-sm" boundary-link-numbers="true"></uib-pagination>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-2">
+                                        <a class="btn btn-block grey-cascade" href="#/deliveryBatchList">关闭</a>
+                                    </div>
+                                    <div class="col-md-5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="editDeliveryModal.html">
+    
+    <div class="modal-header">
+          <div class="col-md-2"> <h5><i class="icon-notebook"></i>创建发货单</h5></div>
+          <div class="col-md-10 form-horizontal nopadding">
+          <div class="control-group col col-md-3">
+                                <label class="col-md-2 control-label">品名</label>
+                                <div class="paddingLeft5 col-md-9">
+                                     <select ng-model="queryParameters.productCategoryId" class="form-control " required ng-options="productCategory.id as productCategory.productCategoryName for productCategory in productCategoryList"></select>
+                            
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-3 nopadding">
+                                <label class="col-md-2 control-label ">规格</label>
+                                <div class="paddingLeft5 col-md-10">
+                                    <select ng-model="queryParameters.modelId" class="form-control " required ng-options="model.id as model.modelName for model in modelList"></select>
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-3 nopadding">
+                                <label class="col-md-2 control-label ">品牌</label>
+                                <div class="paddingLeft5 col-md-10">
+                                   <select ng-model="queryParameters.brandId" class="form-control " required ng-options="brand.id as brand.brandName for brand in brandList"></select>
+                                </div>
+                            </div>
+                            <div class="control-group col col-md-2 nopadding">
+                                <label class="col-md-3 control-label">库位</label>
+                                <div class="paddingLeft5 col-md-9 nopadding">
+                                   <select ng-model="queryParameters.cardId" class="form-control " required ng-options="card.id as card.cardName for card in cardList"></select>
+                                </div>
+                            </div>
+                           <div class="col-md-1">
+                            <span class="input-group-btn">
+                                <button class="btn blue btn-sm" type="button" ng-click="queryStorageList()">搜索</button>
+                            </span>
+                        </div>
+          </div>
+      </div>  
+    <div class="modal-body" id="stock" ng-init="init()">
+        <h4><span class="blueLeftBorder "><span class="font14 paddingLeft5">出库货物</span></span></h4>
+
+        <ul class="nav col-md-12 listHeader greyBorder">
+            <li class="col-md-1 alignCenter">品名</li>
+            <li class="col-md-1">规格/牌号</li>
+            <li class="col-md-2">数量/重量</li>
+            <li class="col-md-1">品牌</li>
+            <li class="col-md-1">库位</li>
+            <li class="col-md-6">货物详情</li>
+
+        </ul>
+        <div class="col-md-12 noHorizontalPadding marginTop5 scrollHeight400">
+            <div class="note note-info" ng-repeat="repository in cardProductOwnerVoList">
+                <ul class="nav col-md-12">
+                    <li class="col-md-1">{{repository.product.productName}}</li>
+
+                    <li class="col-md-1">{{repository.product.modelName}}</li>
+                    <li class="col-md-2">数量{{repository.count}}{{repository.countUnitCode}}<br/>重量{{repository.weight}}吨</li>
+
+                    <li class="col-md-1">{{repository.product.brandName}}</li>
+                    <li class="col-md-1">{{repository.cardName}}</li>
+                    <li class="col-md-6">
+                        <ul class="nav col-md-12">
+                            <li class="col-md-1"></li>
+                            <li class="col-md-3">货位</li>
+                            <li class="col-md-2">数量</li>
+                            <li class="col-md-3">毛重 </li>
+                            <li class="col-md-3">净重</li>
+                        </ul>
+                        <ul class="nav col-md-12" ng-repeat="storage in repository.storageVoList">
+                            <label style="display:block">
+                                <li class="col-md-1"><input type="checkbox" ng-model="storage.checked" ng-click="checkStorage(repository,storage)"/></li>
+                                <li class="col-md-3"> {{storage.placeCode}}</li>
+                                <li class="col-md-2"> {{storage.count}}{{storage.countUnitCode}}</li>
+                                <li class="col-md-3"> {{storage.weightMao}}吨</li>
+                                <li class="col-md-3"> {{storage.weight}}吨</li>
+                            </label>
+                        </ul>
+                        <ul class="nav">
+                            <li class="col-md-12" style="text-align:right">已选重量:
+                                <span class="yellowFont font14">{{repository.selectedWeight.toString()}}</span>吨
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <h4><span class="blueLeftBorder "><span class="font14 paddingLeft5">已选出库货物</span></span>
+            <span class="font14 paddingLeft5 fr">已选货物总重量：<span class="yellowFont font14">{{totalSelectedWeight.toString()}}</span>吨</span>
+        </h4>
+
+        <ul class="nav col-md-12 listHeader greyBorder">
+            <li class="col-md-1 alignCenter">品名</li>
+            <li class="col-md-1">规格/牌号</li>
+            <li class="col-md-2">数量/重量</li>
+            <li class="col-md-1">品牌</li>
+            <li class="col-md-1">库位</li>
+            <li class="col-md-6">货物详情</li>
+
+        </ul>
+        <div class="col-md-12 noHorizontalPadding marginTop5 scrollHeight400">
+            <div class="note note-info" ng-repeat="repository in cardProductOwnerVoList1">
+                <ul class="nav col-md-12">
+                    <li class="col-md-1">{{repository.product.productName}}</li>
+
+                    <li class="col-md-1">{{repository.product.modelName}}</li>
+                    <li class="col-md-2">数量{{repository.count}}{{repository.countUnitCode}}<br/>重量{{repository.weight}}吨</li>
+
+                    <li class="col-md-1">{{repository.product.brandName}}</li>
+                    <li class="col-md-1">{{repository.cardName}}</li>
+                    <li class="col-md-6">
+                        <ul class="nav col-md-12">
+                            <li class="col-md-1"></li>
+                            <li class="col-md-3">货位</li>
+                            <li class="col-md-2">数量</li>
+                            <li class="col-md-3">毛重 </li>
+                            <li class="col-md-3">净重</li>
+                        </ul>
+                        <ul class="nav col-md-12" ng-repeat="storage in repository.storageVoList">
+                            <label style="display:block">
+                                <li class="col-md-1"><input type="checkbox" ng-model="storage.checked" /></li>
+                                <li class="col-md-3"> {{storage.placeCode}}</li>
+                                <li class="col-md-2"> {{storage.count}}{{storage.countUnitCode}}</li>
+                                <li class="col-md-3"> {{storage.weightMao}}吨</li>
+                                <li class="col-md-3"> {{storage.weight}}吨</li>
+                            </label>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <h4><span class="blueLeftBorder "><span class="font14 paddingLeft5">司机信息</span></span></h4>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="gpsName" class="col-md-1 control-label">车牌号</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" ng-model="newDeliveryInfo.carCode" placeholder="">
+                </div>
+                <label for="gpsName" class="col-md-1  control-label">司机姓名</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" ng-model="newDeliveryInfo.driverName" placeholder="">
+                </div>
+                <label for="gpsName" class="col-md-1  control-label">司机身份证</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" ng-model="newDeliveryInfo.driverIdentityNum" placeholder="">
+                </div>
+                <label for="gpsName" class="col-md-1  control-label">单车载重量</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control wid80 input-inline" ng-model="newDeliveryInfo.carLoadWeight" placeholder="">
+                    <span class="paddingLeft5 lineHeight32">吨</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-1 control-label">备注</label>
+                <div class="col-sm-5">
+                    <textarea class="form-control" rows="3" ng-model="newDeliveryInfo.remark"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn green-haze" type="button" ng-click="ok()">提交发货单</button>
+        <button class="btn grey-cascade" type="button" ng-click="cancel()">关闭</button>
+    </div>
+</script>
